@@ -1,0 +1,200 @@
+{
+  "id": "drv8825",
+  "name": "Pololu DRV8825 Stepper Driver Carrier",
+  "category": "module",
+  "family": "Stepper driver",
+  "mcu": "DRV8825",
+  "aliases": ["drv8825", "pololu 2133", "stepstick", "stepper driver", "ti drv8825", "md20"],
+  "logicVoltage": 3.3,
+  "wireless": [],
+  "routing": { "I2C": "fixed", "SPI": "fixed", "UART": "fixed", "PWM": "fixed" },
+  "codeStyle": "gpio",
+  "sources": [
+    {
+      "title": "TI DRV8825 Stepper Motor Controller IC (datasheet)",
+      "url": "https://www.ti.com/lit/ds/symlink/drv8825.pdf",
+      "rev": "SLVSA73F (April 2010, revised July 2014)",
+      "note": "Pin functions, recommended operating conditions, logic-level inputs, 7.6 timing requirements, Table 1 stepping format, 8.3.6 nRESET/nENBL/nSLEEP, 8.3.7 protection and nFAULT."
+    },
+    {
+      "title": "Pololu DRV8825 Stepper Motor Driver Carrier, High Current (product page, item #2133)",
+      "url": "https://www.pololu.com/product/2133",
+      "rev": "Page fetched 2026-10-04",
+      "note": "Minimal wiring diagram and schematic (pin order, FAULT 1.5k series resistor and 10k to SLEEP), microstep table, differences from the A4988, current-limit formula."
+    }
+  ],
+  "datasheet": "https://www.ti.com/lit/ds/symlink/drv8825.pdf",
+  "verified": true,
+  "summary": "Pololu carrier for the TI DRV8825 bipolar stepper driver: STEP/DIR control, up to 1/32 microstepping, 8.2-45 V motor supply, no separate logic supply. Pin-compatible with the A4988 carrier in most systems.",
+  "warnings": [
+    {
+      "level": "danger",
+      "text": "Connecting or disconnecting a stepper motor while the driver is powered can destroy the driver (Pololu).",
+      "pins": ["J2-3", "J2-4", "J2-5", "J2-6"]
+    },
+    {
+      "level": "danger",
+      "text": "The carrier uses low-ESR ceramic capacitors, so LC voltage spikes on long power leads can exceed the DRV8825's 45 V rating even with a 12 V supply. Pololu recommends a large (at least 47 uF) electrolytic capacitor across VMOT and GND close to the board.",
+      "pins": ["J2-1", "J2-2"]
+    },
+    {
+      "level": "warn",
+      "text": "RST and SLP are pulled low inside the DRV8825 (RESET about 100k, SLEEP 1M), which keeps the driver off. Both must be driven high (2.2-5.25 V) for the driver to run. Unlike the A4988 carrier, SLEEP has no pull-up of its own; it only gets a 10k pull-up through FLT when FLT is tied to a logic supply.",
+      "pins": ["J1-5", "J1-6"]
+    },
+    {
+      "level": "warn",
+      "text": "The board can get hot enough to burn you long before the chip overheats (Pololu). Above about 1.5 A per coil it needs a heat sink or other cooling."
+    },
+    {
+      "level": "info",
+      "text": "Microstep table (DRV8825 datasheet Table 1; M2/M1/M0): 0/0/0 = full step (71% current), 0/0/1 = 1/2, 0/1/0 = 1/4, 0/1/1 = 1/8, 1/0/0 = 1/16, 1/0/1, 1/1/0 and 1/1/1 = 1/32. M0-M2 have internal 100k pull-downs, so leaving them unconnected gives full step. Note: the all-high setting that gives 1/16 on the A4988 gives 1/32 here.",
+      "pins": ["J1-2", "J1-3", "J1-4"]
+    },
+    {
+      "level": "info",
+      "text": "Timing (DRV8825 datasheet 7.6): STEP high and STEP low at least 1.9 us each, STEP frequency at most 250 kHz, DIR/MODE setup and hold 650 ns around the STEP rising edge, nENBL active to STEP 650 ns, wake-up time from SLEEP high to STEP accepted 1.7 ms max. These are slower than the A4988 (1 us pulses).",
+      "pins": ["J1-7", "J1-8"]
+    },
+    {
+      "level": "info",
+      "text": "Voltages (DRV8825 datasheet): motor supply VM 8.2-45 V. There is no logic supply pin: the chip makes its own 3.3 V (V3P3OUT, 3.2-3.4 V). Logic inputs read high from 2.2 V to 5.25 V and low up to 0.7 V, so 3.3 V and 5 V controllers both work. 3.3 V is shown as the logic voltage because it is the internal logic level.",
+      "pins": ["J2-1"]
+    },
+    {
+      "level": "info",
+      "text": "FLT sits where the A4988 carrier has VDD. The DRV8825's nFAULT is open drain and goes low on overcurrent or overtemperature shutdown. Pololu adds a 1.5k series resistor so it is safe to connect FLT straight to a logic supply, and a 10k resistor from FLT to SLP (pull-up for FAULT when SLEEP is held high, or pull-up for SLEEP when FLT is tied to logic power). The 10k resistor is absent on the first (md20a) board version.",
+      "pins": ["J2-7", "J1-6"]
+    },
+    {
+      "level": "info",
+      "text": "Current limit (Pololu): Current limit = VREF x 2 (0.100 ohm sense resistors), e.g. VREF 0.5 V for 1 A."
+    }
+  ],
+  "layout": {
+    "width": 6,
+    "height": 8,
+    "features": [
+      { "type": "chip", "x": 2, "y": 3, "w": 2, "h": 3, "label": "DRV8825" },
+      { "type": "label", "x": 3, "y": 1.5, "label": "VREF pot" }
+    ],
+    "headers": [
+      { "id": "J1", "x": 0.5, "y": 0.5, "dir": "down", "count": 8, "labelSide": "left" },
+      { "id": "J2", "x": 5.5, "y": 0.5, "dir": "down", "count": 8, "labelSide": "right" }
+    ]
+  },
+  "pins": [
+    {
+      "id": "J1-1", "header": "J1", "pos": 1, "label": "EN", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "nENBL (active low)" }],
+      "flags": [],
+      "notes": "Active low. High turns the outputs off (high impedance) and STEP is ignored; low enables. Internal ~100k pull-down, so the driver is enabled when this pin is left unconnected.",
+      "verified": true
+    },
+    {
+      "id": "J1-2", "header": "J1", "pos": 2, "label": "M0", "gpio": null, "code": null,
+      "functions": [{ "type": "CONFIG", "name": "MODE0" }],
+      "flags": [],
+      "notes": "Microstep select bit 0. Internal 100k pull-down. See the microstep table in the board warnings.",
+      "verified": true
+    },
+    {
+      "id": "J1-3", "header": "J1", "pos": 3, "label": "M1", "gpio": null, "code": null,
+      "functions": [{ "type": "CONFIG", "name": "MODE1" }],
+      "flags": [],
+      "notes": "Microstep select bit 1. Internal 100k pull-down.",
+      "verified": true
+    },
+    {
+      "id": "J1-4", "header": "J1", "pos": 4, "label": "M2", "gpio": null, "code": null,
+      "functions": [{ "type": "CONFIG", "name": "MODE2" }],
+      "flags": [],
+      "notes": "Microstep select bit 2. Internal 100k pull-down.",
+      "verified": true
+    },
+    {
+      "id": "J1-5", "header": "J1", "pos": 5, "label": "RST", "gpio": null, "code": null,
+      "functions": [{ "type": "CTRL", "name": "nRESET (active low)" }],
+      "flags": [],
+      "notes": "Active low. Low resets the indexer to home and disables the outputs; STEP is ignored. Internal ~100k pull-down, so it must be driven high for the driver to run. Also clears a latched overcurrent fault.",
+      "verified": true
+    },
+    {
+      "id": "J1-6", "header": "J1", "pos": 6, "label": "SLP", "gpio": null, "code": null,
+      "functions": [{ "type": "CTRL", "name": "nSLEEP (active low)" }],
+      "flags": [],
+      "notes": "Active low. Low = sleep (outputs, charge pump and 3.3 V regulator off; all inputs ignored). Internal 1M pull-down, so it must be driven high. On the carrier it connects to FLT through 10k. Wait up to 1.7 ms after waking before STEP. Any external pull-up should be 4.7k or less so a fault can't pull SLEEP low.",
+      "verified": true
+    },
+    {
+      "id": "J1-7", "header": "J1", "pos": 7, "label": "STEP", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "STEP" }],
+      "flags": [],
+      "notes": "Each rising edge moves the indexer one step. Minimum high and low pulse width 1.9 us, max 250 kHz. Internal 100k pull-down.",
+      "verified": true
+    },
+    {
+      "id": "J1-8", "header": "J1", "pos": 8, "label": "DIR", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "DIR" }],
+      "flags": [],
+      "notes": "Direction. 650 ns setup and hold around the STEP rising edge. Internal 100k pull-down, so it can be left unconnected for one direction.",
+      "verified": true
+    },
+    {
+      "id": "J2-1", "header": "J2", "pos": 1, "label": "VMOT", "gpio": null, "code": null,
+      "functions": [{ "type": "POWER", "name": "VMOT (VM, 8.2-45 V)" }],
+      "flags": ["power"],
+      "notes": "Motor supply, 8.2-45 V. Undervoltage lockout disables the chip until VM rises above the UVLO threshold (7.8 V typical, 8.2 V max, rising). Add a 47 uF or larger electrolytic close to the board.",
+      "verified": true
+    },
+    {
+      "id": "J2-2", "header": "J2", "pos": 2, "label": "GND", "gpio": null, "code": null,
+      "functions": [{ "type": "GND", "name": "GND" }],
+      "flags": ["ground"],
+      "notes": "Motor supply ground.",
+      "verified": true
+    },
+    {
+      "id": "J2-3", "header": "J2", "pos": 3, "label": "B2", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "BOUT2" }],
+      "flags": [],
+      "notes": "Coil B output (same position and function as 2B on the A4988 carrier). Never connect or disconnect the motor while powered.",
+      "verified": true
+    },
+    {
+      "id": "J2-4", "header": "J2", "pos": 4, "label": "B1", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "BOUT1" }],
+      "flags": [],
+      "notes": "Coil B output (A4988 equivalent: 2A).",
+      "verified": true
+    },
+    {
+      "id": "J2-5", "header": "J2", "pos": 5, "label": "A1", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "AOUT1" }],
+      "flags": [],
+      "notes": "Coil A output (A4988 equivalent: 1A).",
+      "verified": true
+    },
+    {
+      "id": "J2-6", "header": "J2", "pos": 6, "label": "A2", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "AOUT2" }],
+      "flags": [],
+      "notes": "Coil A output (A4988 equivalent: 1B).",
+      "verified": true
+    },
+    {
+      "id": "J2-7", "header": "J2", "pos": 7, "label": "FLT", "gpio": null, "code": null,
+      "functions": [{ "type": "CTRL", "name": "nFAULT (open drain)" }],
+      "flags": [],
+      "notes": "Open-drain fault output through a 1.5k series resistor; low on overcurrent (latched until RESET or power cycle) or overtemperature (clears automatically when cooled). Pulled up through 10k to SLP. Safe to wire to a logic supply, as in A4988 sockets where this is VDD.",
+      "verified": true
+    },
+    {
+      "id": "J2-8", "header": "J2", "pos": 8, "label": "GND", "gpio": null, "code": null,
+      "functions": [{ "type": "GND", "name": "GND" }],
+      "flags": ["ground"],
+      "notes": "Logic ground.",
+      "verified": true
+    }
+  ]
+}

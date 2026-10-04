@@ -1,0 +1,191 @@
+{
+  "id": "a4988",
+  "name": "Pololu A4988 Stepper Driver Carrier",
+  "category": "module",
+  "family": "Stepper driver",
+  "mcu": "A4988",
+  "aliases": ["a4988", "pololu 1182", "stepstick", "stepper driver", "allegro a4988", "md09b"],
+  "logicVoltage": 5,
+  "wireless": [],
+  "routing": { "I2C": "fixed", "SPI": "fixed", "UART": "fixed", "PWM": "fixed" },
+  "codeStyle": "gpio",
+  "sources": [
+    {
+      "title": "Allegro A4988 DMOS Microstepping Driver with Translator and Overcurrent Protection (datasheet)",
+      "url": "https://www.allegromicro.com/-/media/files/datasheets/a4988-datasheet.pdf",
+      "rev": "A4988-DS Rev. 8 (April 5, 2022)",
+      "note": "Supply ranges (Electrical Characteristics), Figure 1 logic interface timing, Table 1 microstep truth table, MSx pull-downs, RESET/SLEEP/ENABLE behaviour."
+    },
+    {
+      "title": "Pololu A4988 Stepper Motor Driver Carrier (product page, item #1182)",
+      "url": "https://www.pololu.com/product/1182",
+      "rev": "Page fetched 2026-10-04",
+      "note": "Minimal wiring diagram (pin order), schematic diagram (on-board pull-up on SLEEP, pull-down on ENABLE, floating RESET), supply ranges, current-limit formula."
+    }
+  ],
+  "datasheet": "https://www.allegromicro.com/-/media/files/datasheets/a4988-datasheet.pdf",
+  "verified": true,
+  "summary": "Pololu carrier for the Allegro A4988 bipolar stepper driver: STEP/DIR control, up to 1/16 microstepping, 8-35 V motor supply, 3-5.5 V logic supply.",
+  "warnings": [
+    {
+      "level": "danger",
+      "text": "Connecting or disconnecting a stepper motor while the driver is powered can destroy the driver (Pololu).",
+      "pins": ["J2-3", "J2-4", "J2-5", "J2-6"]
+    },
+    {
+      "level": "danger",
+      "text": "The carrier uses low-ESR ceramic capacitors, so LC voltage spikes on long power leads can exceed the A4988's 35 V rating even with a 12 V supply. Pololu recommends a large (at least 47 uF) electrolytic capacitor across VMOT and GND close to the board.",
+      "pins": ["J2-1", "J2-2"]
+    },
+    {
+      "level": "warn",
+      "text": "RESET is floating on the carrier. The driver ignores STEP until RESET is high. If you don't use it, connect RESET to the adjacent SLEEP pin (which the carrier pulls up to VDD) as Pololu recommends.",
+      "pins": ["J1-5", "J1-6"]
+    },
+    {
+      "level": "info",
+      "text": "Microstep table (A4988 datasheet Table 1; MS1/MS2/MS3): L/L/L = full step, H/L/L = half step, L/H/L = quarter step, H/H/L = eighth step, H/H/H = sixteenth step. MS1-MS3 have internal pull-downs, so leaving them unconnected gives full step. A change of step mode takes effect at the next STEP rising edge.",
+      "pins": ["J1-2", "J1-3", "J1-4"]
+    },
+    {
+      "level": "info",
+      "text": "STEP timing (A4988 datasheet Figure 1): STEP high and STEP low pulses at least 1 us each; MS1-MS3/RESET/DIR setup time before the STEP edge 200 ns and hold time after it 200 ns. After leaving sleep, wait 1 ms before the first STEP so the charge pump can stabilise.",
+      "pins": ["J1-7", "J1-8"]
+    },
+    {
+      "level": "info",
+      "text": "Supplies (A4988 datasheet, operating ranges): VMOT (VBB) 8-35 V, VDD logic 3-5.5 V. Logic thresholds are relative to VDD: high is at least 0.7 x VDD and low at most 0.3 x VDD. So power VDD from the same rail as your controller's I/O (e.g. 3.3 V with a 3.3 V MCU); a 3.3 V signal does not reach the high threshold when VDD is 5 V. The 5 V shown as logic voltage is just a typical choice.",
+      "pins": ["J2-1", "J2-7"]
+    },
+    {
+      "level": "info",
+      "text": "Current limit (Pololu): Imax = VREF / (8 x Rcs). Units made since 2017 use 0.068 ohm sense resistors (earlier units 0.050 ohm). VREF is derived from VDD, so re-set the current limit if you change VDD."
+    }
+  ],
+  "layout": {
+    "width": 6,
+    "height": 8,
+    "features": [
+      { "type": "chip", "x": 2, "y": 2, "w": 2, "h": 2, "label": "A4988" },
+      { "type": "label", "x": 3, "y": 5.5, "label": "VREF pot" }
+    ],
+    "headers": [
+      { "id": "J1", "x": 0.5, "y": 0.5, "dir": "down", "count": 8, "labelSide": "left" },
+      { "id": "J2", "x": 5.5, "y": 0.5, "dir": "down", "count": 8, "labelSide": "right" }
+    ]
+  },
+  "pins": [
+    {
+      "id": "J1-1", "header": "J1", "pos": 1, "label": "ENABLE", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "ENABLE (active low)" }],
+      "flags": [],
+      "notes": "Active low. High turns off all FET outputs; low enables them. STEP, DIR and MSx stay active either way. The carrier pulls this pin to GND through 100k, so the outputs are enabled when it is left unconnected.",
+      "verified": true
+    },
+    {
+      "id": "J1-2", "header": "J1", "pos": 2, "label": "MS1", "gpio": null, "code": null,
+      "functions": [{ "type": "CONFIG", "name": "MS1" }],
+      "flags": [],
+      "notes": "Microstep select bit 1. Internal 100k pull-down. See the microstep table in the board warnings.",
+      "verified": true
+    },
+    {
+      "id": "J1-3", "header": "J1", "pos": 3, "label": "MS2", "gpio": null, "code": null,
+      "functions": [{ "type": "CONFIG", "name": "MS2" }],
+      "flags": [],
+      "notes": "Microstep select bit 2. Internal 50k pull-down.",
+      "verified": true
+    },
+    {
+      "id": "J1-4", "header": "J1", "pos": 4, "label": "MS3", "gpio": null, "code": null,
+      "functions": [{ "type": "CONFIG", "name": "MS3" }],
+      "flags": [],
+      "notes": "Microstep select bit 3. Internal 100k pull-down.",
+      "verified": true
+    },
+    {
+      "id": "J1-5", "header": "J1", "pos": 5, "label": "RESET", "gpio": null, "code": null,
+      "functions": [{ "type": "CTRL", "name": "RESET (active low)" }],
+      "flags": [],
+      "notes": "Active low. Low resets the translator to its home state and turns off the outputs; STEP is ignored until RESET is high. Floating on the carrier: tie it to SLEEP or drive it high.",
+      "verified": true
+    },
+    {
+      "id": "J1-6", "header": "J1", "pos": 6, "label": "SLEEP", "gpio": null, "code": null,
+      "functions": [{ "type": "CTRL", "name": "SLEEP (active low)" }],
+      "flags": [],
+      "notes": "Active low. Low puts the A4988 in sleep mode (outputs, current regulator and charge pump off). The carrier pulls it up to VDD through 100k. Wait 1 ms after waking before sending STEP.",
+      "verified": true
+    },
+    {
+      "id": "J1-7", "header": "J1", "pos": 7, "label": "STEP", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "STEP" }],
+      "flags": [],
+      "notes": "Each low-to-high edge advances the motor one microstep. Minimum high and low pulse width 1 us. Not pulled up or down: don't leave it floating.",
+      "verified": true
+    },
+    {
+      "id": "J1-8", "header": "J1", "pos": 8, "label": "DIR", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "DIR" }],
+      "flags": [],
+      "notes": "Direction. A change takes effect at the next STEP rising edge (200 ns setup, 200 ns hold). Not pulled up or down: don't leave it floating; tie it to VDD or GND for one direction only.",
+      "verified": true
+    },
+    {
+      "id": "J2-1", "header": "J2", "pos": 1, "label": "VMOT", "gpio": null, "code": null,
+      "functions": [{ "type": "POWER", "name": "VMOT (VBB, 8-35 V)" }],
+      "flags": ["power"],
+      "notes": "Motor supply, 8-35 V. Add a 47 uF or larger electrolytic capacitor close to the board.",
+      "verified": true
+    },
+    {
+      "id": "J2-2", "header": "J2", "pos": 2, "label": "GND", "gpio": null, "code": null,
+      "functions": [{ "type": "GND", "name": "GND" }],
+      "flags": ["ground"],
+      "notes": "Motor supply ground.",
+      "verified": true
+    },
+    {
+      "id": "J2-3", "header": "J2", "pos": 3, "label": "2B", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "OUT2B" }],
+      "flags": [],
+      "notes": "Coil 2 output (2A/2B pair). Never connect or disconnect the motor while the driver is powered.",
+      "verified": true
+    },
+    {
+      "id": "J2-4", "header": "J2", "pos": 4, "label": "2A", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "OUT2A" }],
+      "flags": [],
+      "notes": "Coil 2 output (2A/2B pair).",
+      "verified": true
+    },
+    {
+      "id": "J2-5", "header": "J2", "pos": 5, "label": "1A", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "OUT1A" }],
+      "flags": [],
+      "notes": "Coil 1 output (1A/1B pair).",
+      "verified": true
+    },
+    {
+      "id": "J2-6", "header": "J2", "pos": 6, "label": "1B", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "OUT1B" }],
+      "flags": [],
+      "notes": "Coil 1 output (1A/1B pair).",
+      "verified": true
+    },
+    {
+      "id": "J2-7", "header": "J2", "pos": 7, "label": "VDD", "gpio": null, "code": null,
+      "functions": [{ "type": "POWER", "name": "VDD (logic, 3-5.5 V)" }],
+      "flags": ["power"],
+      "notes": "Logic supply, 3-5.5 V. Input thresholds and the current-limit reference scale with VDD, so use your controller's I/O voltage.",
+      "verified": true
+    },
+    {
+      "id": "J2-8", "header": "J2", "pos": 8, "label": "GND", "gpio": null, "code": null,
+      "functions": [{ "type": "GND", "name": "GND" }],
+      "flags": ["ground"],
+      "notes": "Logic ground.",
+      "verified": true
+    }
+  ]
+}

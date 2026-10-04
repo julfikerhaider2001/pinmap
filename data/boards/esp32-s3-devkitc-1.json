@@ -1,0 +1,1668 @@
+{
+  "id": "esp32-s3-devkitc-1",
+  "name": "ESP32-S3-DevKitC-1",
+  "category": "board",
+  "family": "ESP32",
+  "mcu": "ESP32-S3",
+  "aliases": [
+    "s3",
+    "esp32s3",
+    "esp32-s3",
+    "devkitc",
+    "devkitc-1",
+    "esp32-s3-devkitc",
+    "wroom-1",
+    "wroom-2",
+    "n8r8",
+    "n32r16v"
+  ],
+  "logicVoltage": 3.3,
+  "wireless": [
+    "wifi",
+    "ble"
+  ],
+  "routing": {
+    "I2C": "any",
+    "SPI": "any",
+    "UART": "any",
+    "PWM": "any"
+  },
+  "codeStyle": "gpio",
+  "sources": [
+    {
+      "title": "ESP32-S3 Series Datasheet",
+      "url": "https://documentation.espressif.com/esp32-s3_datasheet_en.pdf",
+      "rev": "v2.2",
+      "note": "IO MUX, RTC and analog function tables, strapping pins, power-up glitches, flash/PSRAM pin mapping, ADC2/Wi-Fi note. (Redirected from espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf.)"
+    },
+    {
+      "title": "ESP32-S3-DevKitC-1 v1.1 User Guide",
+      "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html",
+      "rev": "v1.1 (esp-dev-kits latest)",
+      "note": "J1/J3 header tables, RGB LED on GPIO38, octal flash/PSRAM note for GPIO35-37, ordering table."
+    }
+  ],
+  "datasheet": "https://documentation.espressif.com/esp32-s3_datasheet_en.pdf",
+  "verified": true,
+  "summary": "Espressif entry-level ESP32-S3 board (v1.1) with an ESP32-S3-WROOM-1/1U or WROOM-2 module, USB-to-UART port plus native USB port, and an RGB LED on GPIO38.",
+  "warnings": [
+    {
+      "level": "danger",
+      "text": "3.3 V logic only. The GPIOs are not 5 V tolerant; never connect a 5 V signal to them."
+    },
+    {
+      "level": "warn",
+      "text": "Strapping pins GPIO0, GPIO3, GPIO45 and GPIO46 are read at reset (boot mode, JTAG source, VDD_SPI voltage, ROM log). External pull-ups/pull-downs on them can stop the board from booting.",
+      "pins": [
+        "J3-14",
+        "J1-13",
+        "J3-15",
+        "J1-14"
+      ]
+    },
+    {
+      "level": "warn",
+      "text": "GPIO35, GPIO36 and GPIO37 are used by the octal SPI flash/PSRAM on every variant in the user guide ordering table (WROOM-1-N8R8, WROOM-1U-N8R8, WROOM-2-N32R16V). Do not use them.",
+      "pins": [
+        "J3-13",
+        "J3-12",
+        "J3-11"
+      ]
+    },
+    {
+      "level": "warn",
+      "text": "ADC2 channels (GPIO11-20) cannot be used while Wi-Fi is on. Use ADC1 (GPIO1-10) for analog input with Wi-Fi.",
+      "pins": [
+        "J1-17",
+        "J1-18",
+        "J1-19",
+        "J1-20",
+        "J1-8",
+        "J1-9",
+        "J1-10",
+        "J1-11",
+        "J3-20",
+        "J3-19"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "GPIO19/GPIO20 are the native USB D-/D+ lines of the \"USB\" port; GPIO43/GPIO44 are UART0, wired to the USB-to-UART bridge.",
+      "pins": [
+        "J3-20",
+        "J3-19",
+        "J3-2",
+        "J3-3"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "The RGB LED is on GPIO38 on v1.1 boards and on GPIO48 on the older v1.0 boards. Both versions are on the market.",
+      "pins": [
+        "J3-10",
+        "J3-16"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "On the WROOM-2-N32R16V variant (1.8 V VDD_SPI), GPIO47 and GPIO48 work at 1.8 V instead of 3.3 V.",
+      "pins": [
+        "J3-17",
+        "J3-16"
+      ]
+    }
+  ],
+  "layout": {
+    "width": 10.2,
+    "height": 24.8,
+    "features": [
+      {
+        "type": "chip",
+        "x": 1.6,
+        "y": 0.4,
+        "w": 7.1,
+        "h": 10.2,
+        "label": "ESP32-S3-WROOM-1"
+      },
+      {
+        "type": "led",
+        "x": 6.3,
+        "y": 19.7,
+        "w": 0.8,
+        "h": 0.8,
+        "label": "RGB"
+      },
+      {
+        "type": "button",
+        "x": 1.2,
+        "y": 21.7,
+        "w": 1.6,
+        "h": 1.2,
+        "label": "BOOT"
+      },
+      {
+        "type": "button",
+        "x": 7.5,
+        "y": 21.7,
+        "w": 1.6,
+        "h": 1.2,
+        "label": "RST"
+      },
+      {
+        "type": "usb",
+        "x": 2.4,
+        "y": 22.8,
+        "w": 2.4,
+        "h": 2,
+        "label": "UART"
+      },
+      {
+        "type": "usb",
+        "x": 5.5,
+        "y": 22.8,
+        "w": 2.4,
+        "h": 2,
+        "label": "USB"
+      }
+    ],
+    "headers": [
+      {
+        "id": "J1",
+        "x": 0.4,
+        "y": 2,
+        "dir": "down",
+        "count": 22,
+        "labelSide": "left"
+      },
+      {
+        "id": "J3",
+        "x": 9.8,
+        "y": 2,
+        "dir": "down",
+        "count": 22,
+        "labelSide": "right"
+      }
+    ]
+  },
+  "pins": [
+    {
+      "id": "J1-1",
+      "header": "J1",
+      "pos": 1,
+      "label": "3V3",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "3V3"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "3.3 V power supply pin (output of the on-board LDO). The board can also be powered through it (user guide power option).",
+      "verified": true
+    },
+    {
+      "id": "J1-2",
+      "header": "J1",
+      "pos": 2,
+      "label": "3V3",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "3V3"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "3.3 V power supply pin (output of the on-board LDO). The board can also be powered through it (user guide power option).",
+      "verified": true
+    },
+    {
+      "id": "J1-3",
+      "header": "J1",
+      "pos": 3,
+      "label": "RST",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "CTRL",
+          "name": "EN"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Chip enable (EN). Driving it low disables/resets the chip. The RST button restarts the system.",
+      "verified": true
+    },
+    {
+      "id": "J1-4",
+      "header": "J1",
+      "pos": 4,
+      "label": "4",
+      "gpio": 4,
+      "code": "4",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO4"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO4"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH4"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH3"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-5",
+      "header": "J1",
+      "pos": 5,
+      "label": "5",
+      "gpio": 5,
+      "code": "5",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO5"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO5"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH5"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH4"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-6",
+      "header": "J1",
+      "pos": 6,
+      "label": "6",
+      "gpio": 6,
+      "code": "6",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO6"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO6"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH6"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH5"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-7",
+      "header": "J1",
+      "pos": 7,
+      "label": "7",
+      "gpio": 7,
+      "code": "7",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO7"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO7"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH7"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH6"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-8",
+      "header": "J1",
+      "pos": 8,
+      "label": "15",
+      "gpio": 15,
+      "code": "15",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO15"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO15"
+        },
+        {
+          "type": "UART",
+          "name": "U0RTS"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH4"
+        },
+        {
+          "type": "CLOCK",
+          "name": "XTAL_32K_P"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "ADC2 cannot be used while Wi-Fi is on (datasheet). Can also take an external 32 kHz crystal (XTAL_32K_P). Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-9",
+      "header": "J1",
+      "pos": 9,
+      "label": "16",
+      "gpio": 16,
+      "code": "16",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO16"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO16"
+        },
+        {
+          "type": "UART",
+          "name": "U0CTS"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH5"
+        },
+        {
+          "type": "CLOCK",
+          "name": "XTAL_32K_N"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "ADC2 cannot be used while Wi-Fi is on (datasheet). Can also take an external 32 kHz crystal (XTAL_32K_N). Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-10",
+      "header": "J1",
+      "pos": 10,
+      "label": "17",
+      "gpio": 17,
+      "code": "17",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO17"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO17"
+        },
+        {
+          "type": "UART",
+          "name": "U1TXD"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH6"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "ADC2 cannot be used while Wi-Fi is on (datasheet). Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-11",
+      "header": "J1",
+      "pos": 11,
+      "label": "18",
+      "gpio": 18,
+      "code": "18",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO18"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO18"
+        },
+        {
+          "type": "UART",
+          "name": "U1RXD"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH7"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLK_OUT3"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "ADC2 cannot be used while Wi-Fi is on (datasheet). Shows low- and high-level glitches (~60 us) at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-12",
+      "header": "J1",
+      "pos": 12,
+      "label": "8",
+      "gpio": 8,
+      "code": "8",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO8"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO8"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH8"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH7"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPICS1 (CS)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-13",
+      "header": "J1",
+      "pos": 13,
+      "label": "3",
+      "gpio": 3,
+      "code": "3",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO3"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO3"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH3"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH2"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin: selects the JTAG signal source during early boot (with eFuses). Floating by default, no internal pull resistor at reset; the datasheet says its level must be driven by the external circuit when it is used for this. Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-14",
+      "header": "J1",
+      "pos": 14,
+      "label": "46",
+      "gpio": 46,
+      "code": "46",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO46"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin: boot mode (with GPIO0) and ROM message printing. Default weak pull-down. Keep it low at reset to be able to enter download mode.",
+      "verified": true
+    },
+    {
+      "id": "J1-15",
+      "header": "J1",
+      "pos": 15,
+      "label": "9",
+      "gpio": 9,
+      "code": "9",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO9"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO9"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH9"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH8"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIHD (HOLD)"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPIHD (HOLD)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-16",
+      "header": "J1",
+      "pos": 16,
+      "label": "10",
+      "gpio": 10,
+      "code": "10",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO10"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO10"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH10"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH9"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPICS0 (CS)"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIIO4"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPICS0 (CS)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-17",
+      "header": "J1",
+      "pos": 17,
+      "label": "11",
+      "gpio": 11,
+      "code": "11",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO11"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO11"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH11"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH0"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPID (MOSI)"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIIO5"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPID (MOSI)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "ADC2 cannot be used while Wi-Fi is on (datasheet). Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-18",
+      "header": "J1",
+      "pos": 18,
+      "label": "12",
+      "gpio": 12,
+      "code": "12",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO12"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO12"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH12"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH1"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPICLK (SCK)"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIIO6"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPICLK (SCK)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "ADC2 cannot be used while Wi-Fi is on (datasheet). Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-19",
+      "header": "J1",
+      "pos": 19,
+      "label": "13",
+      "gpio": 13,
+      "code": "13",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO13"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO13"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH13"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH2"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIQ (MISO)"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIIO7"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPIQ (MISO)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "ADC2 cannot be used while Wi-Fi is on (datasheet). Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-20",
+      "header": "J1",
+      "pos": 20,
+      "label": "14",
+      "gpio": 14,
+      "code": "14",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO14"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO14"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH14"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH3"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIWP (WP)"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIDQS"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPIWP (WP)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "ADC2 cannot be used while Wi-Fi is on (datasheet). Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J1-21",
+      "header": "J1",
+      "pos": 21,
+      "label": "5V",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "5V"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "5 V power supply pin. The board can be powered through it (user guide power option); the on-board LDO converts 5 V to 3.3 V. Never connect 5 V to a GPIO.",
+      "verified": true
+    },
+    {
+      "id": "J1-22",
+      "header": "J1",
+      "pos": 22,
+      "label": "G",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-1",
+      "header": "J3",
+      "pos": 1,
+      "label": "G",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-2",
+      "header": "J3",
+      "pos": 2,
+      "label": "TX",
+      "gpio": 43,
+      "code": "43",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO43"
+        },
+        {
+          "type": "UART",
+          "name": "U0TXD"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLK_OUT1"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "console-uart",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "UART0 TX: default serial console, wired to the on-board USB-to-UART bridge. ROM boot messages are printed here by default.",
+      "verified": true
+    },
+    {
+      "id": "J3-3",
+      "header": "J3",
+      "pos": 3,
+      "label": "RX",
+      "gpio": 44,
+      "code": "44",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO44"
+        },
+        {
+          "type": "UART",
+          "name": "U0RXD"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLK_OUT2"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "console-uart",
+        "not-5v-tolerant"
+      ],
+      "notes": "UART0 RX: default serial console, wired to the on-board USB-to-UART bridge.",
+      "verified": true
+    },
+    {
+      "id": "J3-4",
+      "header": "J3",
+      "pos": 4,
+      "label": "1",
+      "gpio": 1,
+      "code": "1",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO1"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO1"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH1"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH0"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J3-5",
+      "header": "J3",
+      "pos": 5,
+      "label": "2",
+      "gpio": 2,
+      "code": "2",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO2"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO2"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH2"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH1"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Shows a short (~60 us) glitch at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J3-6",
+      "header": "J3",
+      "pos": 6,
+      "label": "42",
+      "gpio": 42,
+      "code": "42",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO42"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTMS"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "JTAG MTMS. Free to use if you debug over the USB port (USB Serial/JTAG) instead of pin JTAG.",
+      "verified": true
+    },
+    {
+      "id": "J3-7",
+      "header": "J3",
+      "pos": 7,
+      "label": "41",
+      "gpio": 41,
+      "code": "41",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO41"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTDI"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLK_OUT1"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "JTAG MTDI. Free to use if you debug over the USB port (USB Serial/JTAG) instead of pin JTAG.",
+      "verified": true
+    },
+    {
+      "id": "J3-8",
+      "header": "J3",
+      "pos": 8,
+      "label": "40",
+      "gpio": 40,
+      "code": "40",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO40"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTDO"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLK_OUT2"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "JTAG MTDO. Free to use if you debug over the USB port (USB Serial/JTAG) instead of pin JTAG.",
+      "verified": true
+    },
+    {
+      "id": "J3-9",
+      "header": "J3",
+      "pos": 9,
+      "label": "39",
+      "gpio": 39,
+      "code": "39",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO39"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTCK"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLK_OUT3"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPICS1 (CS)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "JTAG MTCK. Free to use if you debug over the USB port (USB Serial/JTAG) instead of pin JTAG.",
+      "verified": true
+    },
+    {
+      "id": "J3-10",
+      "header": "J3",
+      "pos": 10,
+      "label": "38",
+      "gpio": 38,
+      "code": "38",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO38"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIWP (WP)"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPIWP (WP)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "onboard-led",
+        "not-5v-tolerant"
+      ],
+      "notes": "Drives the addressable RGB LED on v1.1 boards (v1.0 boards use GPIO48 instead).",
+      "verified": true
+    },
+    {
+      "id": "J3-11",
+      "header": "J3",
+      "pos": 11,
+      "label": "37",
+      "gpio": 37,
+      "code": "37",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO37"
+        },
+        {
+          "type": "SPI",
+          "name": "SPIDQS"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIQ (MISO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPIQ (MISO)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "psram",
+        "not-5v-tolerant"
+      ],
+      "notes": "Used by the octal PSRAM/flash on ESP32-S3-WROOM-1/1U-N8R8 and ESP32-S3-WROOM-2-N32R16V (all variants in the user guide ordering table), so not available for external use on those boards. Only free on modules with quad or no PSRAM.",
+      "verified": true
+    },
+    {
+      "id": "J3-12",
+      "header": "J3",
+      "pos": 12,
+      "label": "36",
+      "gpio": 36,
+      "code": "36",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO36"
+        },
+        {
+          "type": "SPI",
+          "name": "SPIIO7"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPICLK (SCK)"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPICLK (SCK)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "psram",
+        "not-5v-tolerant"
+      ],
+      "notes": "Used by the octal PSRAM/flash on ESP32-S3-WROOM-1/1U-N8R8 and ESP32-S3-WROOM-2-N32R16V (all variants in the user guide ordering table), so not available for external use on those boards. Only free on modules with quad or no PSRAM.",
+      "verified": true
+    },
+    {
+      "id": "J3-13",
+      "header": "J3",
+      "pos": 13,
+      "label": "35",
+      "gpio": 35,
+      "code": "35",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO35"
+        },
+        {
+          "type": "SPI",
+          "name": "SPIIO6"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPID (MOSI)"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPID (MOSI)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "psram",
+        "not-5v-tolerant"
+      ],
+      "notes": "Used by the octal PSRAM/flash on ESP32-S3-WROOM-1/1U-N8R8 and ESP32-S3-WROOM-2-N32R16V (all variants in the user guide ordering table), so not available for external use on those boards. Only free on modules with quad or no PSRAM.",
+      "verified": true
+    },
+    {
+      "id": "J3-14",
+      "header": "J3",
+      "pos": 14,
+      "label": "0",
+      "gpio": 0,
+      "code": "0",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO0"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO0"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin: selects SPI boot (1, default weak pull-up) or download boot (0, together with GPIO46 = 0). Holding the BOOT button while pressing RST enters download mode (user guide).",
+      "verified": true
+    },
+    {
+      "id": "J3-15",
+      "header": "J3",
+      "pos": 15,
+      "label": "45",
+      "gpio": 45,
+      "code": "45",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO45"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin: selects the VDD_SPI (flash/PSRAM) voltage: 0 = 3.3 V (default, weak pull-down), 1 = 1.8 V, unless eFuses override it. A wrong level can stop flash/PSRAM from working.",
+      "verified": true
+    },
+    {
+      "id": "J3-16",
+      "header": "J3",
+      "pos": 16,
+      "label": "48",
+      "gpio": 48,
+      "code": "48",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO48"
+        },
+        {
+          "type": "SPI",
+          "name": "SPICLK_N_DIFF"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPICLK_N_DIFF"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Drives the RGB LED on v1.0 boards (free on v1.1). On boards with the 1.8 V ESP32-S3-WROOM-2-N32R16V module this pin works at 1.8 V, not 3.3 V (datasheet Table 2-1 note 4). The user guide calls the IO MUX function SPICLK_N; the datasheet calls it SPICLK_N_DIFF.",
+      "verified": true
+    },
+    {
+      "id": "J3-17",
+      "header": "J3",
+      "pos": 17,
+      "label": "47",
+      "gpio": 47,
+      "code": "47",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO47"
+        },
+        {
+          "type": "SPI",
+          "name": "SPICLK_P_DIFF"
+        },
+        {
+          "type": "SPI",
+          "name": "SUBSPICLK_P_DIFF"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "On boards with the 1.8 V ESP32-S3-WROOM-2-N32R16V module this pin works at 1.8 V, not 3.3 V (datasheet Table 2-1 note 4). The user guide calls the IO MUX function SPICLK_P; the datasheet calls it SPICLK_P_DIFF.",
+      "verified": true
+    },
+    {
+      "id": "J3-18",
+      "header": "J3",
+      "pos": 18,
+      "label": "21",
+      "gpio": 21,
+      "code": "21",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO21"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO21"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-19",
+      "header": "J3",
+      "pos": 19,
+      "label": "20",
+      "gpio": 20,
+      "code": "20",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO20"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO20"
+        },
+        {
+          "type": "UART",
+          "name": "U1CTS"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH9"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLK_OUT1"
+        },
+        {
+          "type": "USB",
+          "name": "USB_D+"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "usb",
+        "adc2-wifi",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Native USB D+, wired to the board's \"USB\" port (USB Serial/JTAG by default). Using it as GPIO disconnects that USB port. ADC2 cannot be used while Wi-Fi is on (datasheet). Has pull-down and high-level glitches at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J3-20",
+      "header": "J3",
+      "pos": 20,
+      "label": "19",
+      "gpio": 19,
+      "code": "19",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO19"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO19"
+        },
+        {
+          "type": "UART",
+          "name": "U1RTS"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH8"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLK_OUT2"
+        },
+        {
+          "type": "USB",
+          "name": "USB_D-"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "usb",
+        "adc2-wifi",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Native USB D-, wired to the board's \"USB\" port (USB Serial/JTAG by default). Using it as GPIO disconnects that USB port. ADC2 cannot be used while Wi-Fi is on (datasheet). Has low- and high-level glitches at power-up (datasheet Table 2-2).",
+      "verified": true
+    },
+    {
+      "id": "J3-21",
+      "header": "J3",
+      "pos": 21,
+      "label": "G",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-22",
+      "header": "J3",
+      "pos": 22,
+      "label": "G",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    }
+  ]
+}

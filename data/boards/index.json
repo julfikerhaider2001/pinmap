@@ -1,0 +1,21 @@
+{
+  "_comment": "Board manifest. Add the id (file name without .json) of every board file here, in display order.",
+  "boards": [
+    "esp32-s3-devkitc-1",
+    "esp32-devkitc-v4",
+    "esp32-devkit-v1",
+    "esp32-c3-devkitm-1",
+    "esp32-c6-devkitc-1",
+    "esp8266-nodemcu",
+    "arduino-uno-r3",
+    "arduino-nano",
+    "arduino-mega-2560",
+    "cnc-shield-v3",
+    "rpi-pico",
+    "rpi-40pin",
+    "a4988",
+    "drv8825",
+    "tb6600",
+    "as5600"
+  ]
+}

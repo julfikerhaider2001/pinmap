@@ -1,0 +1,121 @@
+{
+  "_comment": "Pin Planner part templates. kind = what the MCU pin must do: out, in, adc, pwm, i2c-sda, i2c-scl, spi-mosi, spi-miso, spi-sck, uart-tx, uart-rx. shareable = several parts may use the same pin for this signal (a bus or a common enable line). i2cAddress values come from the device datasheets cited in 'source'.",
+  "parts": [
+    {
+      "id": "stepper-driver",
+      "name": "Stepper driver (STEP/DIR/EN)",
+      "prefix": "AXIS",
+      "source": "Allegro A4988 and TI DRV8825 datasheets: STEP, DIR and active-low ENABLE inputs. TB6600-style modules use PUL/DIR/ENA.",
+      "signals": [
+        { "key": "step", "label": "STEP", "kind": "out" },
+        { "key": "dir", "label": "DIR", "kind": "out" },
+        { "key": "en", "label": "EN", "kind": "out", "shareable": true, "optional": true }
+      ]
+    },
+    {
+      "id": "as5600",
+      "name": "AS5600 magnetic encoder (I2C)",
+      "prefix": "ENC",
+      "i2cAddress": "0x36",
+      "source": "ams-OSRAM AS5600 datasheet: fixed 7-bit I2C slave address 0x36. See data/boards/as5600.json for the cited revision.",
+      "signals": [
+        { "key": "sda", "label": "SDA", "kind": "i2c-sda", "shareable": true },
+        { "key": "scl", "label": "SCL", "kind": "i2c-scl", "shareable": true },
+        { "key": "dir", "label": "DIR", "kind": "out", "optional": true },
+        { "key": "out", "label": "OUT (analog)", "kind": "adc", "optional": true }
+      ]
+    },
+    {
+      "id": "limit-switch",
+      "name": "Limit switch",
+      "prefix": "LIMIT",
+      "signals": [ { "key": "sig", "label": "Signal", "kind": "in" } ]
+    },
+    {
+      "id": "probe",
+      "name": "Probe / touch plate",
+      "prefix": "PROBE",
+      "signals": [ { "key": "sig", "label": "Signal", "kind": "in" } ]
+    },
+    {
+      "id": "spindle",
+      "name": "Spindle (enable + PWM)",
+      "prefix": "SPINDLE",
+      "signals": [
+        { "key": "en", "label": "Enable", "kind": "out" },
+        { "key": "pwm", "label": "PWM speed", "kind": "pwm", "optional": true },
+        { "key": "dir", "label": "Direction", "kind": "out", "optional": true }
+      ]
+    },
+    {
+      "id": "servo",
+      "name": "Hobby servo",
+      "prefix": "SERVO",
+      "signals": [ { "key": "sig", "label": "Signal (PWM)", "kind": "pwm" } ]
+    },
+    {
+      "id": "quad-encoder",
+      "name": "Quadrature encoder (A/B)",
+      "prefix": "QENC",
+      "signals": [
+        { "key": "a", "label": "A", "kind": "in" },
+        { "key": "b", "label": "B", "kind": "in" },
+        { "key": "z", "label": "Index (Z)", "kind": "in", "optional": true }
+      ]
+    },
+    {
+      "id": "i2c-device",
+      "name": "Generic I2C device",
+      "prefix": "I2C_DEV",
+      "editableAddress": true,
+      "signals": [
+        { "key": "sda", "label": "SDA", "kind": "i2c-sda", "shareable": true },
+        { "key": "scl", "label": "SCL", "kind": "i2c-scl", "shareable": true }
+      ]
+    },
+    {
+      "id": "spi-device",
+      "name": "Generic SPI device",
+      "prefix": "SPI_DEV",
+      "signals": [
+        { "key": "mosi", "label": "MOSI", "kind": "spi-mosi", "shareable": true },
+        { "key": "miso", "label": "MISO", "kind": "spi-miso", "shareable": true, "optional": true },
+        { "key": "sck", "label": "SCK", "kind": "spi-sck", "shareable": true },
+        { "key": "cs", "label": "CS", "kind": "out" }
+      ]
+    },
+    {
+      "id": "uart-device",
+      "name": "Generic UART device",
+      "prefix": "UART_DEV",
+      "signals": [
+        { "key": "tx", "label": "MCU TX", "kind": "uart-tx" },
+        { "key": "rx", "label": "MCU RX", "kind": "uart-rx" }
+      ]
+    },
+    {
+      "id": "digital-out",
+      "name": "Digital output (LED, relay, ...)",
+      "prefix": "OUT",
+      "signals": [ { "key": "pin", "label": "Output", "kind": "out" } ]
+    },
+    {
+      "id": "digital-in",
+      "name": "Digital input (button, sensor, ...)",
+      "prefix": "IN",
+      "signals": [ { "key": "pin", "label": "Input", "kind": "in" } ]
+    },
+    {
+      "id": "analog-in",
+      "name": "Analog input (pot, sensor, ...)",
+      "prefix": "AIN",
+      "signals": [ { "key": "pin", "label": "Analog in", "kind": "adc" } ]
+    },
+    {
+      "id": "pwm-out",
+      "name": "PWM output (fan, LED dimming, ...)",
+      "prefix": "PWM",
+      "signals": [ { "key": "pin", "label": "PWM out", "kind": "pwm" } ]
+    }
+  ]
+}

@@ -1,0 +1,1588 @@
+{
+  "id": "esp32-devkitc-v4",
+  "name": "ESP32-DevKitC V4",
+  "category": "board",
+  "family": "ESP32",
+  "mcu": "ESP32",
+  "aliases": [
+    "esp32",
+    "devkitc",
+    "devkitc-v4",
+    "esp32-devkitc",
+    "wroom-32e",
+    "wroom-32ue",
+    "esp32-wroom",
+    "espressif"
+  ],
+  "logicVoltage": 3.3,
+  "wireless": [
+    "wifi",
+    "bt",
+    "ble"
+  ],
+  "routing": {
+    "I2C": "any",
+    "SPI": "any",
+    "UART": "any",
+    "PWM": "any"
+  },
+  "codeStyle": "gpio",
+  "sources": [
+    {
+      "title": "ESP32 Series Datasheet",
+      "url": "https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf",
+      "rev": "v5.3",
+      "note": "Table 2-1 Pin Overview, Section 2.3.1 restrictions, Section 3 Boot Configurations (strapping pins), Table 4-6 peripheral pins (ADC, DAC, touch), Appendix A.1."
+    },
+    {
+      "title": "ESP32-DevKitC V4 User Guide (header blocks J2/J3)",
+      "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32/esp32-devkitc/user_guide.html",
+      "rev": "latest (fetched 2026-10-04)",
+      "note": "Pin order of J2 and J3, flash pins, GPIO16/17 WROVER note, EN/Boot buttons."
+    },
+    {
+      "title": "ESP32-WROOM-32E & ESP32-WROOM-32UE Datasheet",
+      "url": "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf",
+      "rev": "v2.1",
+      "note": "Module pin definitions (GPIO6-11 not led out; IO16 used by PSRAM on D0WDR2 variants)."
+    },
+    {
+      "title": "ESP-IDF Programming Guide: GPIO & RTC GPIO (ESP32)",
+      "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/peripherals/gpio.html",
+      "rev": "ESP-IDF v6.1",
+      "note": "Strapping pin list, ADC2 unavailable while Wi-Fi is used, GPIO34-39 input only without pull-ups, GPIO36/39 interrupt caveat."
+    }
+  ],
+  "datasheet": "https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf",
+  "verified": true,
+  "summary": "Espressif's official ESP32 development board with an ESP32-WROOM-32E (or -32UE) module, CP210x USB-serial bridge and two 19-pin headers (J2, J3).",
+  "warnings": [
+    {
+      "level": "danger",
+      "text": "All I/O is 3.3 V only. Do not connect 5 V signals directly."
+    },
+    {
+      "level": "danger",
+      "text": "D0, D1, D2, D3, CMD and CLK (GPIO6-11) belong to the SPI flash. Do not use them.",
+      "pins": [
+        "J2-16",
+        "J2-17",
+        "J2-18",
+        "J3-17",
+        "J3-18",
+        "J3-19"
+      ]
+    },
+    {
+      "level": "warn",
+      "text": "Strapping pins GPIO0, GPIO2, GPIO5, GPIO12 (MTDI) and GPIO15 (MTDO) are read at reset. External pull-ups/pull-downs on them can stop the board booting; GPIO12 HIGH at reset selects 1.8 V flash voltage.",
+      "pins": [
+        "J3-14",
+        "J3-15",
+        "J3-10",
+        "J2-13",
+        "J3-16"
+      ]
+    },
+    {
+      "level": "warn",
+      "text": "ADC2 pins (GPIO0, 2, 4, 12, 13, 14, 15, 25, 26, 27) cannot be used for analog input while Wi-Fi is on. Use ADC1 (GPIO32-39) instead.",
+      "pins": [
+        "J3-14",
+        "J3-15",
+        "J3-13",
+        "J2-13",
+        "J2-15",
+        "J2-12",
+        "J3-16",
+        "J2-9",
+        "J2-10",
+        "J2-11"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "GPIO34, 35, 36 (VP) and 39 (VN) are input only and have no internal pull-up or pull-down.",
+      "pins": [
+        "J2-3",
+        "J2-4",
+        "J2-5",
+        "J2-6"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "TX/RX (GPIO1/GPIO3) are UART0, used by the USB-serial bridge for flashing and the serial monitor.",
+      "pins": [
+        "J3-4",
+        "J3-5"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "GPIO16 and GPIO17 are reserved for PSRAM on boards built with ESP32-WROVER modules.",
+      "pins": [
+        "J3-11",
+        "J3-12"
+      ]
+    }
+  ],
+  "layout": {
+    "width": 26,
+    "height": 25,
+    "features": [
+      {
+        "type": "chip",
+        "x": 6,
+        "y": 0,
+        "w": 14,
+        "h": 11,
+        "label": "ESP32-WROOM-32E"
+      },
+      {
+        "type": "usb",
+        "x": 11,
+        "y": 21,
+        "w": 4,
+        "h": 4,
+        "label": "USB"
+      },
+      {
+        "type": "button",
+        "x": 4,
+        "y": 21,
+        "w": 3,
+        "h": 2,
+        "label": "EN"
+      },
+      {
+        "type": "button",
+        "x": 19,
+        "y": 21,
+        "w": 3,
+        "h": 2,
+        "label": "Boot"
+      }
+    ],
+    "headers": [
+      {
+        "id": "J2",
+        "x": 1,
+        "y": 3,
+        "dir": "down",
+        "count": 19,
+        "labelSide": "left"
+      },
+      {
+        "id": "J3",
+        "x": 25,
+        "y": 3,
+        "dir": "down",
+        "count": 19,
+        "labelSide": "right"
+      }
+    ]
+  },
+  "pins": [
+    {
+      "id": "J2-1",
+      "header": "J2",
+      "pos": 1,
+      "label": "3V3",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "3.3 V supply"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "3.3 V power supply.",
+      "verified": true
+    },
+    {
+      "id": "J2-2",
+      "header": "J2",
+      "pos": 2,
+      "label": "EN",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "CTRL",
+          "name": "CHIP_PU (EN / reset)"
+        }
+      ],
+      "flags": [],
+      "notes": "Chip enable / reset. Pulled HIGH; LOW resets the chip. Connected to the EN button.",
+      "verified": true
+    },
+    {
+      "id": "J2-3",
+      "header": "J2",
+      "pos": 3,
+      "label": "VP",
+      "gpio": 36,
+      "code": "36",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO36"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH0"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "SENSOR_VP"
+        }
+      ],
+      "flags": [
+        "input-only",
+        "no-pullup",
+        "not-5v-tolerant"
+      ],
+      "notes": "Input only, no internal pull-up/pull-down. ESP-IDF: do not use the GPIO36 interrupt when using ADC, or Wi-Fi/Bluetooth with sleep mode enabled.",
+      "verified": true
+    },
+    {
+      "id": "J2-4",
+      "header": "J2",
+      "pos": 4,
+      "label": "VN",
+      "gpio": 39,
+      "code": "39",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO39"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH3"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO3"
+        },
+        {
+          "type": "OTHER",
+          "name": "SENSOR_VN"
+        }
+      ],
+      "flags": [
+        "input-only",
+        "no-pullup",
+        "not-5v-tolerant"
+      ],
+      "notes": "Input only, no internal pull-up/pull-down. ESP-IDF: do not use the GPIO39 interrupt when using ADC, or Wi-Fi/Bluetooth with sleep mode enabled.",
+      "verified": true
+    },
+    {
+      "id": "J2-5",
+      "header": "J2",
+      "pos": 5,
+      "label": "IO34",
+      "gpio": 34,
+      "code": "34",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO34"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH6"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO4"
+        },
+        {
+          "type": "OTHER",
+          "name": "VDET_1"
+        }
+      ],
+      "flags": [
+        "input-only",
+        "no-pullup",
+        "not-5v-tolerant"
+      ],
+      "notes": "Input only, no internal pull-up/pull-down.",
+      "verified": true
+    },
+    {
+      "id": "J2-6",
+      "header": "J2",
+      "pos": 6,
+      "label": "IO35",
+      "gpio": 35,
+      "code": "35",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO35"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH7"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO5"
+        },
+        {
+          "type": "OTHER",
+          "name": "VDET_2"
+        }
+      ],
+      "flags": [
+        "input-only",
+        "no-pullup",
+        "not-5v-tolerant"
+      ],
+      "notes": "Input only, no internal pull-up/pull-down.",
+      "verified": true
+    },
+    {
+      "id": "J2-7",
+      "header": "J2",
+      "pos": 7,
+      "label": "IO32",
+      "gpio": 32,
+      "code": "32",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO32"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH4"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH9"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO9"
+        },
+        {
+          "type": "CLOCK",
+          "name": "XTAL_32K_P (32.768 kHz crystal input)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Safe general-purpose pin. Also the 32 kHz crystal input if an external RTC crystal is fitted.",
+      "verified": true
+    },
+    {
+      "id": "J2-8",
+      "header": "J2",
+      "pos": 8,
+      "label": "IO33",
+      "gpio": 33,
+      "code": "33",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO33"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH5"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH8"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO8"
+        },
+        {
+          "type": "CLOCK",
+          "name": "XTAL_32K_N (32.768 kHz crystal output)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Safe general-purpose pin. Also the 32 kHz crystal output if an external RTC crystal is fitted.",
+      "verified": true
+    },
+    {
+      "id": "J2-9",
+      "header": "J2",
+      "pos": 9,
+      "label": "IO25",
+      "gpio": 25,
+      "code": "25",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO25"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH8"
+        },
+        {
+          "type": "DAC",
+          "name": "DAC_1"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO6"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_RXD0"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "not-5v-tolerant"
+      ],
+      "notes": "DAC channel 1 (8-bit). ADC2 channel: no analogRead while Wi-Fi is on.",
+      "verified": true
+    },
+    {
+      "id": "J2-10",
+      "header": "J2",
+      "pos": 10,
+      "label": "IO26",
+      "gpio": 26,
+      "code": "26",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO26"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH9"
+        },
+        {
+          "type": "DAC",
+          "name": "DAC_2"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO7"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_RXD1"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "not-5v-tolerant"
+      ],
+      "notes": "DAC channel 2 (8-bit). ADC2 channel: no analogRead while Wi-Fi is on.",
+      "verified": true
+    },
+    {
+      "id": "J2-11",
+      "header": "J2",
+      "pos": 11,
+      "label": "IO27",
+      "gpio": 27,
+      "code": "27",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO27"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH7"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH7"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO17"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_RX_DV"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "not-5v-tolerant"
+      ],
+      "notes": "ADC2 channel: no analogRead while Wi-Fi is on.",
+      "verified": true
+    },
+    {
+      "id": "J2-12",
+      "header": "J2",
+      "pos": 12,
+      "label": "IO14",
+      "gpio": 14,
+      "code": "14",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO14"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH6"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH6"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO16"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTMS"
+        },
+        {
+          "type": "SPI",
+          "name": "HSPICLK (SCK)"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS2_CLK"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD_CLK"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_TXD2"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "not-5v-tolerant"
+      ],
+      "notes": "JTAG TMS. ADC2 channel: no analogRead while Wi-Fi is on.",
+      "verified": true
+    },
+    {
+      "id": "J2-13",
+      "header": "J2",
+      "pos": 13,
+      "label": "IO12",
+      "gpio": 12,
+      "code": "12",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO12"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH5"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH5"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO15"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTDI"
+        },
+        {
+          "type": "SPI",
+          "name": "HSPIQ (MISO)"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS2_DATA2"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD_DATA2"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_TXD3"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "adc2-wifi",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin MTDI: sets the flash voltage (VDD_SDIO). If it is HIGH at reset, VDD_SDIO switches to 1.8 V and a module with 3.3 V flash will not boot. Keep it LOW/floating at reset. Also JTAG TDI. ADC2 channel: no analogRead while Wi-Fi is on.",
+      "verified": true
+    },
+    {
+      "id": "J2-14",
+      "header": "J2",
+      "pos": 14,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J2-15",
+      "header": "J2",
+      "pos": 15,
+      "label": "IO13",
+      "gpio": 13,
+      "code": "13",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO13"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH4"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH4"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO14"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTCK"
+        },
+        {
+          "type": "SPI",
+          "name": "HSPID (MOSI)"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS2_DATA3"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD_DATA3"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_RX_ER"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "not-5v-tolerant"
+      ],
+      "notes": "JTAG TCK. ADC2 channel: no analogRead while Wi-Fi is on.",
+      "verified": true
+    },
+    {
+      "id": "J2-16",
+      "header": "J2",
+      "pos": 16,
+      "label": "D2",
+      "gpio": 9,
+      "code": "9",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO9"
+        },
+        {
+          "type": "SPI",
+          "name": "SPIHD (flash)"
+        },
+        {
+          "type": "UART",
+          "name": "U1RXD"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS1_DATA2"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD_DATA2"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "flash",
+        "not-5v-tolerant"
+      ],
+      "notes": "Wired to the module SPI flash pins: do not use. On ESP32-WROOM-32E/32UE the module does not lead out GPIO6-11 (module pins 17-22 are NC), so this header pin is not connected; on older modules (WROOM-32) it goes to the flash.",
+      "verified": true
+    },
+    {
+      "id": "J2-17",
+      "header": "J2",
+      "pos": 17,
+      "label": "D3",
+      "gpio": 10,
+      "code": "10",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO10"
+        },
+        {
+          "type": "SPI",
+          "name": "SPIWP (flash)"
+        },
+        {
+          "type": "UART",
+          "name": "U1TXD"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS1_DATA3"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD_DATA3"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "flash",
+        "not-5v-tolerant"
+      ],
+      "notes": "Wired to the module SPI flash pins: do not use. On ESP32-WROOM-32E/32UE the module does not lead out GPIO6-11 (module pins 17-22 are NC), so this header pin is not connected; on older modules (WROOM-32) it goes to the flash.",
+      "verified": true
+    },
+    {
+      "id": "J2-18",
+      "header": "J2",
+      "pos": 18,
+      "label": "CMD",
+      "gpio": 11,
+      "code": "11",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO11"
+        },
+        {
+          "type": "SPI",
+          "name": "SPICS0 (flash CS)"
+        },
+        {
+          "type": "UART",
+          "name": "U1RTS"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS1_CMD"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD_CMD"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "flash",
+        "not-5v-tolerant"
+      ],
+      "notes": "Wired to the module SPI flash pins: do not use. On ESP32-WROOM-32E/32UE the module does not lead out GPIO6-11 (module pins 17-22 are NC), so this header pin is not connected; on older modules (WROOM-32) it goes to the flash.",
+      "verified": true
+    },
+    {
+      "id": "J2-19",
+      "header": "J2",
+      "pos": 19,
+      "label": "5V",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "5 V supply"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "5 V power supply (USB 5 V rail).",
+      "verified": true
+    },
+    {
+      "id": "J3-1",
+      "header": "J3",
+      "pos": 1,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-2",
+      "header": "J3",
+      "pos": 2,
+      "label": "IO23",
+      "gpio": 23,
+      "code": "23",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO23"
+        },
+        {
+          "type": "SPI",
+          "name": "VSPID (MOSI)"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS1_STROBE"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Default VSPI MOSI.",
+      "verified": true
+    },
+    {
+      "id": "J3-3",
+      "header": "J3",
+      "pos": 3,
+      "label": "IO22",
+      "gpio": 22,
+      "code": "22",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO22"
+        },
+        {
+          "type": "SPI",
+          "name": "VSPIWP"
+        },
+        {
+          "type": "UART",
+          "name": "U0RTS"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_TXD1"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Commonly used as I2C SCL (Arduino default), but I2C can be routed to any output-capable GPIO.",
+      "verified": true
+    },
+    {
+      "id": "J3-4",
+      "header": "J3",
+      "pos": 4,
+      "label": "TX",
+      "gpio": 1,
+      "code": "1",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO1"
+        },
+        {
+          "type": "UART",
+          "name": "U0TXD"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLK_OUT3"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_RXD2"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "console-uart",
+        "usb",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "UART0 TX: serial console and programming port, connected to the USB-serial bridge. Prints the boot log at reset (unless MTDO is LOW).",
+      "verified": true
+    },
+    {
+      "id": "J3-5",
+      "header": "J3",
+      "pos": 5,
+      "label": "RX",
+      "gpio": 3,
+      "code": "3",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO3"
+        },
+        {
+          "type": "UART",
+          "name": "U0RXD"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLK_OUT2"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "console-uart",
+        "usb",
+        "not-5v-tolerant"
+      ],
+      "notes": "UART0 RX: serial console and programming port, connected to the USB-serial bridge.",
+      "verified": true
+    },
+    {
+      "id": "J3-6",
+      "header": "J3",
+      "pos": 6,
+      "label": "IO21",
+      "gpio": 21,
+      "code": "21",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO21"
+        },
+        {
+          "type": "SPI",
+          "name": "VSPIHD"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_TX_EN"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Commonly used as I2C SDA (Arduino default), but I2C can be routed to any output-capable GPIO.",
+      "verified": true
+    },
+    {
+      "id": "J3-7",
+      "header": "J3",
+      "pos": 7,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-8",
+      "header": "J3",
+      "pos": 8,
+      "label": "IO19",
+      "gpio": 19,
+      "code": "19",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO19"
+        },
+        {
+          "type": "SPI",
+          "name": "VSPIQ (MISO)"
+        },
+        {
+          "type": "UART",
+          "name": "U0CTS"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_TXD0"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Default VSPI MISO.",
+      "verified": true
+    },
+    {
+      "id": "J3-9",
+      "header": "J3",
+      "pos": 9,
+      "label": "IO18",
+      "gpio": 18,
+      "code": "18",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO18"
+        },
+        {
+          "type": "SPI",
+          "name": "VSPICLK (SCK)"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS1_DATA7"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Default VSPI SCK.",
+      "verified": true
+    },
+    {
+      "id": "J3-10",
+      "header": "J3",
+      "pos": 10,
+      "label": "IO5",
+      "gpio": 5,
+      "code": "5",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO5"
+        },
+        {
+          "type": "SPI",
+          "name": "VSPICS0 (CS)"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS1_DATA6"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_RX_CLK"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin: sets SDIO slave timing together with MTDO (default pull-up). Default VSPI CS.",
+      "verified": true
+    },
+    {
+      "id": "J3-11",
+      "header": "J3",
+      "pos": 11,
+      "label": "IO17",
+      "gpio": 17,
+      "code": "17",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO17"
+        },
+        {
+          "type": "UART",
+          "name": "U2TXD"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS1_DATA5"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_CLK_OUT_180"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "psram",
+        "not-5v-tolerant"
+      ],
+      "notes": "Boards fitted with an ESP32-WROVER module reserve GPIO16/17 for PSRAM (DevKitC guide). Free on ESP32-WROOM-32E boards.",
+      "verified": true
+    },
+    {
+      "id": "J3-12",
+      "header": "J3",
+      "pos": 12,
+      "label": "IO16",
+      "gpio": 16,
+      "code": "16",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO16"
+        },
+        {
+          "type": "UART",
+          "name": "U2RXD"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS1_DATA4"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_CLK_OUT"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "psram",
+        "not-5v-tolerant"
+      ],
+      "notes": "Boards fitted with an ESP32-WROVER module reserve GPIO16/17 for PSRAM (DevKitC guide). Also connected to embedded PSRAM on WROOM-32E variants with ESP32-D0WDR2-V3 (N4R2/N8R2). Free on plain WROOM-32E boards.",
+      "verified": true
+    },
+    {
+      "id": "J3-13",
+      "header": "J3",
+      "pos": 13,
+      "label": "IO4",
+      "gpio": 4,
+      "code": "4",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO4"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH0"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH0"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO10"
+        },
+        {
+          "type": "SPI",
+          "name": "HSPIHD"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS2_DATA1"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD_DATA1"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_TX_ER"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "adc2-wifi",
+        "not-5v-tolerant"
+      ],
+      "notes": "ADC2 channel: no analogRead while Wi-Fi is on.",
+      "verified": true
+    },
+    {
+      "id": "J3-14",
+      "header": "J3",
+      "pos": 14,
+      "label": "IO0",
+      "gpio": 0,
+      "code": "0",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO0"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH1"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH1"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO11"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLK_OUT1"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_TX_CLK"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        },
+        {
+          "type": "CTRL",
+          "name": "Boot (download mode)"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "adc2-wifi",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin: LOW at reset = download (flashing) mode, HIGH = normal SPI boot. Default pull-up. ADC2 channel: no analogRead while Wi-Fi is on. Connected to the Boot button on the board.",
+      "verified": true
+    },
+    {
+      "id": "J3-15",
+      "header": "J3",
+      "pos": 15,
+      "label": "IO2",
+      "gpio": 2,
+      "code": "2",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO2"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH2"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH2"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO12"
+        },
+        {
+          "type": "SPI",
+          "name": "HSPIWP"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS2_DATA0"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD_DATA0"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "adc2-wifi",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin: must be LOW or floating to enter download (flashing) mode together with GPIO0 = LOW. Default pull-down. ADC2 channel: no analogRead while Wi-Fi is on.",
+      "verified": true
+    },
+    {
+      "id": "J3-16",
+      "header": "J3",
+      "pos": 16,
+      "label": "IO15",
+      "gpio": 15,
+      "code": "15",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO15"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CH3"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH3"
+        },
+        {
+          "type": "RTC",
+          "name": "RTC_GPIO13"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTDO"
+        },
+        {
+          "type": "SPI",
+          "name": "HSPICS0 (CS)"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS2_CMD"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD_CMD"
+        },
+        {
+          "type": "OTHER",
+          "name": "EMAC_RXD3"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "adc2-wifi",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin MTDO: LOW at reset silences the boot log on U0TXD and sets SDIO slave timing (default pull-up). Also JTAG TDO. ADC2 channel: no analogRead while Wi-Fi is on.",
+      "verified": true
+    },
+    {
+      "id": "J3-17",
+      "header": "J3",
+      "pos": 17,
+      "label": "D1",
+      "gpio": 8,
+      "code": "8",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO8"
+        },
+        {
+          "type": "SPI",
+          "name": "SPID (flash MOSI)"
+        },
+        {
+          "type": "UART",
+          "name": "U2CTS"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS1_DATA1"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD_DATA1"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "flash",
+        "not-5v-tolerant"
+      ],
+      "notes": "Wired to the module SPI flash pins: do not use. On ESP32-WROOM-32E/32UE the module does not lead out GPIO6-11 (module pins 17-22 are NC), so this header pin is not connected; on older modules (WROOM-32) it goes to the flash.",
+      "verified": true
+    },
+    {
+      "id": "J3-18",
+      "header": "J3",
+      "pos": 18,
+      "label": "D0",
+      "gpio": 7,
+      "code": "7",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO7"
+        },
+        {
+          "type": "SPI",
+          "name": "SPIQ (flash MISO)"
+        },
+        {
+          "type": "UART",
+          "name": "U2RTS"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS1_DATA0"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD_DATA0"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "flash",
+        "not-5v-tolerant"
+      ],
+      "notes": "Wired to the module SPI flash pins: do not use. On ESP32-WROOM-32E/32UE the module does not lead out GPIO6-11 (module pins 17-22 are NC), so this header pin is not connected; on older modules (WROOM-32) it goes to the flash.",
+      "verified": true
+    },
+    {
+      "id": "J3-19",
+      "header": "J3",
+      "pos": 19,
+      "label": "CLK",
+      "gpio": 6,
+      "code": "6",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO6"
+        },
+        {
+          "type": "SPI",
+          "name": "SPICLK (flash SCK)"
+        },
+        {
+          "type": "UART",
+          "name": "U1CTS"
+        },
+        {
+          "type": "SDIO",
+          "name": "HS1_CLK"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD_CLK"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "flash",
+        "not-5v-tolerant"
+      ],
+      "notes": "Wired to the module SPI flash pins: do not use. On ESP32-WROOM-32E/32UE the module does not lead out GPIO6-11 (module pins 17-22 are NC), so this header pin is not connected; on older modules (WROOM-32) it goes to the flash.",
+      "verified": true
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "id": "tb6600",
+  "name": "TB6600 Stepper Driver Module (generic)",
+  "category": "module",
+  "family": "Stepper driver",
+  "mcu": "TB6600HG",
+  "aliases": ["tb6600", "tb6600hg", "tb67s109", "stepper driver", "screw terminal stepper driver", "dri0043"],
+  "logicVoltage": 5,
+  "wireless": [],
+  "routing": { "I2C": "fixed", "SPI": "fixed", "UART": "fixed", "PWM": "fixed" },
+  "codeStyle": "gpio",
+  "sources": [
+    {
+      "title": "Toshiba TB6600HG PWM Chopper-Type Bipolar Stepping Motor Driver IC (datasheet)",
+      "url": "https://toshiba.semicon-storage.com/info/TB6600HG_datasheet_en_20160610.pdf?did=14683&prodName=TB6600HG",
+      "rev": "Page footer date 2026-04-07 (file name 20160610)",
+      "note": "Chip-level facts only: operating range, input levels, minimum CLK pulse width, excitation table. It does not describe any module or its terminals."
+    },
+    {
+      "title": "DFRobot TB6600 Arduino Stepper Motor Driver (DRI0043) product page",
+      "url": "https://www.dfrobot.com/product-1547.html",
+      "rev": "Page fetched 2026-10-04",
+      "note": "Vendor page for a module sold as 'TB6600' whose specification lists 'Drive IC: TB67S109AFTG'; also 9-42 V input and 3.3-24 V control signals for that module."
+    },
+    {
+      "title": "Makerguides: TB6600 Stepper Motor Driver with Arduino Tutorial",
+      "url": "https://www.makerguides.com/tb6600-stepper-motor-driver-arduino-tutorial/",
+      "rev": "Page fetched 2026-10-04",
+      "note": "Third-party tutorial, used only for the common terminal names (ENA/DIR/PUL +/-, A/B +/-, VCC, GND). Not an official document."
+    }
+  ],
+  "datasheet": "https://toshiba.semicon-storage.com/info/TB6600HG_datasheet_en_20160610.pdf?did=14683&prodName=TB6600HG",
+  "verified": false,
+  "summary": "Generic enclosed stepper driver with optocoupled PUL/DIR/ENA inputs and screw terminals, sold under the TB6600 name. No official module datasheet exists; terminal names and ratings vary by vendor.",
+  "warnings": [
+    {
+      "level": "danger",
+      "text": "Many modules sold as 'TB6600' do not use the Toshiba TB6600HG. For example, DFRobot's 'TB6600' stepper driver (DRI0043) lists its drive IC as the TB67S109AFTG. Microstep options, current ratings and DIP-switch tables differ between chips and vendors, so check the chip and the label on your own unit."
+    },
+    {
+      "level": "danger",
+      "text": "Never connect or disconnect the motor while the module is powered. Check the supply voltage printed on your unit before wiring VCC (the TB6600HG chip's operating maximum is 42 V; absolute maximum 50 V).",
+      "pins": ["J1-7", "J1-8", "J1-9", "J1-10", "J1-12"]
+    },
+    {
+      "level": "warn",
+      "text": "Everything about the terminals comes from generic vendor material, not an official datasheet. Terminal order and names vary between makers; read the silkscreen on your module. The order shown is one common arrangement."
+    },
+    {
+      "level": "warn",
+      "text": "The PUL/DIR/ENA inputs are optocoupled on typical modules: each signal has a + and a - terminal. One common wiring ties all '-' terminals to the controller's GND and drives the '+' terminals from the controller (common cathode), or ties all '+' to the controller's supply and drives the '-' terminals (common anode). Input voltage limits depend on the vendor (DFRobot quotes 3.3-24 V for its unit); check yours. The 5 V shown as logic voltage is a typical choice, not a rated value.",
+      "pins": ["J1-1", "J1-2", "J1-3", "J1-4", "J1-5", "J1-6"]
+    },
+    {
+      "level": "info",
+      "text": "DIP switches (unverified): typical modules use SW1-SW3 for microstep and SW4-SW6 for current, printed as a table on the case. The tables differ between vendors and between TB6600HG and TB67S109 units, so use the table printed on your module. Not reproduced here."
+    },
+    {
+      "level": "info",
+      "text": "TB6600HG chip facts (Toshiba datasheet; apply only if your unit really uses this chip): Vcc operating range 8.0-42 V; output current up to 4.5 A per phase (operating max); excitation modes 1/1, 1/2 (A and B types), 1/4, 1/8, 1/16; minimum CLK high and low pulse width 2.2 us; clock frequency up to 200 kHz; logic input high 2.0-5.5 V, low up to 0.8 V; inputs have 100k pull-downs. The module's optocouplers sit in front of these inputs, so the module may need longer pulses than the chip."
+    }
+  ],
+  "layout": {
+    "width": 10,
+    "height": 25,
+    "features": [
+      { "type": "terminal", "x": 7.5, "y": 0.5, "w": 2.5, "h": 12, "label": "Signal" },
+      { "type": "terminal", "x": 7.5, "y": 12.5, "w": 2.5, "h": 12, "label": "Power / motor" },
+      { "type": "chip", "x": 1.5, "y": 8, "w": 4, "h": 8, "label": "Driver IC (heatsink)" },
+      { "type": "label", "x": 3.5, "y": 3, "label": "DIP SW1-SW6" }
+    ],
+    "headers": [
+      { "id": "J1", "x": 9, "y": 1.5, "dir": "down", "count": 12, "pitch": 2, "labelSide": "right" }
+    ]
+  },
+  "pins": [
+    {
+      "id": "J1-1", "header": "J1", "pos": 1, "label": "ENA-", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "ENA- (enable input, optocoupler -)" }],
+      "flags": [],
+      "notes": "Module terminal labelling from generic vendor documentation; no official module datasheet. Enable input, opto-isolated. The Makerguides wiring example leaves ENA+ and ENA- unconnected; check how your unit behaves.",
+      "verified": false
+    },
+    {
+      "id": "J1-2", "header": "J1", "pos": 2, "label": "ENA+", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "ENA+ (enable input, optocoupler +)" }],
+      "flags": [],
+      "notes": "Module terminal labelling from generic vendor documentation; no official module datasheet.",
+      "verified": false
+    },
+    {
+      "id": "J1-3", "header": "J1", "pos": 3, "label": "DIR-", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "DIR- (direction input, optocoupler -)" }],
+      "flags": [],
+      "notes": "Module terminal labelling from generic vendor documentation; no official module datasheet.",
+      "verified": false
+    },
+    {
+      "id": "J1-4", "header": "J1", "pos": 4, "label": "DIR+", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "DIR+ (direction input, optocoupler +)" }],
+      "flags": [],
+      "notes": "Module terminal labelling from generic vendor documentation; no official module datasheet.",
+      "verified": false
+    },
+    {
+      "id": "J1-5", "header": "J1", "pos": 5, "label": "PUL-", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "PUL- (step pulse input, optocoupler -)" }],
+      "flags": [],
+      "notes": "Module terminal labelling from generic vendor documentation; no official module datasheet.",
+      "verified": false
+    },
+    {
+      "id": "J1-6", "header": "J1", "pos": 6, "label": "PUL+", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "PUL+ (step pulse input, optocoupler +)" }],
+      "flags": [],
+      "notes": "Module terminal labelling from generic vendor documentation; no official module datasheet. Step pulse input (the chip calls it CLK).",
+      "verified": false
+    },
+    {
+      "id": "J1-7", "header": "J1", "pos": 7, "label": "B-", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "B- (coil B)" }],
+      "flags": [],
+      "notes": "Module terminal labelling from generic vendor documentation; no official module datasheet. Motor coil B.",
+      "verified": false
+    },
+    {
+      "id": "J1-8", "header": "J1", "pos": 8, "label": "B+", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "B+ (coil B)" }],
+      "flags": [],
+      "notes": "Module terminal labelling from generic vendor documentation; no official module datasheet. Motor coil B.",
+      "verified": false
+    },
+    {
+      "id": "J1-9", "header": "J1", "pos": 9, "label": "A-", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "A- (coil A)" }],
+      "flags": [],
+      "notes": "Module terminal labelling from generic vendor documentation; no official module datasheet. Motor coil A.",
+      "verified": false
+    },
+    {
+      "id": "J1-10", "header": "J1", "pos": 10, "label": "A+", "gpio": null, "code": null,
+      "functions": [{ "type": "MOTOR", "name": "A+ (coil A)" }],
+      "flags": [],
+      "notes": "Module terminal labelling from generic vendor documentation; no official module datasheet. Motor coil A.",
+      "verified": false
+    },
+    {
+      "id": "J1-11", "header": "J1", "pos": 11, "label": "GND", "gpio": null, "code": null,
+      "functions": [{ "type": "GND", "name": "GND (motor supply)" }],
+      "flags": ["ground"],
+      "notes": "Module terminal labelling from generic vendor documentation; no official module datasheet. Motor power supply ground.",
+      "verified": false
+    },
+    {
+      "id": "J1-12", "header": "J1", "pos": 12, "label": "VCC", "gpio": null, "code": null,
+      "functions": [{ "type": "POWER", "name": "VCC (motor supply)" }],
+      "flags": ["power"],
+      "notes": "Module terminal labelling from generic vendor documentation; no official module datasheet. Motor supply; vendors commonly quote 9-42 V DC. Check the rating printed on your unit.",
+      "verified": false
+    }
+  ]
+}

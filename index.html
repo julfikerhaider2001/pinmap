@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PinMap</title>
+  <meta name="description" content="Searchable, interactive pinout reference for ESP32, Arduino, Raspberry Pi and stepper driver modules, built from official datasheets.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/main.css">
+  <script>
+    // Apply the saved theme before first paint to avoid a flash.
+    try { const t = JSON.parse(localStorage.getItem('pinmap.theme')); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch {}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/boards" aria-label="PinMap home">
+      <img src="assets/favicon.svg" alt="" width="24" height="24"> PinMap
+    </a>
+    <nav class="tabs" aria-label="Main">
+      <a href="#/boards" data-tab="boards">Boards</a>
+      <a href="#/search" data-tab="search">Search</a>
+      <a href="#/planner" data-tab="planner">Pin Planner</a>
+    </nav>
+    <button class="icon-btn" id="theme-btn" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+    </button>
+  </header>
+
+  <main id="view" tabindex="-1">
+    <p class="loading">Loading board data…</p>
+  </main>
+
+  <footer class="footer">
+    Pin data is built from the official datasheets linked on each board. Items marked <span class="badge badge-unverified">unverified</span> could not be confirmed against an official source.
+    Always check your own hardware. · <a href="https://github.com/julfikerhaider2001/pinmap" id="repo-link" rel="noopener">Source on GitHub</a>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

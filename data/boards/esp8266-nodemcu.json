@@ -1,0 +1,988 @@
+{
+  "id": "esp8266-nodemcu",
+  "name": "NodeMCU DevKit v1.0 (ESP-12E)",
+  "category": "board",
+  "family": "ESP8266",
+  "mcu": "ESP8266EX",
+  "aliases": [
+    "nodemcu",
+    "esp8266",
+    "esp-12e",
+    "esp12e",
+    "nodemcu v2",
+    "nodemcu 1.0",
+    "amica",
+    "devkit v1.0",
+    "nodemcuv2"
+  ],
+  "logicVoltage": 3.3,
+  "wireless": [
+    "wifi"
+  ],
+  "routing": {
+    "I2C": "any",
+    "SPI": "fixed",
+    "UART": "fixed",
+    "PWM": "any"
+  },
+  "codeStyle": "gpio",
+  "sources": [
+    {
+      "title": "ESP8266EX Datasheet",
+      "url": "https://www.espressif.com/sites/default/files/documentation/0a-esp8266ex_datasheet_en.pdf",
+      "rev": "v7.1",
+      "note": "Table 2-1 pin definitions, boot-mode note, Chapter 4 (GPIO, SDIO, SPI/HSPI, I2C, I2S, UART, PWM, IR, ADC 0-1.0 V)."
+    },
+    {
+      "title": "NodeMCU DevKit v1.0 schematic",
+      "url": "https://github.com/nodemcu/nodemcu-devkit-v1.0/blob/master/NODEMCU_DEVKIT_V1.0.PDF",
+      "rev": "V1.0 (25/01/2015)",
+      "note": "IO connector J1/J2 nets, 12k boot pull-ups/down, 220k/100k ADC divider, LED on GPIO16, FLASH button on GPIO0, boot and deep-sleep notes."
+    },
+    {
+      "title": "NodeMCU DevKit v1.0 pin map",
+      "url": "https://github.com/nodemcu/nodemcu-devkit-v1.0/blob/master/Documents/NODEMCU_DEVKIT_V1.0_PINMAP.png",
+      "note": "Header order and D-label to GPIO mapping. (Documents/新版本管脚对应关系.txt in the same repo swaps D1/D2; the pin map image and the schematic netlist agree on D1 = GPIO5, D2 = GPIO4.)"
+    },
+    {
+      "title": "Arduino core for ESP8266: Reference and Libraries",
+      "url": "https://arduino-esp8266.readthedocs.io/en/latest/reference.html",
+      "note": "GPIO16 limits (no interrupts, INPUT_PULLDOWN_16), software PWM on pins 0-16, Wire default SDA=4/SCL=5 (libraries page)."
+    }
+  ],
+  "datasheet": "https://www.espressif.com/sites/default/files/documentation/0a-esp8266ex_datasheet_en.pdf",
+  "verified": false,
+  "summary": "Open-source ESP8266 board with an ESP-12E module (4 MB flash), CP2102 USB-serial bridge and two 15-pin headers. Silkscreen uses D-labels; code uses GPIO numbers.",
+  "warnings": [
+    {
+      "level": "danger",
+      "text": "All I/O is 3.3 V only. Do not connect 5 V signals directly."
+    },
+    {
+      "level": "warn",
+      "text": "D-labels are not GPIO numbers (e.g. D1 = GPIO5, D4 = GPIO2). In Arduino code you can write D1 or 5."
+    },
+    {
+      "level": "warn",
+      "text": "Boot pins: GPIO15 (D8) must be LOW and GPIO2 (D4) HIGH at every boot/reset/wake. GPIO0 (D3) HIGH = run, LOW = flash mode. Do not load these pins with circuits that change those levels.",
+      "pins": [
+        "J2-11",
+        "J2-5",
+        "J2-4"
+      ]
+    },
+    {
+      "level": "danger",
+      "text": "SD0-SD3, CMD and CLK (GPIO6-11) are the ESP-12E flash pins. Do not use them.",
+      "pins": [
+        "J1-4",
+        "J1-5",
+        "J1-6",
+        "J1-7",
+        "J1-8",
+        "J1-9"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "A0 has an on-board 220k/100k divider: about 0-3.2 V at the pin maps to the chip ADC 0-1.0 V range.",
+      "pins": [
+        "J1-1"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "For deep-sleep wake, connect D0 (GPIO16) to RST. GPIO16 has no interrupts and no internal pull-up.",
+      "pins": [
+        "J2-1",
+        "J1-13"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "Hardware SPI (HSPI) and UART pins are fixed. I2C and PWM are done in software and work on most GPIOs."
+    },
+    {
+      "level": "info",
+      "text": "Clones (e.g. LoLin \"V3\") use a different width, USB chip and sometimes different reserved pins. Check your board."
+    }
+  ],
+  "layout": {
+    "width": 25,
+    "height": 21,
+    "features": [
+      {
+        "type": "chip",
+        "x": 6,
+        "y": 0,
+        "w": 13,
+        "h": 9,
+        "label": "ESP-12E"
+      },
+      {
+        "type": "usb",
+        "x": 10.5,
+        "y": 18,
+        "w": 4,
+        "h": 3,
+        "label": "USB"
+      },
+      {
+        "type": "button",
+        "x": 4,
+        "y": 18,
+        "w": 3,
+        "h": 2,
+        "label": "RST"
+      },
+      {
+        "type": "button",
+        "x": 18,
+        "y": 18,
+        "w": 3,
+        "h": 2,
+        "label": "FLASH"
+      }
+    ],
+    "headers": [
+      {
+        "id": "J1",
+        "x": 1,
+        "y": 3,
+        "dir": "down",
+        "count": 15,
+        "labelSide": "left"
+      },
+      {
+        "id": "J2",
+        "x": 24,
+        "y": 3,
+        "dir": "down",
+        "count": 15,
+        "labelSide": "right"
+      }
+    ]
+  },
+  "pins": [
+    {
+      "id": "J1-1",
+      "header": "J1",
+      "pos": 1,
+      "label": "A0",
+      "gpio": null,
+      "code": "A0",
+      "functions": [
+        {
+          "type": "ADC",
+          "name": "ADC0 (TOUT)"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Arduino alias: A0. 10-bit ADC. The chip TOUT input takes 0-1.0 V; the board feeds it through a 220k/100k divider (R13/R14), so A0 accepts about 0-3.2 V. Do not exceed 3.3 V.",
+      "verified": true
+    },
+    {
+      "id": "J1-2",
+      "header": "J1",
+      "pos": 2,
+      "label": "RSV",
+      "gpio": null,
+      "code": null,
+      "functions": [],
+      "flags": [
+        "reserved"
+      ],
+      "notes": "Marked RESERVED in the official pin map. Do not use. (The schematic netlist text suggests this pad may be tied to an internal signal; not confirmed.)",
+      "verified": false
+    },
+    {
+      "id": "J1-3",
+      "header": "J1",
+      "pos": 3,
+      "label": "RSV",
+      "gpio": null,
+      "code": null,
+      "functions": [],
+      "flags": [
+        "reserved"
+      ],
+      "notes": "Marked RESERVED in the official pin map. Do not use. (The schematic netlist text suggests this pad may be tied to an internal signal; not confirmed.)",
+      "verified": false
+    },
+    {
+      "id": "J1-4",
+      "header": "J1",
+      "pos": 4,
+      "label": "SD3",
+      "gpio": 10,
+      "code": "10",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO10"
+        },
+        {
+          "type": "SDIO",
+          "name": "SDIO_DATA_3"
+        },
+        {
+          "type": "SPI",
+          "name": "SPIWP (flash)"
+        },
+        {
+          "type": "SPI",
+          "name": "HSPIWP"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "flash",
+        "not-5v-tolerant"
+      ],
+      "notes": "Wired to the SPI flash on the ESP-12E module. Do not use.",
+      "verified": true
+    },
+    {
+      "id": "J1-5",
+      "header": "J1",
+      "pos": 5,
+      "label": "SD2",
+      "gpio": 9,
+      "code": "9",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO9"
+        },
+        {
+          "type": "SDIO",
+          "name": "SDIO_DATA_2"
+        },
+        {
+          "type": "SPI",
+          "name": "SPIHD (flash)"
+        },
+        {
+          "type": "SPI",
+          "name": "HSPIHD"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "flash",
+        "not-5v-tolerant"
+      ],
+      "notes": "Wired to the SPI flash on the ESP-12E module. Do not use.",
+      "verified": true
+    },
+    {
+      "id": "J1-6",
+      "header": "J1",
+      "pos": 6,
+      "label": "SD1",
+      "gpio": 8,
+      "code": "8",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO8"
+        },
+        {
+          "type": "SDIO",
+          "name": "SDIO_DATA_1"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI_MOSI (flash MOSI)"
+        },
+        {
+          "type": "UART",
+          "name": "U1RXD"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "flash",
+        "not-5v-tolerant"
+      ],
+      "notes": "Wired to the SPI flash on the ESP-12E module. Do not use.",
+      "verified": true
+    },
+    {
+      "id": "J1-7",
+      "header": "J1",
+      "pos": 7,
+      "label": "CMD",
+      "gpio": 11,
+      "code": "11",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO11"
+        },
+        {
+          "type": "SDIO",
+          "name": "SDIO_CMD"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI_CS0 (flash CS)"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "flash",
+        "not-5v-tolerant"
+      ],
+      "notes": "Wired to the SPI flash on the ESP-12E module. Do not use.",
+      "verified": true
+    },
+    {
+      "id": "J1-8",
+      "header": "J1",
+      "pos": 8,
+      "label": "SD0",
+      "gpio": 7,
+      "code": "7",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO7"
+        },
+        {
+          "type": "SDIO",
+          "name": "SDIO_DATA_0"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI_MISO (flash MISO)"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "flash",
+        "not-5v-tolerant"
+      ],
+      "notes": "Wired to the SPI flash on the ESP-12E module. Do not use.",
+      "verified": true
+    },
+    {
+      "id": "J1-9",
+      "header": "J1",
+      "pos": 9,
+      "label": "CLK",
+      "gpio": 6,
+      "code": "6",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO6"
+        },
+        {
+          "type": "SDIO",
+          "name": "SDIO_CLK"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI_CLK (flash SCK)"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "flash",
+        "not-5v-tolerant"
+      ],
+      "notes": "Wired to the SPI flash on the ESP-12E module. Do not use.",
+      "verified": true
+    },
+    {
+      "id": "J1-10",
+      "header": "J1",
+      "pos": 10,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J1-11",
+      "header": "J1",
+      "pos": 11,
+      "label": "3V3",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "3.3 V"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "3.3 V regulator output.",
+      "verified": true
+    },
+    {
+      "id": "J1-12",
+      "header": "J1",
+      "pos": 12,
+      "label": "EN",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "CTRL",
+          "name": "CHIP_EN"
+        }
+      ],
+      "flags": [],
+      "notes": "Chip enable, pulled up to 3.3 V on the board (12k). LOW disables the chip.",
+      "verified": true
+    },
+    {
+      "id": "J1-13",
+      "header": "J1",
+      "pos": 13,
+      "label": "RST",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "CTRL",
+          "name": "EXT_RSTB (reset)"
+        }
+      ],
+      "flags": [],
+      "notes": "External reset, active LOW, pulled up on the board (12k). Connected to the RST button. Wire D0 (GPIO16) here for deep-sleep wake.",
+      "verified": true
+    },
+    {
+      "id": "J1-14",
+      "header": "J1",
+      "pos": 14,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J1-15",
+      "header": "J1",
+      "pos": 15,
+      "label": "Vin",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "VIN (5 V)"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "5 V input (shared with USB 5 V) feeding the 3.3 V regulator.",
+      "verified": true
+    },
+    {
+      "id": "J2-1",
+      "header": "J2",
+      "pos": 1,
+      "label": "D0",
+      "gpio": 16,
+      "code": "16",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO16"
+        },
+        {
+          "type": "RTC",
+          "name": "Deep-sleep wake (XPD_DCDC)"
+        },
+        {
+          "type": "LED",
+          "name": "On-board blue LED"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software, Arduino core only)",
+          "verified": false
+        }
+      ],
+      "flags": [
+        "onboard-led",
+        "not-5v-tolerant"
+      ],
+      "notes": "Arduino alias: D0 / 16. Deep-sleep wake: connect D0 to RST so GPIO16 can pull RST LOW on wake (the board leaves R10 unfitted). No interrupts (Arduino core); only an internal pull-DOWN, no pull-up (INPUT_PULLDOWN_16). The official NodeMCU pin map says: GPIO read/write only, no interrupt, PWM, I2C or OneWire. The Arduino core does allow software PWM on pins 0-16. Board blue LED (LED1) is on this pin.",
+      "verified": true
+    },
+    {
+      "id": "J2-2",
+      "header": "J2",
+      "pos": 2,
+      "label": "D1",
+      "gpio": 5,
+      "code": "5",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO5"
+        },
+        {
+          "type": "OTHER",
+          "name": "IR Rx"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Arduino alias: D1 / 5. Arduino Wire default SCL. Safe general-purpose pin.",
+      "verified": true
+    },
+    {
+      "id": "J2-3",
+      "header": "J2",
+      "pos": 3,
+      "label": "D2",
+      "gpio": 4,
+      "code": "4",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO4"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Arduino alias: D2 / 4. Arduino Wire default SDA. Safe general-purpose pin. Datasheet PWM table lists it as PWM3.",
+      "verified": true
+    },
+    {
+      "id": "J2-4",
+      "header": "J2",
+      "pos": 4,
+      "label": "D3",
+      "gpio": 0,
+      "code": "0",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO0"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI_CS2"
+        },
+        {
+          "type": "CTRL",
+          "name": "Boot mode (FLASH button)"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "not-5v-tolerant"
+      ],
+      "notes": "Arduino alias: D3 / 0. Strapping pin: HIGH at reset = run from flash, LOW = flash (download) mode. Pulled up (12k) and wired to the FLASH button on the board.",
+      "verified": true
+    },
+    {
+      "id": "J2-5",
+      "header": "J2",
+      "pos": 5,
+      "label": "D4",
+      "gpio": 2,
+      "code": "2",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO2"
+        },
+        {
+          "type": "UART",
+          "name": "U1TXD"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C_SDA"
+        },
+        {
+          "type": "I2S",
+          "name": "I2SO_WS"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "not-5v-tolerant"
+      ],
+      "notes": "Arduino alias: D4 / 2. Strapping pin: must be HIGH at boot/reset/wake. Pulled up (12k) on the board. UART1 TX (log output).",
+      "verified": true
+    },
+    {
+      "id": "J2-6",
+      "header": "J2",
+      "pos": 6,
+      "label": "3V3",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "3.3 V"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "3.3 V regulator output.",
+      "verified": true
+    },
+    {
+      "id": "J2-7",
+      "header": "J2",
+      "pos": 7,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J2-8",
+      "header": "J2",
+      "pos": 8,
+      "label": "D5",
+      "gpio": 14,
+      "code": "14",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO14"
+        },
+        {
+          "type": "SPI",
+          "name": "HSPICLK (SCK)"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C_SCL"
+        },
+        {
+          "type": "I2S",
+          "name": "I2SI_WS"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTMS"
+        },
+        {
+          "type": "OTHER",
+          "name": "IR TX"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Arduino alias: D5 / 14. HSPI clock. Datasheet PWM table lists it as PWM2.",
+      "verified": true
+    },
+    {
+      "id": "J2-9",
+      "header": "J2",
+      "pos": 9,
+      "label": "D6",
+      "gpio": 12,
+      "code": "12",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO12"
+        },
+        {
+          "type": "SPI",
+          "name": "HSPIQ (MISO)"
+        },
+        {
+          "type": "I2S",
+          "name": "I2SI_DATA"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTDI"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Arduino alias: D6 / 12. HSPI MISO. Datasheet PWM table lists it as PWM0.",
+      "verified": true
+    },
+    {
+      "id": "J2-10",
+      "header": "J2",
+      "pos": 10,
+      "label": "D7",
+      "gpio": 13,
+      "code": "13",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO13"
+        },
+        {
+          "type": "SPI",
+          "name": "HSPID (MOSI)"
+        },
+        {
+          "type": "UART",
+          "name": "U0CTS"
+        },
+        {
+          "type": "UART",
+          "name": "U0RXD (swapped, RXD2)"
+        },
+        {
+          "type": "I2S",
+          "name": "I2SI_BCK"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTCK"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Arduino alias: D7 / 13. HSPI MOSI. UART0 RX after Serial.swap() (labelled RXD2 on the pin map).",
+      "verified": true
+    },
+    {
+      "id": "J2-11",
+      "header": "J2",
+      "pos": 11,
+      "label": "D8",
+      "gpio": 15,
+      "code": "15",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO15"
+        },
+        {
+          "type": "SPI",
+          "name": "HSPICS (CS)"
+        },
+        {
+          "type": "UART",
+          "name": "U0RTS"
+        },
+        {
+          "type": "UART",
+          "name": "U0TXD (swapped, TXD2)"
+        },
+        {
+          "type": "I2S",
+          "name": "I2SO_BCK"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTDO"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "not-5v-tolerant"
+      ],
+      "notes": "Arduino alias: D8 / 15. Strapping pin (MTDO): must be LOW at boot/reset/wake. Pulled down (12k) on the board. HSPI CS. UART0 TX after Serial.swap() (TXD2). Datasheet PWM table lists it as PWM1.",
+      "verified": true
+    },
+    {
+      "id": "J2-12",
+      "header": "J2",
+      "pos": 12,
+      "label": "RX",
+      "gpio": 3,
+      "code": "3",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO3"
+        },
+        {
+          "type": "UART",
+          "name": "U0RXD"
+        },
+        {
+          "type": "I2S",
+          "name": "I2SO_DATA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "console-uart",
+        "usb",
+        "not-5v-tolerant"
+      ],
+      "notes": "Arduino alias: 3 (D9 on the official pin map). UART0 RX: serial console and programming port, connected to the CP2102 USB-serial bridge.",
+      "verified": true
+    },
+    {
+      "id": "J2-13",
+      "header": "J2",
+      "pos": 13,
+      "label": "TX",
+      "gpio": 1,
+      "code": "1",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO1"
+        },
+        {
+          "type": "UART",
+          "name": "U0TXD"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI_CS1"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM (software)"
+        }
+      ],
+      "flags": [
+        "console-uart",
+        "usb",
+        "boot-glitch",
+        "not-5v-tolerant"
+      ],
+      "notes": "Arduino alias: 1 (D10 on the official pin map). UART0 TX: serial console and programming port, connected to the CP2102 USB-serial bridge. Prints boot messages at power-up (74880 baud with 26 MHz crystal). Must not be pulled LOW during power-up.",
+      "verified": true
+    },
+    {
+      "id": "J2-14",
+      "header": "J2",
+      "pos": 14,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J2-15",
+      "header": "J2",
+      "pos": 15,
+      "label": "3V3",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "3.3 V"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "3.3 V regulator output.",
+      "verified": true
+    }
+  ]
+}

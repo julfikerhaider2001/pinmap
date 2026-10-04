@@ -1,0 +1,1086 @@
+{
+  "id": "esp32-c6-devkitc-1",
+  "name": "ESP32-C6-DevKitC-1",
+  "category": "board",
+  "family": "ESP32",
+  "mcu": "ESP32-C6",
+  "aliases": [
+    "c6",
+    "esp32c6",
+    "esp32-c6",
+    "devkitc",
+    "devkitc-1",
+    "esp32-c6-devkitc",
+    "wroom-1",
+    "esp32-c6-wroom-1",
+    "zigbee",
+    "thread",
+    "wifi6",
+    "risc-v"
+  ],
+  "logicVoltage": 3.3,
+  "wireless": [
+    "wifi",
+    "ble",
+    "zigbee",
+    "thread"
+  ],
+  "routing": {
+    "I2C": "any",
+    "SPI": "any",
+    "UART": "any",
+    "PWM": "any"
+  },
+  "codeStyle": "gpio",
+  "sources": [
+    {
+      "title": "ESP32-C6 Series Datasheet",
+      "url": "https://documentation.espressif.com/esp32-c6_datasheet_en.pdf",
+      "rev": "v1.5",
+      "note": "QFN40 IO MUX, LP IO MUX and analog function tables, strapping pins and boot mode table. (Redirected from espressif.com/sites/default/files/documentation/esp32-c6_datasheet_en.pdf.)"
+    },
+    {
+      "title": "ESP32-C6-DevKitC-1 v1.2 User Guide",
+      "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32c6/esp32-c6-devkitc-1/user_guide.html",
+      "rev": "v1.2 (esp-dev-kits latest)",
+      "note": "J1/J3 header tables, RGB LED on GPIO8, strapping pin footnote."
+    }
+  ],
+  "datasheet": "https://documentation.espressif.com/esp32-c6_datasheet_en.pdf",
+  "verified": true,
+  "summary": "Espressif entry-level RISC-V ESP32-C6 board (v1.2) with an ESP32-C6-WROOM-1(U) module (8 MB flash), Wi-Fi 6, BLE, Zigbee/Thread, two USB-C ports and an RGB LED on GPIO8.",
+  "warnings": [
+    {
+      "level": "danger",
+      "text": "3.3 V logic only. The GPIOs are not 5 V tolerant; never connect a 5 V signal to them."
+    },
+    {
+      "level": "warn",
+      "text": "Strapping pins GPIO4 (MTMS), GPIO5 (MTDI), GPIO8, GPIO9 and GPIO15 are read at reset. GPIO9 low = download mode; GPIO8 must be high for download mode and also drives the RGB LED. External pull-ups/pull-downs on them can stop the board from booting.",
+      "pins": [
+        "J1-3",
+        "J1-4",
+        "J1-9",
+        "J3-11",
+        "J3-4"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "GPIO12/GPIO13 are the native USB D-/D+ of the ESP32-C6 USB-C port. GPIO16/GPIO17 are UART0, wired to the USB-to-UART bridge.",
+      "pins": [
+        "J3-14",
+        "J3-13",
+        "J3-2",
+        "J3-3"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "The ADC (ADC1 only) is on GPIO0-6. LP GPIOs (usable in deep sleep by the LP core) are GPIO0-7.",
+      "pins": [
+        "J1-7",
+        "J1-8",
+        "J1-12",
+        "J1-13",
+        "J1-3",
+        "J1-4",
+        "J1-5"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "GPIO4-7 are the pin JTAG interface (MTMS, MTDI, MTCK, MTDO). They are free if you debug over USB Serial/JTAG.",
+      "pins": [
+        "J1-3",
+        "J1-4",
+        "J1-5",
+        "J1-6"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "J5 jumper (fitted by default) is for measuring module current. Removing it cuts the power between the module and the board peripherals (user guide)."
+    }
+  ],
+  "layout": {
+    "width": 10.2,
+    "height": 21.7,
+    "features": [
+      {
+        "type": "chip",
+        "x": 2,
+        "y": 0.4,
+        "w": 6.3,
+        "h": 7.9,
+        "label": "ESP32-C6-WROOM-1"
+      },
+      {
+        "type": "led",
+        "x": 6.7,
+        "y": 15,
+        "w": 0.8,
+        "h": 0.8,
+        "label": "RGB"
+      },
+      {
+        "type": "label",
+        "x": 3.9,
+        "y": 13.8,
+        "label": "J5"
+      },
+      {
+        "type": "button",
+        "x": 1.6,
+        "y": 17.7,
+        "w": 1.6,
+        "h": 1.2,
+        "label": "BOOT"
+      },
+      {
+        "type": "button",
+        "x": 7.1,
+        "y": 17.7,
+        "w": 1.6,
+        "h": 1.2,
+        "label": "RST"
+      },
+      {
+        "type": "usb",
+        "x": 2,
+        "y": 19.7,
+        "w": 2.8,
+        "h": 2,
+        "label": "UART"
+      },
+      {
+        "type": "usb",
+        "x": 5.5,
+        "y": 19.7,
+        "w": 2.8,
+        "h": 2,
+        "label": "USB"
+      }
+    ],
+    "headers": [
+      {
+        "id": "J1",
+        "x": 0.4,
+        "y": 2,
+        "dir": "down",
+        "count": 16,
+        "labelSide": "left"
+      },
+      {
+        "id": "J3",
+        "x": 9.8,
+        "y": 2,
+        "dir": "down",
+        "count": 16,
+        "labelSide": "right"
+      }
+    ]
+  },
+  "pins": [
+    {
+      "id": "J1-1",
+      "header": "J1",
+      "pos": 1,
+      "label": "3V3",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "3V3"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "3.3 V power supply pin (output of the on-board LDO). The board can also be powered through it (user guide power option).",
+      "verified": true
+    },
+    {
+      "id": "J1-2",
+      "header": "J1",
+      "pos": 2,
+      "label": "RST",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "CTRL",
+          "name": "CHIP_PU"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Chip enable (CHIP_PU). High enables the chip, low disables it (user guide). The Reset button restarts the system.",
+      "verified": true
+    },
+    {
+      "id": "J1-3",
+      "header": "J1",
+      "pos": 3,
+      "label": "4",
+      "gpio": 4,
+      "code": "4",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO4"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTMS"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO4"
+        },
+        {
+          "type": "UART",
+          "name": "LP_UART_RXD"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH4"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIHD (HOLD)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin: with the other of MTMS/MTDI, selects the SDIO sampling/driving clock edge. Floating by default. JTAG MTMS. Free to use if you debug over USB Serial/JTAG (GPIO12/13) instead of pin JTAG.",
+      "verified": true
+    },
+    {
+      "id": "J1-4",
+      "header": "J1",
+      "pos": 4,
+      "label": "5",
+      "gpio": 5,
+      "code": "5",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO5"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTDI"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO5"
+        },
+        {
+          "type": "UART",
+          "name": "LP_UART_TXD"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH5"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIWP (WP)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin: with the other of MTMS/MTDI, selects the SDIO sampling/driving clock edge. Floating by default. JTAG MTDI. Free to use if you debug over USB Serial/JTAG (GPIO12/13) instead of pin JTAG.",
+      "verified": true
+    },
+    {
+      "id": "J1-5",
+      "header": "J1",
+      "pos": 5,
+      "label": "6",
+      "gpio": 6,
+      "code": "6",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO6"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTCK"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO6"
+        },
+        {
+          "type": "I2C",
+          "name": "LP_I2C_SDA"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH6"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPICLK (SCK)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "JTAG MTCK. Free to use if you debug over USB Serial/JTAG (GPIO12/13) instead of pin JTAG.",
+      "verified": true
+    },
+    {
+      "id": "J1-6",
+      "header": "J1",
+      "pos": 6,
+      "label": "7",
+      "gpio": 7,
+      "code": "7",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO7"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTDO"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO7"
+        },
+        {
+          "type": "I2C",
+          "name": "LP_I2C_SCL"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPID (MOSI)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "JTAG MTDO. Free to use if you debug over USB Serial/JTAG (GPIO12/13) instead of pin JTAG.",
+      "verified": true
+    },
+    {
+      "id": "J1-7",
+      "header": "J1",
+      "pos": 7,
+      "label": "0",
+      "gpio": 0,
+      "code": "0",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO0"
+        },
+        {
+          "type": "CLOCK",
+          "name": "XTAL_32K_P"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO0"
+        },
+        {
+          "type": "UART",
+          "name": "LP_UART_DTRN"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH0"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Can also take an external 32 kHz crystal (XTAL_32K_P).",
+      "verified": true
+    },
+    {
+      "id": "J1-8",
+      "header": "J1",
+      "pos": 8,
+      "label": "1",
+      "gpio": 1,
+      "code": "1",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO1"
+        },
+        {
+          "type": "CLOCK",
+          "name": "XTAL_32K_N"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO1"
+        },
+        {
+          "type": "UART",
+          "name": "LP_UART_DSRN"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH1"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Can also take an external 32 kHz crystal (XTAL_32K_N).",
+      "verified": true
+    },
+    {
+      "id": "J1-9",
+      "header": "J1",
+      "pos": 9,
+      "label": "8",
+      "gpio": 8,
+      "code": "8",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO8"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "onboard-led",
+        "not-5v-tolerant"
+      ],
+      "notes": "Drives the addressable RGB LED. Strapping pin: must be high at reset to enter download boot (with GPIO9 low); also controls ROM log printing when set by eFuse. Floating by default.",
+      "verified": true
+    },
+    {
+      "id": "J1-10",
+      "header": "J1",
+      "pos": 10,
+      "label": "10",
+      "gpio": 10,
+      "code": "10",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO10"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J1-11",
+      "header": "J1",
+      "pos": 11,
+      "label": "11",
+      "gpio": 11,
+      "code": "11",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO11"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J1-12",
+      "header": "J1",
+      "pos": 12,
+      "label": "2",
+      "gpio": 2,
+      "code": "2",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO2"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO2"
+        },
+        {
+          "type": "UART",
+          "name": "LP_UART_RTSN"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH2"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPIQ (MISO)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J1-13",
+      "header": "J1",
+      "pos": 13,
+      "label": "3",
+      "gpio": 3,
+      "code": "3",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO3"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO3"
+        },
+        {
+          "type": "UART",
+          "name": "LP_UART_CTSN"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CH3"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J1-14",
+      "header": "J1",
+      "pos": 14,
+      "label": "5V",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "5V"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "5 V power supply pin. The board can be powered through it (user guide power option); the on-board LDO converts 5 V to 3.3 V. Never connect 5 V to a GPIO.",
+      "verified": true
+    },
+    {
+      "id": "J1-15",
+      "header": "J1",
+      "pos": 15,
+      "label": "G",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J1-16",
+      "header": "J1",
+      "pos": 16,
+      "label": "NC",
+      "gpio": null,
+      "code": null,
+      "functions": [],
+      "flags": [
+        "nc"
+      ],
+      "notes": "No connection (user guide).",
+      "verified": true
+    },
+    {
+      "id": "J3-1",
+      "header": "J3",
+      "pos": 1,
+      "label": "G",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-2",
+      "header": "J3",
+      "pos": 2,
+      "label": "TX",
+      "gpio": 16,
+      "code": "16",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO16"
+        },
+        {
+          "type": "UART",
+          "name": "U0TXD"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPICS0 (CS)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "console-uart",
+        "not-5v-tolerant"
+      ],
+      "notes": "UART0 TX: default serial console, wired to the on-board USB-to-UART bridge. ROM boot messages are printed here by default.",
+      "verified": true
+    },
+    {
+      "id": "J3-3",
+      "header": "J3",
+      "pos": 3,
+      "label": "RX",
+      "gpio": 17,
+      "code": "17",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO17"
+        },
+        {
+          "type": "UART",
+          "name": "U0RXD"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPICS1 (CS)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "console-uart",
+        "not-5v-tolerant"
+      ],
+      "notes": "UART0 RX: default serial console, wired to the on-board USB-to-UART bridge.",
+      "verified": true
+    },
+    {
+      "id": "J3-4",
+      "header": "J3",
+      "pos": 4,
+      "label": "15",
+      "gpio": 15,
+      "code": "15",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO15"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin: selects the JTAG signal source during early boot (with eFuses). Floating by default.",
+      "verified": true
+    },
+    {
+      "id": "J3-5",
+      "header": "J3",
+      "pos": 5,
+      "label": "23",
+      "gpio": 23,
+      "code": "23",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO23"
+        },
+        {
+          "type": "SDIO",
+          "name": "SDIO_DATA3"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-6",
+      "header": "J3",
+      "pos": 6,
+      "label": "22",
+      "gpio": 22,
+      "code": "22",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO22"
+        },
+        {
+          "type": "SDIO",
+          "name": "SDIO_DATA2"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-7",
+      "header": "J3",
+      "pos": 7,
+      "label": "21",
+      "gpio": 21,
+      "code": "21",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO21"
+        },
+        {
+          "type": "SDIO",
+          "name": "SDIO_DATA1"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPICS5 (CS)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-8",
+      "header": "J3",
+      "pos": 8,
+      "label": "20",
+      "gpio": 20,
+      "code": "20",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO20"
+        },
+        {
+          "type": "SDIO",
+          "name": "SDIO_DATA0"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPICS4 (CS)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-9",
+      "header": "J3",
+      "pos": 9,
+      "label": "19",
+      "gpio": 19,
+      "code": "19",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO19"
+        },
+        {
+          "type": "SDIO",
+          "name": "SDIO_CLK"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPICS3 (CS)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-10",
+      "header": "J3",
+      "pos": 10,
+      "label": "18",
+      "gpio": 18,
+      "code": "18",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO18"
+        },
+        {
+          "type": "SDIO",
+          "name": "SDIO_CMD"
+        },
+        {
+          "type": "SPI",
+          "name": "FSPICS2 (CS)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-11",
+      "header": "J3",
+      "pos": 11,
+      "label": "9",
+      "gpio": 9,
+      "code": "9",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO9"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin: boot mode. Default weak pull-up = SPI boot; held low at reset = download boot. Holding the Boot button while pressing Reset enters download mode (user guide).",
+      "verified": true
+    },
+    {
+      "id": "J3-12",
+      "header": "J3",
+      "pos": 12,
+      "label": "G",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-13",
+      "header": "J3",
+      "pos": 13,
+      "label": "13",
+      "gpio": 13,
+      "code": "13",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO13"
+        },
+        {
+          "type": "USB",
+          "name": "USB_D+"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "usb",
+        "not-5v-tolerant"
+      ],
+      "notes": "Native USB D+, wired to the board's \"ESP32-C6 USB Type-C Port\" (USB Serial/JTAG by default). Using it as GPIO disconnects that port.",
+      "verified": true
+    },
+    {
+      "id": "J3-14",
+      "header": "J3",
+      "pos": 14,
+      "label": "12",
+      "gpio": 12,
+      "code": "12",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO12"
+        },
+        {
+          "type": "USB",
+          "name": "USB_D-"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "usb",
+        "not-5v-tolerant"
+      ],
+      "notes": "Native USB D-, wired to the board's \"ESP32-C6 USB Type-C Port\" (USB Serial/JTAG by default). Using it as GPIO disconnects that port.",
+      "verified": true
+    },
+    {
+      "id": "J3-15",
+      "header": "J3",
+      "pos": 15,
+      "label": "G",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "J3-16",
+      "header": "J3",
+      "pos": 16,
+      "label": "NC",
+      "gpio": null,
+      "code": null,
+      "functions": [],
+      "flags": [
+        "nc"
+      ],
+      "notes": "No connection (user guide).",
+      "verified": true
+    }
+  ]
+}

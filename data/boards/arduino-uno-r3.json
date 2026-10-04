@@ -1,0 +1,1112 @@
+{
+  "id": "arduino-uno-r3",
+  "name": "Arduino Uno Rev3",
+  "category": "board",
+  "family": "Arduino",
+  "mcu": "ATmega328P",
+  "aliases": [
+    "uno",
+    "uno r3",
+    "arduino uno",
+    "atmega328p",
+    "a000066",
+    "uno rev3"
+  ],
+  "logicVoltage": 5,
+  "wireless": [],
+  "routing": {
+    "I2C": "fixed",
+    "SPI": "fixed",
+    "UART": "fixed",
+    "PWM": "fixed"
+  },
+  "codeStyle": "arduino",
+  "sources": [
+    {
+      "title": "Arduino UNO R3 product reference manual (datasheet), SKU A000066",
+      "url": "https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf",
+      "rev": "Revision 3 (25/04/2024)",
+      "note": "Connector tables JANALOG and JDIGITAL, section 5."
+    },
+    {
+      "title": "Arduino UNO R3 full pinout, SKU A000066",
+      "url": "https://docs.arduino.cc/resources/pinouts/A000066-full-pinout.pdf",
+      "rev": "Last update 6 Oct 2022",
+      "note": "Port, timer, interrupt and ICSP mapping; 20 mA per I/O pin, 50 mA on 3.3V, VIN 6-20 V."
+    },
+    {
+      "title": "Arduino UNO R3 product page",
+      "url": "https://docs.arduino.cc/hardware/uno-rev3/"
+    },
+    {
+      "title": "Microchip ATmega48A/PA/88A/PA/168A/PA/328/P datasheet (port alternate functions, Tables 14-3/14-6/14-9; absolute maximum ratings, section 30.1)",
+      "url": "https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf",
+      "rev": "DS40002061B (2020)"
+    },
+    {
+      "title": "Arduino Language Reference: attachInterrupt() (interrupt-capable pins and int.N to pin table)",
+      "url": "https://docs.arduino.cc/language-reference/en/functions/external-interrupts/attachInterrupt/",
+      "note": "Content read from the official source file github.com/arduino/reference-en, Language/Functions/External Interrupts/attachInterrupt.adoc (master)."
+    },
+    {
+      "title": "Arduino Language Reference: analogWrite() (PWM pins and frequencies per board)",
+      "url": "https://docs.arduino.cc/language-reference/en/functions/analog-io/analogWrite/",
+      "note": "Content read from the official source file github.com/arduino/reference-en, Language/Functions/Analog IO/analogWrite.adoc (master)."
+    },
+    {
+      "title": "ArduinoCore-avr variants/standard/pins_arduino.h (Arduino pin numbers A0=14 ... A7=21, SPI/I2C pins, LED_BUILTIN)",
+      "url": "https://github.com/arduino/ArduinoCore-avr/blob/master/variants/standard/pins_arduino.h",
+      "rev": "master"
+    }
+  ],
+  "datasheet": "https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf",
+  "verified": true,
+  "summary": "The classic 5 V Arduino: ATmega328P at 16 MHz, 14 digital I/O (6 PWM), 6 analog inputs, ATmega16U2 USB-serial bridge.",
+  "warnings": [
+    {
+      "level": "info",
+      "text": "All I/O on this board is native 5 V logic: the ATmega328P runs from 5 V, so its pins output 5 V and accept 0 to 5 V (absolute max VCC + 0.5 V). They are not \"5 V tolerant\" pins, they simply are 5 V pins. Connecting a 3.3 V-only device directly to an output pin can damage it; use a level shifter."
+    },
+    {
+      "level": "warn",
+      "text": "Pins 0 (RX) and 1 (TX) are shared with the USB-serial chip. Anything connected to them can block sketch uploads and Serial Monitor; disconnect it while uploading.",
+      "pins": [
+        "JD1-1",
+        "JD1-2"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "A4 and A5 are the I2C pins SDA and SCL. The SDA/SCL pins next to AREF are the same two signals, so I2C uses up A4 and A5.",
+      "pins": [
+        "JA-5",
+        "JA-6",
+        "JD2-9",
+        "JD2-10"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "Hardware SPI is on 10 (SS), 11 (MOSI), 12 (MISO) and 13 (SCK), and also on the 6-pin ICSP header.",
+      "pins": [
+        "JD2-3",
+        "JD2-4",
+        "JD2-5",
+        "JD2-6"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "Only pins 2 and 3 have external interrupts (INT0/INT1) for attachInterrupt(). Every I/O pin also has a pin-change interrupt (PCINT), which needs direct register code or a library.",
+      "pins": [
+        "JD1-3",
+        "JD1-4"
+      ]
+    },
+    {
+      "level": "warn",
+      "text": "Current limits: the ATmega328P absolute maximum is 40 mA DC per I/O pin and 200 mA through the VCC and GND pins (Microchip DS40002061B, Absolute Maximum Ratings). The datasheet specifies output levels only up to its 20 mA test condition, and Arduino's official pinout gives 20 mA as the maximum per I/O pin, so design for 20 mA or less per pin. The datasheet also limits the summed current of each port group (see its DC characteristics notes)."
+    }
+  ],
+  "layout": {
+    "width": 27,
+    "height": 21,
+    "features": [
+      {
+        "type": "usb",
+        "x": -1,
+        "y": 3,
+        "w": 6,
+        "h": 5,
+        "label": "USB-B"
+      },
+      {
+        "type": "jack",
+        "x": -1,
+        "y": 14,
+        "w": 5.5,
+        "h": 4.5,
+        "label": "DC jack"
+      },
+      {
+        "type": "button",
+        "x": 1,
+        "y": 0.5,
+        "w": 2,
+        "h": 2,
+        "label": "RESET"
+      },
+      {
+        "type": "chip",
+        "x": 7,
+        "y": 6,
+        "w": 3,
+        "h": 3,
+        "label": "ATmega16U2"
+      },
+      {
+        "type": "chip",
+        "x": 11,
+        "y": 13,
+        "w": 14,
+        "h": 4,
+        "label": "ATmega328P"
+      },
+      {
+        "type": "led",
+        "x": 15,
+        "y": 3,
+        "w": 1,
+        "h": 0.6,
+        "label": "L"
+      },
+      {
+        "type": "label",
+        "x": 24,
+        "y": 8.5,
+        "label": "ICSP"
+      }
+    ],
+    "headers": [
+      {
+        "id": "JD2",
+        "x": 16.4,
+        "y": 1,
+        "dir": "left",
+        "count": 10,
+        "labelSide": "top"
+      },
+      {
+        "id": "JD1",
+        "x": 25,
+        "y": 1,
+        "dir": "left",
+        "count": 8,
+        "labelSide": "top"
+      },
+      {
+        "id": "JP",
+        "x": 11,
+        "y": 20,
+        "dir": "right",
+        "count": 8,
+        "labelSide": "bottom"
+      },
+      {
+        "id": "JA",
+        "x": 20,
+        "y": 20,
+        "dir": "right",
+        "count": 6,
+        "labelSide": "bottom"
+      },
+      {
+        "id": "ICSP1",
+        "x": 26,
+        "y": 10,
+        "dir": "left",
+        "count": 3,
+        "labelSide": "top"
+      },
+      {
+        "id": "ICSP2",
+        "x": 26,
+        "y": 11,
+        "dir": "left",
+        "count": 3,
+        "labelSide": "bottom"
+      }
+    ]
+  },
+  "pins": [
+    {
+      "id": "JD1-1",
+      "header": "JD1",
+      "pos": 1,
+      "label": "0 (RX)",
+      "gpio": 0,
+      "code": "0",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PD0"
+        },
+        {
+          "type": "UART",
+          "name": "RX0 (USART0 RXD)"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT16"
+        }
+      ],
+      "flags": [
+        "console-uart",
+        "usb"
+      ],
+      "notes": "Serial RX. Wired (through a resistor) to the ATmega16U2 USB-serial chip, used for Serial and sketch upload. Avoid driving it from other devices while USB is used.",
+      "verified": true
+    },
+    {
+      "id": "JD1-2",
+      "header": "JD1",
+      "pos": 2,
+      "label": "1 (TX)",
+      "gpio": 1,
+      "code": "1",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PD1"
+        },
+        {
+          "type": "UART",
+          "name": "TX0 (USART0 TXD)"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT17"
+        }
+      ],
+      "flags": [
+        "console-uart",
+        "usb"
+      ],
+      "notes": "Serial TX. Wired (through a resistor) to the ATmega16U2 USB-serial chip, used for Serial and sketch upload. Extra loads here can break uploading.",
+      "verified": true
+    },
+    {
+      "id": "JD1-3",
+      "header": "JD1",
+      "pos": 3,
+      "label": "2",
+      "gpio": 2,
+      "code": "2",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PD2"
+        },
+        {
+          "type": "INT",
+          "name": "INT0 (attachInterrupt 0)"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT18"
+        }
+      ],
+      "flags": [],
+      "notes": "External interrupt INT0: attachInterrupt(digitalPinToInterrupt(2), ...).",
+      "verified": true
+    },
+    {
+      "id": "JD1-4",
+      "header": "JD1",
+      "pos": 4,
+      "label": "~3",
+      "gpio": 3,
+      "code": "3",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PD3"
+        },
+        {
+          "type": "PWM",
+          "name": "OC2B"
+        },
+        {
+          "type": "INT",
+          "name": "INT1 (attachInterrupt 1)"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT19"
+        }
+      ],
+      "flags": [],
+      "notes": "PWM (~) on Timer2 output B, about 490 Hz. External interrupt INT1: attachInterrupt(digitalPinToInterrupt(3), ...).",
+      "verified": true
+    },
+    {
+      "id": "JD1-5",
+      "header": "JD1",
+      "pos": 5,
+      "label": "4",
+      "gpio": 4,
+      "code": "4",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PD4"
+        },
+        {
+          "type": "TIMER",
+          "name": "T0 (Timer0 clock input)"
+        },
+        {
+          "type": "CLOCK",
+          "name": "XCK (USART external clock)"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT20"
+        }
+      ],
+      "flags": [],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "JD1-6",
+      "header": "JD1",
+      "pos": 6,
+      "label": "~5",
+      "gpio": 5,
+      "code": "5",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PD5"
+        },
+        {
+          "type": "PWM",
+          "name": "OC0B"
+        },
+        {
+          "type": "TIMER",
+          "name": "T1 (Timer1 clock input)"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT21"
+        }
+      ],
+      "flags": [],
+      "notes": "PWM (~) on Timer0 output B, about 980 Hz. Timer0 also drives millis()/delay().",
+      "verified": true
+    },
+    {
+      "id": "JD1-7",
+      "header": "JD1",
+      "pos": 7,
+      "label": "~6",
+      "gpio": 6,
+      "code": "6",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PD6"
+        },
+        {
+          "type": "PWM",
+          "name": "OC0A"
+        },
+        {
+          "type": "ANALOG_CMP",
+          "name": "AIN0 (comparator + input)"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT22"
+        }
+      ],
+      "flags": [],
+      "notes": "PWM (~) on Timer0 output A, about 980 Hz. Timer0 also drives millis()/delay().",
+      "verified": true
+    },
+    {
+      "id": "JD1-8",
+      "header": "JD1",
+      "pos": 8,
+      "label": "7",
+      "gpio": 7,
+      "code": "7",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PD7"
+        },
+        {
+          "type": "ANALOG_CMP",
+          "name": "AIN1 (comparator - input)"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT23"
+        }
+      ],
+      "flags": [],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "JD2-1",
+      "header": "JD2",
+      "pos": 1,
+      "label": "8",
+      "gpio": 8,
+      "code": "8",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PB0"
+        },
+        {
+          "type": "TIMER",
+          "name": "ICP1 (Timer1 input capture)"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLKO (system clock output)"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT0"
+        }
+      ],
+      "flags": [],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "JD2-2",
+      "header": "JD2",
+      "pos": 2,
+      "label": "~9",
+      "gpio": 9,
+      "code": "9",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PB1"
+        },
+        {
+          "type": "PWM",
+          "name": "OC1A"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT1"
+        }
+      ],
+      "flags": [],
+      "notes": "PWM (~) on Timer1 output A, about 490 Hz. The Servo library uses Timer1 and disables PWM on 9 and 10.",
+      "verified": true
+    },
+    {
+      "id": "JD2-3",
+      "header": "JD2",
+      "pos": 3,
+      "label": "~10",
+      "gpio": 10,
+      "code": "10",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PB2"
+        },
+        {
+          "type": "PWM",
+          "name": "OC1B"
+        },
+        {
+          "type": "SPI",
+          "name": "SS"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT2"
+        }
+      ],
+      "flags": [],
+      "notes": "PWM (~) on Timer1 output B. Hardware SPI SS. Keep it an OUTPUT when the board is SPI master, or SPI can drop into slave mode.",
+      "verified": true
+    },
+    {
+      "id": "JD2-4",
+      "header": "JD2",
+      "pos": 4,
+      "label": "~11",
+      "gpio": 11,
+      "code": "11",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PB3"
+        },
+        {
+          "type": "PWM",
+          "name": "OC2A"
+        },
+        {
+          "type": "SPI",
+          "name": "MOSI (COPI)"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT3"
+        }
+      ],
+      "flags": [],
+      "notes": "PWM (~) on Timer2 output A. Hardware SPI MOSI, also on ICSP pin 4.",
+      "verified": true
+    },
+    {
+      "id": "JD2-5",
+      "header": "JD2",
+      "pos": 5,
+      "label": "12",
+      "gpio": 12,
+      "code": "12",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PB4"
+        },
+        {
+          "type": "SPI",
+          "name": "MISO (CIPO)"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT4"
+        }
+      ],
+      "flags": [],
+      "notes": "Hardware SPI MISO, also on ICSP pin 1.",
+      "verified": true
+    },
+    {
+      "id": "JD2-6",
+      "header": "JD2",
+      "pos": 6,
+      "label": "13",
+      "gpio": 13,
+      "code": "13",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PB5"
+        },
+        {
+          "type": "SPI",
+          "name": "SCK"
+        },
+        {
+          "type": "LED",
+          "name": "LED_BUILTIN (L)"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT5"
+        }
+      ],
+      "flags": [
+        "onboard-led"
+      ],
+      "notes": "Hardware SPI SCK, also on ICSP pin 3. The onboard \"L\" LED is connected here, so it lights when the pin is HIGH and loads the pin slightly.",
+      "verified": true
+    },
+    {
+      "id": "JD2-7",
+      "header": "JD2",
+      "pos": 7,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "JD2-8",
+      "header": "JD2",
+      "pos": 8,
+      "label": "AREF",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "OTHER",
+          "name": "AREF (ADC reference voltage input)"
+        }
+      ],
+      "flags": [],
+      "notes": "Analog reference input for the ADC (used with analogReference(EXTERNAL)). Not an I/O pin.",
+      "verified": true
+    },
+    {
+      "id": "JD2-9",
+      "header": "JD2",
+      "pos": 9,
+      "label": "SDA",
+      "gpio": 18,
+      "code": "SDA",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PC4"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA"
+        }
+      ],
+      "flags": [],
+      "notes": "Duplicate of A4/SDA (same pin, wired together on the board). Do not use A4 for anything else when this is in use.",
+      "verified": true
+    },
+    {
+      "id": "JD2-10",
+      "header": "JD2",
+      "pos": 10,
+      "label": "SCL",
+      "gpio": 19,
+      "code": "SCL",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PC5"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL"
+        }
+      ],
+      "flags": [],
+      "notes": "Duplicate of A5/SCL (same pin, wired together on the board). Do not use A5 for anything else when this is in use.",
+      "verified": true
+    },
+    {
+      "id": "JP-1",
+      "header": "JP",
+      "pos": 1,
+      "label": "NC",
+      "gpio": null,
+      "code": null,
+      "functions": [],
+      "flags": [
+        "nc"
+      ],
+      "notes": "Not connected (reserved by the R3 header layout).",
+      "verified": true
+    },
+    {
+      "id": "JP-2",
+      "header": "JP",
+      "pos": 2,
+      "label": "IOREF",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "IOREF"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "Tells shields the board I/O voltage. Connected to 5 V on the Uno.",
+      "verified": true
+    },
+    {
+      "id": "JP-3",
+      "header": "JP",
+      "pos": 3,
+      "label": "RESET",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "CTRL",
+          "name": "RESET"
+        }
+      ],
+      "flags": [],
+      "notes": "Pull LOW to reset the microcontroller.",
+      "verified": true
+    },
+    {
+      "id": "JP-4",
+      "header": "JP",
+      "pos": 4,
+      "label": "3.3V",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "+3V3"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "3.3 V output from the onboard regulator. Maximum 50 mA (official pinout).",
+      "verified": true
+    },
+    {
+      "id": "JP-5",
+      "header": "JP",
+      "pos": 5,
+      "label": "5V",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "+5V"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "Regulated 5 V rail (from USB or the onboard regulator). Feeding power in here bypasses the regulator.",
+      "verified": true
+    },
+    {
+      "id": "JP-6",
+      "header": "JP",
+      "pos": 6,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "JP-7",
+      "header": "JP",
+      "pos": 7,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "",
+      "verified": true
+    },
+    {
+      "id": "JP-8",
+      "header": "JP",
+      "pos": 8,
+      "label": "VIN",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "VIN"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "Input to the onboard regulator, 6-20 V per the official pinout (same supply as the barrel jack).",
+      "verified": true
+    },
+    {
+      "id": "JA-1",
+      "header": "JA",
+      "pos": 1,
+      "label": "A0",
+      "gpio": 14,
+      "code": "A0",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PC0"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC0"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT8"
+        }
+      ],
+      "flags": [],
+      "notes": "Analog input A0 (ADC channel 0); also usable as digital pin 14.",
+      "verified": true
+    },
+    {
+      "id": "JA-2",
+      "header": "JA",
+      "pos": 2,
+      "label": "A1",
+      "gpio": 15,
+      "code": "A1",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PC1"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT9"
+        }
+      ],
+      "flags": [],
+      "notes": "Analog input A1 (ADC channel 1); also usable as digital pin 15.",
+      "verified": true
+    },
+    {
+      "id": "JA-3",
+      "header": "JA",
+      "pos": 3,
+      "label": "A2",
+      "gpio": 16,
+      "code": "A2",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PC2"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT10"
+        }
+      ],
+      "flags": [],
+      "notes": "Analog input A2 (ADC channel 2); also usable as digital pin 16.",
+      "verified": true
+    },
+    {
+      "id": "JA-4",
+      "header": "JA",
+      "pos": 4,
+      "label": "A3",
+      "gpio": 17,
+      "code": "A3",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PC3"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC3"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT11"
+        }
+      ],
+      "flags": [],
+      "notes": "Analog input A3 (ADC channel 3); also usable as digital pin 17.",
+      "verified": true
+    },
+    {
+      "id": "JA-5",
+      "header": "JA",
+      "pos": 5,
+      "label": "A4",
+      "gpio": 18,
+      "code": "A4",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PC4"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC4"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT12"
+        }
+      ],
+      "flags": [],
+      "notes": "Analog input A4 (ADC channel 4); also usable as digital pin 18. Hardware I2C SDA (Wire library). Same signal as the SDA pin on the digital header. Using I2C takes this pin away from analog/digital use.",
+      "verified": true
+    },
+    {
+      "id": "JA-6",
+      "header": "JA",
+      "pos": 6,
+      "label": "A5",
+      "gpio": 19,
+      "code": "A5",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PC5"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC5"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL"
+        },
+        {
+          "type": "INT",
+          "name": "PCINT13"
+        }
+      ],
+      "flags": [],
+      "notes": "Analog input A5 (ADC channel 5); also usable as digital pin 19. Hardware I2C SCL (Wire library). Same signal as the SCL pin on the digital header. Using I2C takes this pin away from analog/digital use.",
+      "verified": true
+    },
+    {
+      "id": "ICSP1-1",
+      "header": "ICSP1",
+      "pos": 1,
+      "label": "CIPO",
+      "gpio": 12,
+      "code": "MISO",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PB4"
+        },
+        {
+          "type": "SPI",
+          "name": "MISO (CIPO)"
+        }
+      ],
+      "flags": [],
+      "notes": "ICSP pin 1. Same signal as digital pin 12.",
+      "verified": true
+    },
+    {
+      "id": "ICSP1-2",
+      "header": "ICSP1",
+      "pos": 2,
+      "label": "SCK",
+      "gpio": 13,
+      "code": "SCK",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PB5"
+        },
+        {
+          "type": "SPI",
+          "name": "SCK"
+        }
+      ],
+      "flags": [],
+      "notes": "ICSP pin 3. Same signal as digital pin 13 (onboard LED).",
+      "verified": true
+    },
+    {
+      "id": "ICSP1-3",
+      "header": "ICSP1",
+      "pos": 3,
+      "label": "RESET",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "CTRL",
+          "name": "RESET"
+        }
+      ],
+      "flags": [],
+      "notes": "ICSP pin 5. Board reset.",
+      "verified": true
+    },
+    {
+      "id": "ICSP2-1",
+      "header": "ICSP2",
+      "pos": 1,
+      "label": "+5V",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "+5V"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "ICSP pin 2.",
+      "verified": true
+    },
+    {
+      "id": "ICSP2-2",
+      "header": "ICSP2",
+      "pos": 2,
+      "label": "COPI",
+      "gpio": 11,
+      "code": "MOSI",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "PB3"
+        },
+        {
+          "type": "SPI",
+          "name": "MOSI (COPI)"
+        }
+      ],
+      "flags": [],
+      "notes": "ICSP pin 4. Same signal as digital pin 11.",
+      "verified": true
+    },
+    {
+      "id": "ICSP2-3",
+      "header": "ICSP2",
+      "pos": 3,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "ICSP pin 6.",
+      "verified": true
+    }
+  ]
+}

@@ -1,0 +1,1696 @@
+{
+  "id": "rpi-pico",
+  "name": "Raspberry Pi Pico",
+  "category": "board",
+  "family": "Raspberry Pi",
+  "mcu": "RP2040",
+  "aliases": [
+    "pico",
+    "rp2040",
+    "raspberry pi pico",
+    "rpi pico",
+    "pi pico"
+  ],
+  "logicVoltage": 3.3,
+  "wireless": [],
+  "routing": {
+    "I2C": "fixed",
+    "SPI": "fixed",
+    "UART": "fixed",
+    "PWM": "any"
+  },
+  "codeStyle": "gpio",
+  "sources": [
+    {
+      "title": "Raspberry Pi Pico Datasheet",
+      "url": "https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf",
+      "rev": "Release 21, build date 03/07/2026, build d4e0f1799616",
+      "note": "Section 2.1 pinout: internal GPIO23/24/25/29, power and control pins, test points, ADC pin diode note."
+    },
+    {
+      "title": "Raspberry Pi Pico Pinout (Pico-R3-A4-Pinout)",
+      "url": "https://datasheets.raspberrypi.com/pico/Pico-R3-A4-Pinout.pdf",
+      "rev": "Pico Rev3 pinout diagram (PDF, undated)",
+      "note": "Physical pin order, default peripherals, debug pads."
+    },
+    {
+      "title": "RP2040 Datasheet",
+      "url": "https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf",
+      "rev": "build-date 2025-02-20, build-version 3184e62-clean",
+      "note": "Table 279 GPIO function select (F1-F9); section 5.5.3 absolute maximum ratings (VPIN max IOVDD + 0.5 V, IOVDD max 3.63 V)."
+    }
+  ],
+  "datasheet": "https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf",
+  "verified": true,
+  "summary": "RP2040 board with 26 usable 3.3 V GPIOs, 3 ADC inputs, 2× UART/SPI/I2C on fixed pin options, 16 PWM channels and 8 PIO state machines.",
+  "warnings": [
+    {
+      "level": "danger",
+      "text": "All GPIOs are 3.3 V only. The RP2040 absolute maximum pin voltage is IOVDD + 0.5 V, so 5 V signals will damage it. Use a level shifter."
+    },
+    {
+      "level": "info",
+      "text": "Some RP2040 GPIOs are used on the board and are not on the header: GPIO23 controls the SMPS power-save pin, GPIO24 senses VBUS (high when USB power is present), GPIO25 drives the onboard LED, and GPIO29 reads VSYS/3 on ADC3."
+    },
+    {
+      "level": "info",
+      "text": "I2C, SPI and UART can only use the pins listed for them (each function has several pin options). Every GPIO has a PWM channel, but the two pins sharing a slice and channel (e.g. GP0 and GP16 are both PWM0 A) get the same output."
+    },
+    {
+      "level": "warn",
+      "text": "GP26-GP28 (ADC pins) have a reverse diode to 3.3 V. Driving them above 3.3 V + about 300 mV pulls current through the diode into the 3.3 V rail.",
+      "pins": [
+        "pin31",
+        "pin32",
+        "pin34"
+      ]
+    }
+  ],
+  "layout": {
+    "width": 10,
+    "height": 22,
+    "features": [
+      {
+        "type": "usb",
+        "x": 3.5,
+        "y": 0,
+        "w": 3,
+        "h": 2,
+        "label": "USB"
+      },
+      {
+        "type": "led",
+        "x": 2.2,
+        "y": 1.2,
+        "w": 1,
+        "h": 1,
+        "label": "LED (GP25)"
+      },
+      {
+        "type": "button",
+        "x": 2.2,
+        "y": 3.5,
+        "w": 2,
+        "h": 2,
+        "label": "BOOTSEL"
+      },
+      {
+        "type": "chip",
+        "x": 3,
+        "y": 9,
+        "w": 4,
+        "h": 4,
+        "label": "RP2040"
+      }
+    ],
+    "headers": [
+      {
+        "id": "J1",
+        "x": 0.5,
+        "y": 1.5,
+        "dir": "down",
+        "count": 20,
+        "labelSide": "left"
+      },
+      {
+        "id": "J2",
+        "x": 9.5,
+        "y": 20.5,
+        "dir": "up",
+        "count": 20,
+        "labelSide": "right"
+      },
+      {
+        "id": "DEBUG",
+        "x": 4,
+        "y": 21.4,
+        "dir": "right",
+        "count": 3,
+        "labelSide": "bottom"
+      }
+    ]
+  },
+  "pins": [
+    {
+      "id": "pin1",
+      "header": "J1",
+      "pos": 1,
+      "label": "GP0",
+      "gpio": 0,
+      "code": "0",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP0 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 RX (MISO)"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 TX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM0 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB OVCUR DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 1. Shown as the default UART0 TX in the official Pico pinout.",
+      "verified": true
+    },
+    {
+      "id": "pin2",
+      "header": "J1",
+      "pos": 2,
+      "label": "GP1",
+      "gpio": 1,
+      "code": "1",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP1 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 CSn"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 RX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SCL"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM0 B"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 2. Shown as the default UART0 RX in the official Pico pinout.",
+      "verified": true
+    },
+    {
+      "id": "pin3",
+      "header": "J1",
+      "pos": 3,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 3.",
+      "verified": true
+    },
+    {
+      "id": "pin4",
+      "header": "J1",
+      "pos": 4,
+      "label": "GP2",
+      "gpio": 2,
+      "code": "2",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP2 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 SCK"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 CTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM1 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS EN"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 4.",
+      "verified": true
+    },
+    {
+      "id": "pin5",
+      "header": "J1",
+      "pos": 5,
+      "label": "GP3",
+      "gpio": 3,
+      "code": "3",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP3 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 TX (MOSI)"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 RTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SCL"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM1 B"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB OVCUR DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 5.",
+      "verified": true
+    },
+    {
+      "id": "pin6",
+      "header": "J1",
+      "pos": 6,
+      "label": "GP4",
+      "gpio": 4,
+      "code": "4",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP4 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 RX (MISO)"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 TX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM2 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 6. Shown as the default I2C0 SDA in the official Pico pinout.",
+      "verified": true
+    },
+    {
+      "id": "pin7",
+      "header": "J1",
+      "pos": 7,
+      "label": "GP5",
+      "gpio": 5,
+      "code": "5",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP5 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 CSn"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 RX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SCL"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM2 B"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS EN"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 7. Shown as the default I2C0 SCL in the official Pico pinout.",
+      "verified": true
+    },
+    {
+      "id": "pin8",
+      "header": "J1",
+      "pos": 8,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 8.",
+      "verified": true
+    },
+    {
+      "id": "pin9",
+      "header": "J1",
+      "pos": 9,
+      "label": "GP6",
+      "gpio": 6,
+      "code": "6",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP6 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 SCK"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 CTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM3 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB OVCUR DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 9.",
+      "verified": true
+    },
+    {
+      "id": "pin10",
+      "header": "J1",
+      "pos": 10,
+      "label": "GP7",
+      "gpio": 7,
+      "code": "7",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP7 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 TX (MOSI)"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 RTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SCL"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM3 B"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 10.",
+      "verified": true
+    },
+    {
+      "id": "pin11",
+      "header": "J1",
+      "pos": 11,
+      "label": "GP8",
+      "gpio": 8,
+      "code": "8",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP8 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1 RX (MISO)"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 TX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM4 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS EN"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 11.",
+      "verified": true
+    },
+    {
+      "id": "pin12",
+      "header": "J1",
+      "pos": 12,
+      "label": "GP9",
+      "gpio": 9,
+      "code": "9",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP9 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1 CSn"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 RX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SCL"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM4 B"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB OVCUR DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 12.",
+      "verified": true
+    },
+    {
+      "id": "pin13",
+      "header": "J1",
+      "pos": 13,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 13.",
+      "verified": true
+    },
+    {
+      "id": "pin14",
+      "header": "J1",
+      "pos": 14,
+      "label": "GP10",
+      "gpio": 10,
+      "code": "10",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP10 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1 SCK"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 CTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM5 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 14.",
+      "verified": true
+    },
+    {
+      "id": "pin15",
+      "header": "J1",
+      "pos": 15,
+      "label": "GP11",
+      "gpio": 11,
+      "code": "11",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP11 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1 TX (MOSI)"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 RTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SCL"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM5 B"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS EN"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 15.",
+      "verified": true
+    },
+    {
+      "id": "pin16",
+      "header": "J1",
+      "pos": 16,
+      "label": "GP12",
+      "gpio": 12,
+      "code": "12",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP12 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1 RX (MISO)"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 TX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM6 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB OVCUR DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 16.",
+      "verified": true
+    },
+    {
+      "id": "pin17",
+      "header": "J1",
+      "pos": 17,
+      "label": "GP13",
+      "gpio": 13,
+      "code": "13",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP13 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1 CSn"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 RX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SCL"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM6 B"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 17.",
+      "verified": true
+    },
+    {
+      "id": "pin18",
+      "header": "J1",
+      "pos": 18,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 18.",
+      "verified": true
+    },
+    {
+      "id": "pin19",
+      "header": "J1",
+      "pos": 19,
+      "label": "GP14",
+      "gpio": 14,
+      "code": "14",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP14 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1 SCK"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 CTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM7 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS EN"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 19.",
+      "verified": true
+    },
+    {
+      "id": "pin20",
+      "header": "J1",
+      "pos": 20,
+      "label": "GP15",
+      "gpio": 15,
+      "code": "15",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP15 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1 TX (MOSI)"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 RTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SCL"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM7 B"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB OVCUR DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 20.",
+      "verified": true
+    },
+    {
+      "id": "pin21",
+      "header": "J2",
+      "pos": 1,
+      "label": "GP16",
+      "gpio": 16,
+      "code": "16",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP16 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 RX (MISO)"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 TX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM0 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 21. Shown as the default SPI0 RX in the official Pico pinout.",
+      "verified": true
+    },
+    {
+      "id": "pin22",
+      "header": "J2",
+      "pos": 2,
+      "label": "GP17",
+      "gpio": 17,
+      "code": "17",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP17 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 CSn"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 RX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SCL"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM0 B"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS EN"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 22. Shown as the default SPI0 CSn in the official Pico pinout.",
+      "verified": true
+    },
+    {
+      "id": "pin23",
+      "header": "J2",
+      "pos": 3,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 23.",
+      "verified": true
+    },
+    {
+      "id": "pin24",
+      "header": "J2",
+      "pos": 4,
+      "label": "GP18",
+      "gpio": 18,
+      "code": "18",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP18 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 SCK"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 CTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM1 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB OVCUR DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 24. Shown as the default SPI0 SCK in the official Pico pinout.",
+      "verified": true
+    },
+    {
+      "id": "pin25",
+      "header": "J2",
+      "pos": 5,
+      "label": "GP19",
+      "gpio": 19,
+      "code": "19",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP19 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 TX (MOSI)"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 RTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SCL"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM1 B"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 25. Shown as the default SPI0 TX in the official Pico pinout.",
+      "verified": true
+    },
+    {
+      "id": "pin26",
+      "header": "J2",
+      "pos": 6,
+      "label": "GP20",
+      "gpio": 20,
+      "code": "20",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP20 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 RX (MISO)"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 TX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM2 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLOCK GPIN0"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS EN"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 26.",
+      "verified": true
+    },
+    {
+      "id": "pin27",
+      "header": "J2",
+      "pos": 7,
+      "label": "GP21",
+      "gpio": 21,
+      "code": "21",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP21 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 CSn"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 RX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SCL"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM2 B"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLOCK GPOUT0"
+        },
+        {
+          "type": "USB",
+          "name": "USB OVCUR DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 27.",
+      "verified": true
+    },
+    {
+      "id": "pin28",
+      "header": "J2",
+      "pos": 8,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 28.",
+      "verified": true
+    },
+    {
+      "id": "pin29",
+      "header": "J2",
+      "pos": 9,
+      "label": "GP22",
+      "gpio": 22,
+      "code": "22",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP22 (SIO)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0 SCK"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 CTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM3 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "CLOCK",
+          "name": "CLOCK GPIN1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 29.",
+      "verified": true
+    },
+    {
+      "id": "pin30",
+      "header": "J2",
+      "pos": 10,
+      "label": "RUN",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "CTRL",
+          "name": "RUN"
+        }
+      ],
+      "flags": [],
+      "notes": "Physical pin 30. RP2040 enable. Internal ~50 kΩ pull-up to 3.3 V. Short to GND to reset the RP2040.",
+      "verified": true
+    },
+    {
+      "id": "pin31",
+      "header": "J2",
+      "pos": 11,
+      "label": "GP26",
+      "gpio": 26,
+      "code": "26",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP26 (SIO)"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC0"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1 SCK"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 CTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM5 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS EN"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 31. ADC-capable pin: has an internal reverse diode to the 3.3 V (IOVDD) rail, so never drive it above about 3.3 V + 300 mV (Pico datasheet).",
+      "verified": true
+    },
+    {
+      "id": "pin32",
+      "header": "J2",
+      "pos": 12,
+      "label": "GP27",
+      "gpio": 27,
+      "code": "27",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP27 (SIO)"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1 TX (MOSI)"
+        },
+        {
+          "type": "UART",
+          "name": "UART1 RTS"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C1 SCL"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM5 B"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB OVCUR DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 32. ADC-capable pin: has an internal reverse diode to the 3.3 V (IOVDD) rail, so never drive it above about 3.3 V + 300 mV (Pico datasheet).",
+      "verified": true
+    },
+    {
+      "id": "pin33",
+      "header": "J2",
+      "pos": 13,
+      "label": "AGND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "AGND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 33. Analog ground reference for GPIO26-29 (separate analog ground plane). Can be tied to GND if ADC accuracy is not critical.",
+      "verified": true
+    },
+    {
+      "id": "pin34",
+      "header": "J2",
+      "pos": 14,
+      "label": "GP28",
+      "gpio": 28,
+      "code": "28",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GP28 (SIO)"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1 RX (MISO)"
+        },
+        {
+          "type": "UART",
+          "name": "UART0 TX"
+        },
+        {
+          "type": "I2C",
+          "name": "I2C0 SDA"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM6 A"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO0"
+        },
+        {
+          "type": "OTHER",
+          "name": "PIO1"
+        },
+        {
+          "type": "USB",
+          "name": "USB VBUS DET"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 34. ADC-capable pin: has an internal reverse diode to the 3.3 V (IOVDD) rail, so never drive it above about 3.3 V + 300 mV (Pico datasheet).",
+      "verified": true
+    },
+    {
+      "id": "pin35",
+      "header": "J2",
+      "pos": 15,
+      "label": "ADC_VREF",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "ADC_VREF"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "Physical pin 35. ADC supply and reference, made on the board by filtering 3.3 V. You can feed an external reference here for better ADC accuracy.",
+      "verified": true
+    },
+    {
+      "id": "pin36",
+      "header": "J2",
+      "pos": 16,
+      "label": "3V3(OUT)",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "3V3"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "Physical pin 36. 3.3 V output from the on-board SMPS. Datasheet recommends keeping the external load under 300 mA.",
+      "verified": true
+    },
+    {
+      "id": "pin37",
+      "header": "J2",
+      "pos": 17,
+      "label": "3V3_EN",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "CTRL",
+          "name": "3V3_EN"
+        }
+      ],
+      "flags": [],
+      "notes": "Physical pin 37. SMPS enable, pulled up to VSYS by 100 kΩ. Short to GND to turn off the 3.3 V supply (this also powers down the RP2040).",
+      "verified": true
+    },
+    {
+      "id": "pin38",
+      "header": "J2",
+      "pos": 18,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 38.",
+      "verified": true
+    },
+    {
+      "id": "pin39",
+      "header": "J2",
+      "pos": 19,
+      "label": "VSYS",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "VSYS"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "Physical pin 39. Main system input, 1.8 V to 5.5 V. Fed from VBUS through a Schottky diode; feeds the RT6150 buck-boost SMPS.",
+      "verified": true
+    },
+    {
+      "id": "pin40",
+      "header": "J2",
+      "pos": 20,
+      "label": "VBUS",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "VBUS"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "Physical pin 40. Micro-USB 5 V input (0 V when USB is not connected). Do not feed GPIO with this.",
+      "verified": true
+    },
+    {
+      "id": "SWCLK",
+      "header": "DEBUG",
+      "pos": 1,
+      "label": "SWCLK",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "JTAG",
+          "name": "SWCLK"
+        }
+      ],
+      "flags": [],
+      "notes": "3-pin Serial Wire Debug (SWD) port at the bottom edge, not on the 40-pin header.",
+      "verified": true
+    },
+    {
+      "id": "SWD-GND",
+      "header": "DEBUG",
+      "pos": 2,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Ground pin of the 3-pin SWD debug port.",
+      "verified": true
+    },
+    {
+      "id": "SWDIO",
+      "header": "DEBUG",
+      "pos": 3,
+      "label": "SWDIO",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "JTAG",
+          "name": "SWDIO"
+        }
+      ],
+      "flags": [],
+      "notes": "3-pin Serial Wire Debug (SWD) port at the bottom edge, not on the 40-pin header.",
+      "verified": true
+    }
+  ]
+}

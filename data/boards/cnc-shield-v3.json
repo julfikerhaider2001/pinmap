@@ -1,0 +1,607 @@
+{
+  "id": "cnc-shield-v3",
+  "name": "Arduino CNC Shield V3 (Protoneer)",
+  "category": "shield",
+  "family": "Arduino",
+  "mcu": "ATmega328P (host Uno)",
+  "aliases": [
+    "cnc shield",
+    "cnc shield v3",
+    "protoneer",
+    "grbl",
+    "grbl shield",
+    "a4988 shield",
+    "drv8825 shield",
+    "4 axis"
+  ],
+  "logicVoltage": 5,
+  "wireless": [],
+  "routing": {
+    "I2C": "fixed",
+    "SPI": "fixed",
+    "UART": "fixed",
+    "PWM": "fixed"
+  },
+  "codeStyle": "arduino",
+  "connectsTo": "arduino-uno-r3",
+  "sources": [
+    {
+      "title": "GRBL cpu_map.h (CPU_MAP_ATMEGA328P)",
+      "url": "https://github.com/gnea/grbl/blob/master/grbl/cpu_map.h",
+      "rev": "gnea/grbl master (v1.1)",
+      "note": "Authoritative pin assignment for GRBL 1.1 on the Uno, including the VARIABLE_SPINDLE Z-limit/spindle-enable swap."
+    },
+    {
+      "title": "GRBL config.h",
+      "url": "https://github.com/gnea/grbl/blob/master/grbl/config.h",
+      "rev": "gnea/grbl master (v1.1)",
+      "note": "Default build options: VARIABLE_SPINDLE on; USE_SPINDLE_DIR_AS_ENABLE_PIN, ENABLE_M7, ENABLE_SAFETY_DOOR_INPUT_PIN off."
+    },
+    {
+      "title": "GRBL wiki: Connecting Grbl",
+      "url": "https://github.com/gnea/grbl/wiki/Connecting-Grbl",
+      "rev": "last edited Nov 9, 2022",
+      "note": "States that in GRBL 0.9 and 1.1 default builds Z-limit is on D12 and spindle enable uses the hardware PWM on D11."
+    },
+    {
+      "title": "Protoneer: Arduino CNC Shield - 100% GRBL Compatible (archived)",
+      "url": "http://web.archive.org/web/20231223214149/https://blog.protoneer.co.nz/arduino-cnc-shield/",
+      "rev": "Wayback Machine snapshot 2023-12-23; the live protoneer.co.nz pages now return 404",
+      "note": "GRBL pin layout image (pre-0.9 mapping), V3.XX schematic (shield header to Uno pin wiring, A-axis jumpers to X/Y/Z or D12/D13, 12-36V input), version history (V3.10 adds GRBL 0.9 PWM spindle support)."
+    }
+  ],
+  "datasheet": "https://github.com/gnea/grbl/blob/master/grbl/cpu_map.h",
+  "verified": false,
+  "summary": "Four-axis stepper shield for the Arduino Uno running GRBL. Takes four A4988/DRV8825-style drivers; X, Y, Z have their own pins and A clones an axis or uses D12/D13.",
+  "warnings": [
+    {
+      "level": "warn",
+      "text": "The pin functions depend on the GRBL version. GRBL 0.9/1.1 default builds (variable spindle PWM) swap two pins compared with GRBL 0.8c and the shield silkscreen: D11 (shield \"Z+/Z-\" end-stop pins) becomes the spindle PWM/enable output, and D12 (shield \"SpnEn\" pin) becomes the Z limit input. This table shows the GRBL 1.1 default; the 0.8c use is in each pin's notes. A5 is the probe input in GRBL 0.9/1.1 only.",
+      "pins": [
+        "DIGITAL-12",
+        "DIGITAL-13",
+        "ANALOG-6"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "The A axis has no Uno pins of its own. Jumpers on the shield set A.STEP/A.DIR to clone the X, Y or Z step/dir signals (A moves together with that axis, e.g. a dual-motor gantry), or connect them to D12 (A.STEP) and D13 (A.DIR). Stock GRBL does not drive a 4th axis on D12/D13, and on GRBL 0.9/1.1 D12 is the Z limit, so that option needs different firmware.",
+      "pins": [
+        "DIGITAL-13",
+        "DIGITAL-14"
+      ]
+    },
+    {
+      "level": "warn",
+      "text": "Motor power (12-36 V per the shield silkscreen) goes into the screw terminal, not through the Uno."
+    },
+    {
+      "level": "info",
+      "text": "The shield E-Stop pins connect to the Uno RESET line (same as pressing the Uno reset button). Protoneer recommends a real emergency stop that cuts power to the machine as well."
+    },
+    {
+      "level": "info",
+      "text": "Board marked unverified because the Protoneer page (only reachable as an archived copy) documents the pre-0.9 mapping. The GRBL 1.1 mapping comes from GRBL cpu_map.h and the GRBL wiki. Each pin has been checked against both sources."
+    }
+  ],
+  "layout": {
+    "width": 27,
+    "height": 21,
+    "features": [
+      {
+        "type": "terminal",
+        "x": 1,
+        "y": 3,
+        "w": 5,
+        "h": 8,
+        "label": "X driver"
+      },
+      {
+        "type": "terminal",
+        "x": 7,
+        "y": 3,
+        "w": 5,
+        "h": 8,
+        "label": "Y driver"
+      },
+      {
+        "type": "terminal",
+        "x": 1,
+        "y": 12,
+        "w": 5,
+        "h": 7,
+        "label": "Z driver"
+      },
+      {
+        "type": "terminal",
+        "x": 13,
+        "y": 3,
+        "w": 5,
+        "h": 8,
+        "label": "A driver"
+      },
+      {
+        "type": "terminal",
+        "x": 7,
+        "y": 13,
+        "w": 4,
+        "h": 3,
+        "label": "12-36V motor power"
+      },
+      {
+        "type": "button",
+        "x": 12,
+        "y": 13,
+        "w": 2,
+        "h": 2,
+        "label": "RESET"
+      },
+      {
+        "type": "label",
+        "x": 21.5,
+        "y": 15.6,
+        "label": "End stops · Spindle · Coolant"
+      },
+      {
+        "type": "label",
+        "x": 21.5,
+        "y": 16.4,
+        "label": "Abort · Hold · Resume · E-Stop"
+      }
+    ],
+    "headers": [
+      {
+        "id": "DIGITAL",
+        "x": 26,
+        "y": 1,
+        "dir": "left",
+        "count": 14,
+        "labelSide": "bottom"
+      },
+      {
+        "id": "POWER",
+        "x": 10,
+        "y": 20,
+        "dir": "right",
+        "count": 8,
+        "labelSide": "top"
+      },
+      {
+        "id": "ANALOG",
+        "x": 19,
+        "y": 20,
+        "dir": "right",
+        "count": 6,
+        "labelSide": "top"
+      }
+    ]
+  },
+  "pins": [
+    {
+      "id": "DIGITAL-1",
+      "header": "DIGITAL",
+      "pos": 1,
+      "label": "D0",
+      "gpio": 0,
+      "code": "0",
+      "functions": [
+        {
+          "type": "UART",
+          "name": "RX (GRBL serial in, USART RXD)"
+        }
+      ],
+      "flags": [],
+      "notes": "Serial link to the host (G-code sender). Broken out on the shield RX/TX header. Leave free.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-2",
+      "header": "DIGITAL",
+      "pos": 2,
+      "label": "D1",
+      "gpio": 1,
+      "code": "1",
+      "functions": [
+        {
+          "type": "UART",
+          "name": "TX (GRBL serial out, USART TXD)"
+        }
+      ],
+      "flags": [],
+      "notes": "Serial link to the host (G-code sender). Broken out on the shield RX/TX header. Leave free.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-3",
+      "header": "DIGITAL",
+      "pos": 3,
+      "label": "D2",
+      "gpio": 2,
+      "code": "2",
+      "functions": [
+        {
+          "type": "MOTOR",
+          "name": "X.STEP (X step pulse)"
+        },
+        {
+          "type": "MOTOR",
+          "name": "A.STEP when the A axis is jumpered to clone X"
+        }
+      ],
+      "flags": [],
+      "notes": "Same in all GRBL versions.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-4",
+      "header": "DIGITAL",
+      "pos": 4,
+      "label": "D3",
+      "gpio": 3,
+      "code": "3",
+      "functions": [
+        {
+          "type": "MOTOR",
+          "name": "Y.STEP (Y step pulse)"
+        },
+        {
+          "type": "MOTOR",
+          "name": "A.STEP when the A axis is jumpered to clone Y"
+        }
+      ],
+      "flags": [],
+      "notes": "Same in all GRBL versions.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-5",
+      "header": "DIGITAL",
+      "pos": 5,
+      "label": "D4",
+      "gpio": 4,
+      "code": "4",
+      "functions": [
+        {
+          "type": "MOTOR",
+          "name": "Z.STEP (Z step pulse)"
+        },
+        {
+          "type": "MOTOR",
+          "name": "A.STEP when the A axis is jumpered to clone Z"
+        }
+      ],
+      "flags": [],
+      "notes": "Same in all GRBL versions.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-6",
+      "header": "DIGITAL",
+      "pos": 6,
+      "label": "D5",
+      "gpio": 5,
+      "code": "5",
+      "functions": [
+        {
+          "type": "MOTOR",
+          "name": "X.DIR (X direction)"
+        },
+        {
+          "type": "MOTOR",
+          "name": "A.DIR when the A axis is jumpered to clone X"
+        }
+      ],
+      "flags": [],
+      "notes": "Same in all GRBL versions.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-7",
+      "header": "DIGITAL",
+      "pos": 7,
+      "label": "D6",
+      "gpio": 6,
+      "code": "6",
+      "functions": [
+        {
+          "type": "MOTOR",
+          "name": "Y.DIR (Y direction)"
+        },
+        {
+          "type": "MOTOR",
+          "name": "A.DIR when the A axis is jumpered to clone Y"
+        }
+      ],
+      "flags": [],
+      "notes": "Same in all GRBL versions.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-8",
+      "header": "DIGITAL",
+      "pos": 8,
+      "label": "D7",
+      "gpio": 7,
+      "code": "7",
+      "functions": [
+        {
+          "type": "MOTOR",
+          "name": "Z.DIR (Z direction)"
+        },
+        {
+          "type": "MOTOR",
+          "name": "A.DIR when the A axis is jumpered to clone Z"
+        }
+      ],
+      "flags": [],
+      "notes": "Same in all GRBL versions.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-9",
+      "header": "DIGITAL",
+      "pos": 9,
+      "label": "D8",
+      "gpio": 8,
+      "code": "8",
+      "functions": [
+        {
+          "type": "MOTOR",
+          "name": "EN (stepper enable/disable, shared by all four drivers)"
+        }
+      ],
+      "flags": [],
+      "notes": "One enable line for all drivers. The shield has a 10 kΩ pull-up from EN to 5 V (\"Disable Drivers\" in the schematic), so the drivers stay disabled until GRBL drives this pin. Same in all GRBL versions.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-10",
+      "header": "DIGITAL",
+      "pos": 10,
+      "label": "D9",
+      "gpio": 9,
+      "code": "9",
+      "functions": [
+        {
+          "type": "OTHER",
+          "name": "X limit (shield X+ and X- end-stop pins)"
+        }
+      ],
+      "flags": [],
+      "notes": "Input, held high by the internal pull-up (Protoneer pin layout). X+ and X- share this one pin. Same in all GRBL versions.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-11",
+      "header": "DIGITAL",
+      "pos": 11,
+      "label": "D10",
+      "gpio": 10,
+      "code": "10",
+      "functions": [
+        {
+          "type": "OTHER",
+          "name": "Y limit (shield Y+ and Y- end-stop pins)"
+        }
+      ],
+      "flags": [],
+      "notes": "Input, held high by the internal pull-up (Protoneer pin layout). Y+ and Y- share this one pin. Same in all GRBL versions.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-12",
+      "header": "DIGITAL",
+      "pos": 12,
+      "label": "D11",
+      "gpio": 11,
+      "code": "11",
+      "functions": [
+        {
+          "type": "OTHER",
+          "name": "Spindle PWM / spindle enable (GRBL 0.9/1.1 default, variable spindle)"
+        },
+        {
+          "type": "PWM",
+          "name": "Spindle PWM (Timer2 OC2A)"
+        }
+      ],
+      "flags": [],
+      "notes": "Wired to the shield end-stop pins silkscreened \"Z+ / Z-\". GRBL 0.9 and 1.1 default builds (VARIABLE_SPINDLE on) use this pin for the spindle PWM/enable output, so connect your spindle speed signal here, NOT a Z limit switch. GRBL 0.8c (or builds with VARIABLE_SPINDLE off): Z limit input.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-13",
+      "header": "DIGITAL",
+      "pos": 13,
+      "label": "D12",
+      "gpio": 12,
+      "code": "12",
+      "functions": [
+        {
+          "type": "OTHER",
+          "name": "Z limit (GRBL 0.9/1.1 default, variable spindle)"
+        },
+        {
+          "type": "MOTOR",
+          "name": "A.STEP when the A axis is jumpered to D12"
+        }
+      ],
+      "flags": [],
+      "notes": "Wired to the shield pin silkscreened \"SpnEn\". GRBL 0.9 and 1.1 default builds use it as the Z limit input, so wire the Z limit switch to the SpnEn pin. GRBL 0.8c (or VARIABLE_SPINDLE off): spindle enable output. Also selectable as A.STEP with the A-axis jumper, which then conflicts with the GRBL function.",
+      "verified": true
+    },
+    {
+      "id": "DIGITAL-14",
+      "header": "DIGITAL",
+      "pos": 14,
+      "label": "D13",
+      "gpio": 13,
+      "code": "13",
+      "functions": [
+        {
+          "type": "OTHER",
+          "name": "Spindle direction"
+        },
+        {
+          "type": "MOTOR",
+          "name": "A.DIR when the A axis is jumpered to D13"
+        }
+      ],
+      "flags": [],
+      "notes": "Wired to the shield pin silkscreened \"SpnDir\". Spindle direction in GRBL 0.8c, 0.9 and 1.1. If GRBL 1.1 is compiled with USE_SPINDLE_DIR_AS_ENABLE_PIN, this pin becomes spindle enable instead. Also selectable as A.DIR with the A-axis jumper.",
+      "verified": true
+    },
+    {
+      "id": "ANALOG-1",
+      "header": "ANALOG",
+      "pos": 1,
+      "label": "A0",
+      "gpio": 14,
+      "code": "A0",
+      "functions": [
+        {
+          "type": "CTRL",
+          "name": "Reset / Abort"
+        }
+      ],
+      "flags": [],
+      "notes": "Shield pin \"Abort\". Input, held high by the internal pull-up (Protoneer pin layout). Same in GRBL 0.8c and 1.1.",
+      "verified": true
+    },
+    {
+      "id": "ANALOG-2",
+      "header": "ANALOG",
+      "pos": 2,
+      "label": "A1",
+      "gpio": 15,
+      "code": "A1",
+      "functions": [
+        {
+          "type": "CTRL",
+          "name": "Feed hold"
+        },
+        {
+          "type": "CTRL",
+          "name": "Safety door (only if GRBL is built with ENABLE_SAFETY_DOOR_INPUT_PIN)"
+        }
+      ],
+      "flags": [],
+      "notes": "Shield pin \"Hold\". Input, held high by the internal pull-up (Protoneer pin layout). Same in GRBL 0.8c and 1.1.",
+      "verified": true
+    },
+    {
+      "id": "ANALOG-3",
+      "header": "ANALOG",
+      "pos": 3,
+      "label": "A2",
+      "gpio": 16,
+      "code": "A2",
+      "functions": [
+        {
+          "type": "CTRL",
+          "name": "Cycle start / Resume"
+        }
+      ],
+      "flags": [],
+      "notes": "Shield pin \"Resume\". Input, held high by the internal pull-up (Protoneer pin layout). Same in GRBL 0.8c and 1.1.",
+      "verified": true
+    },
+    {
+      "id": "ANALOG-4",
+      "header": "ANALOG",
+      "pos": 4,
+      "label": "A3",
+      "gpio": 17,
+      "code": "A3",
+      "functions": [
+        {
+          "type": "OTHER",
+          "name": "Coolant enable (flood, M8)"
+        }
+      ],
+      "flags": [],
+      "notes": "Shield pin \"CoolEn\". Output. Same in GRBL 0.8c and 1.1.",
+      "verified": true
+    },
+    {
+      "id": "ANALOG-5",
+      "header": "ANALOG",
+      "pos": 5,
+      "label": "A4",
+      "gpio": 18,
+      "code": "A4",
+      "functions": [
+        {
+          "type": "OTHER",
+          "name": "Coolant mist (M7), only if GRBL 1.1 is built with ENABLE_M7"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA (shield I2C breakout)"
+        }
+      ],
+      "flags": [],
+      "notes": "Broken out on the shield I2C header (labelled A4/SDA). Unused by GRBL 0.8c and by default GRBL 1.1 builds (ENABLE_M7 is off by default).",
+      "verified": true
+    },
+    {
+      "id": "ANALOG-6",
+      "header": "ANALOG",
+      "pos": 6,
+      "label": "A5",
+      "gpio": 19,
+      "code": "A5",
+      "functions": [
+        {
+          "type": "OTHER",
+          "name": "Probe (GRBL 0.9/1.1)"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL (shield I2C breakout)"
+        }
+      ],
+      "flags": [],
+      "notes": "Broken out on the shield I2C header (labelled A5/SCL); the V3.xx schematic has no separate probe connector. GRBL 0.9/1.1 read the touch probe here. Unused in GRBL 0.8c.",
+      "verified": true
+    },
+    {
+      "id": "POWER-5",
+      "header": "POWER",
+      "pos": 5,
+      "label": "5V",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "5V (logic supply for the drivers, from the Uno)"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "Logic 5 V from the Uno feeds the drivers' VDD. Motor power comes from the separate 12-36 V screw terminal, never from this pin.",
+      "verified": true
+    },
+    {
+      "id": "POWER-6",
+      "header": "POWER",
+      "pos": 6,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Common ground between the Uno, the shield and the motor supply.",
+      "verified": true
+    }
+  ]
+}

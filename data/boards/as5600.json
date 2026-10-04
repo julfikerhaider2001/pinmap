@@ -1,0 +1,122 @@
+{
+  "id": "as5600",
+  "name": "AS5600 Magnetic Rotary Encoder",
+  "category": "module",
+  "family": "Sensor",
+  "mcu": "AS5600",
+  "aliases": ["as5600", "magnetic encoder", "rotary position sensor", "angle sensor", "ams as5600", "contactless potentiometer"],
+  "logicVoltage": 3.3,
+  "wireless": [],
+  "routing": { "I2C": "fixed", "SPI": "fixed", "UART": "fixed", "PWM": "fixed" },
+  "codeStyle": "gpio",
+  "i2cAddress": ["0x36"],
+  "sources": [
+    {
+      "title": "ams AS5600 12-Bit Programmable Contactless Potentiometer (datasheet, legacy ams-OSRAM document hosted by Infineon)",
+      "url": "https://www.infineon.com/assets/row/public/documents/24/49/infineon-as5600-datasheet-en.pdf",
+      "rev": "v1-06, 2018-Jun-20",
+      "note": "Figure 3/4 SOIC-8 pin-out and pin description, Figure 6 supply ranges, Figure 13 power supply options, I2C section (address 0x36, 1 MHz max SCL), output stage (OUTS) and PWM frequencies. The ams-OSRAM product page (ams-osram.com/products/sensor-solutions/position-sensors/ams-as5600-position-sensor) redirected to the ams-OSRAM home page when fetched; the datasheet now carries an Infineon cover note after Infineon acquired this sensor line."
+    }
+  ],
+  "datasheet": "https://www.infineon.com/assets/row/public/documents/24/49/infineon-as5600-datasheet-en.pdf",
+  "verified": true,
+  "summary": "12-bit contactless magnetic angle sensor (SOIC-8) with I2C at fixed address 0x36 and an analog or PWM output. Runs from 5 V (internal LDO) or 3.3 V.",
+  "warnings": [
+    {
+      "level": "info",
+      "text": "The pin order shown is the AS5600 chip's SOIC-8 pin-out (pins 1-4 down the left, 5-8 up the right). Breakout boards vary in header order, labels and on-board parts (pull-ups, DIR resistor, regulator), so check the silkscreen on your board."
+    },
+    {
+      "level": "warn",
+      "text": "The I2C address is fixed at 0x36 (7-bit) and can't be changed. To use several AS5600s, put them on separate I2C buses or behind an I2C multiplexer.",
+      "pins": ["P6", "P7"]
+    },
+    {
+      "level": "warn",
+      "text": "DIR sets the counting direction: connect it to GND (values increase clockwise) or VDD (values increase counterclockwise). The datasheet only defines these two connections and lists no internal pull resistor on DIR, so don't leave it floating.",
+      "pins": ["P8"]
+    },
+    {
+      "level": "info",
+      "text": "Supply options (datasheet Figure 13): 5 V mode: 4.5-5.5 V on VDD5V with 100 nF, and a 1 uF capacitor from VDD3V3 to GND (VDD3V3 is the internal LDO output; don't use it to power other chips). 3.3 V mode: 3.0-3.6 V with VDD5V and VDD3V3 tied together (10 uF needed only for OTP programming, which needs 3.3-3.5 V). The 3.3 V shown as logic voltage is one of these two modes; I2C levels are relative to VDD (low up to 0.3 x VDD, high from 0.7 x VDD).",
+      "pins": ["P1", "P2"]
+    },
+    {
+      "level": "info",
+      "text": "I2C: standard, fast and fast-mode plus; maximum SCL frequency 1 MHz; no clock stretching. SDA and SCL need external pull-ups.",
+      "pins": ["P6", "P7"]
+    }
+  ],
+  "layout": {
+    "width": 8,
+    "height": 6,
+    "features": [
+      { "type": "chip", "x": 2, "y": 0.5, "w": 4, "h": 5, "label": "AS5600 (SOIC-8)" }
+    ],
+    "headers": [
+      { "id": "L", "x": 0.5, "y": 1.5, "dir": "down", "count": 4, "labelSide": "left" },
+      { "id": "R", "x": 7.5, "y": 4.5, "dir": "up", "count": 4, "labelSide": "right" }
+    ]
+  },
+  "pins": [
+    {
+      "id": "P1", "header": "L", "pos": 1, "label": "VDD5V", "gpio": null, "code": null,
+      "functions": [{ "type": "POWER", "name": "VDD5V" }],
+      "flags": ["power"],
+      "notes": "Chip pin 1. Supply in 5 V mode (4.5-5.5 V, 100 nF decoupling). In 3.3 V mode, tie to VDD3V3 and feed 3.0-3.6 V.",
+      "verified": true
+    },
+    {
+      "id": "P2", "header": "L", "pos": 2, "label": "VDD3V3", "gpio": null, "code": null,
+      "functions": [{ "type": "POWER", "name": "VDD3V3" }],
+      "flags": ["power"],
+      "notes": "Chip pin 2. In 5 V mode this is the internal LDO output: connect only a 1 uF capacitor to GND and don't power other chips from it. In 3.3 V mode, tie it to VDD5V.",
+      "verified": true
+    },
+    {
+      "id": "P3", "header": "L", "pos": 3, "label": "OUT", "gpio": null, "code": null,
+      "functions": [
+        { "type": "ADC", "name": "OUT (analog, ratiometric to VDD)" },
+        { "type": "PWM", "name": "OUT (PWM)" }
+      ],
+      "flags": [],
+      "notes": "Chip pin 3. Analog output by default (0 V to VDD, or 10-90% of VDD if programmed). Can be set to a digital PWM output with the OUTS bits (PWM frequency 115, 230, 460 or 920 Hz). Read it with an ADC or a timer input. Also used to program the zero position without I2C.",
+      "verified": true
+    },
+    {
+      "id": "P4", "header": "L", "pos": 4, "label": "GND", "gpio": null, "code": null,
+      "functions": [{ "type": "GND", "name": "GND" }],
+      "flags": ["ground"],
+      "notes": "Chip pin 4. Ground.",
+      "verified": true
+    },
+    {
+      "id": "P5", "header": "R", "pos": 1, "label": "PGO", "gpio": null, "code": null,
+      "functions": [{ "type": "OTHER", "name": "PGO (program option)" }],
+      "flags": [],
+      "notes": "Chip pin 5. Program option input with internal pull-up. Connect to GND to select programming option B (programming via the OUT pin).",
+      "verified": true
+    },
+    {
+      "id": "P6", "header": "R", "pos": 2, "label": "SDA", "gpio": null, "code": null,
+      "functions": [{ "type": "I2C", "name": "SDA" }],
+      "flags": [],
+      "notes": "Chip pin 6. I2C data (open drain), address 0x36. Needs an external pull-up.",
+      "verified": true
+    },
+    {
+      "id": "P7", "header": "R", "pos": 3, "label": "SCL", "gpio": null, "code": null,
+      "functions": [{ "type": "I2C", "name": "SCL" }],
+      "flags": [],
+      "notes": "Chip pin 7. I2C clock input, up to 1 MHz. Needs an external pull-up.",
+      "verified": true
+    },
+    {
+      "id": "P8", "header": "R", "pos": 4, "label": "DIR", "gpio": null, "code": null,
+      "functions": [{ "type": "OTHER", "name": "DIR (direction polarity)" }],
+      "flags": [],
+      "notes": "Chip pin 8. GND = values increase clockwise; VDD = values increase counterclockwise (viewed from the top). Tie it to one or the other; don't leave it floating.",
+      "verified": true
+    }
+  ]
+}

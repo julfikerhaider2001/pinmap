@@ -1,0 +1,1735 @@
+{
+  "id": "rpi-40pin",
+  "name": "Raspberry Pi 40-pin header (Pi 2/3/4/Zero)",
+  "category": "board",
+  "family": "Raspberry Pi",
+  "mcu": "BCM2835 family / BCM2711",
+  "aliases": [
+    "raspberry pi",
+    "rpi",
+    "pi 4",
+    "pi 3",
+    "pi 2",
+    "pi zero",
+    "zero 2 w",
+    "gpio header",
+    "40-pin",
+    "bcm2711",
+    "bcm2837",
+    "bcm2835",
+    "rpi4",
+    "rpi3"
+  ],
+  "logicVoltage": 3.3,
+  "wireless": [],
+  "routing": {
+    "I2C": "fixed",
+    "SPI": "fixed",
+    "UART": "fixed",
+    "PWM": "fixed"
+  },
+  "codeStyle": "bcm",
+  "sources": [
+    {
+      "title": "Raspberry Pi documentation: GPIO and the 40-pin header (asciidoc source + GPIO-Pinout-Diagram-2.png, GPIO.png)",
+      "url": "https://www.raspberrypi.com/documentation/computers/raspberry-pi.html",
+      "rev": "raspberrypi/documentation master, gpio-on-raspberry-pi.adoc last commit 0456a78 (2026-06-19); fetched from github.com/raspberrypi/documentation because the web page is behind a bot check",
+      "note": "Physical pin order, 5V/3V3/GND pins, fixed pull-ups on GPIO2/3, 3.3 V levels, primary functions."
+    },
+    {
+      "title": "BCM2711 ARM Peripherals",
+      "url": "https://datasheets.raspberrypi.com/bcm2711/bcm2711-peripherals.pdf",
+      "rev": "Release 4, 18 Jan 2022 (build cfcff44)",
+      "note": "Table 94, GPIO alternative function assignment (Pi 4B)."
+    },
+    {
+      "title": "BCM2835 ARM Peripherals",
+      "url": "https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf",
+      "rev": "06 February 2012",
+      "note": "Section 6.2 alternative function table. Raspberry Pi docs state BCM2836 is architecturally identical to BCM2835, and BCM2837/RP3A0 to BCM2836."
+    },
+    {
+      "title": "Raspberry Pi 4 Model B reduced schematics",
+      "url": "https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-reduced-schematics.pdf",
+      "note": "J8 header pin assignment and the ID_SD/ID_SC \"reserved for HAT ID EEPROM\" note."
+    },
+    {
+      "title": "Raspberry Pi documentation: processors (BCM2836, BCM2837, RP3A0, BCM2712)",
+      "url": "https://www.raspberrypi.com/documentation/computers/processors.html",
+      "rev": "raspberrypi/documentation master (asciidoc source)",
+      "note": "SoC lineage; Pi 5 uses BCM2712 with the RP1 I/O controller."
+    }
+  ],
+  "datasheet": "https://datasheets.raspberrypi.com/bcm2711/bcm2711-peripherals.pdf",
+  "verified": true,
+  "summary": "The 40-pin GPIO header shared by Raspberry Pi 2B, 3B, 3B+, 4B, Zero and Zero 2 W. 26 GPIOs at 3.3 V, plus 5 V, 3.3 V and ground pins. Pin numbers in code are BCM GPIO numbers.",
+  "warnings": [
+    {
+      "level": "danger",
+      "text": "All GPIOs are 3.3 V only and are not 5 V tolerant. Pins 2 and 4 carry 5 V: never connect them to a GPIO.",
+      "pins": [
+        "pin2",
+        "pin4"
+      ]
+    },
+    {
+      "level": "warn",
+      "text": "Raspberry Pi 5 gets its external I/O from the RP1 south-bridge chip, not the BCM SoC, so its GPIO alternate functions differ from the BCM2835/BCM2711 ones listed here. Do not use this table for a Pi 5."
+    },
+    {
+      "level": "warn",
+      "text": "GPIO0/GPIO1 (pins 27/28, ID_SD/ID_SC) are reserved for the HAT ID EEPROM and are probed at boot. Do not use them for anything else.",
+      "pins": [
+        "pin27",
+        "pin28"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "Functions marked [Pi 4B only] appear only in the BCM2711 table: extra UARTs 2-5, I2C 3-6, SPI 3-6, the SD0 interface and the DPI/LCD signals (the BCM2835 table marks ALT2 as reserved on these pins). Functions marked [Pi 2/3/Zero only] appear only in the BCM2835 table: the BSC/SPI slave on GPIO18-21 (moved to GPIO8-11 on the BCM2711) and ARM JTAG on ALT5 of GPIO4/5/6/12/13. Only one function per pin can be active at a time."
+    },
+    {
+      "level": "info",
+      "text": "Hardware PWM is on GPIO12, GPIO13, GPIO18 and GPIO19. Software PWM works on any GPIO. UART1 (TXD1/RXD1) is the mini UART. \"SMI\" functions are the BCM Secondary Memory Interface."
+    }
+  ],
+  "layout": {
+    "width": 22,
+    "height": 4,
+    "features": [],
+    "headers": [
+      {
+        "id": "P1-odd",
+        "x": 1.5,
+        "y": 2.5,
+        "dir": "right",
+        "count": 20,
+        "labelSide": "bottom"
+      },
+      {
+        "id": "P1-even",
+        "x": 1.5,
+        "y": 1.5,
+        "dir": "right",
+        "count": 20,
+        "labelSide": "top"
+      }
+    ]
+  },
+  "pins": [
+    {
+      "id": "pin1",
+      "header": "P1-odd",
+      "pos": 1,
+      "label": "3V3",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "3V3 power"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 1"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "Physical pin 1. 3.3 V supply rail.",
+      "verified": true
+    },
+    {
+      "id": "pin2",
+      "header": "P1-even",
+      "pos": 1,
+      "label": "5V",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "5V power"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 2"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "Physical pin 2. 5 V supply rail. Never connect it to a GPIO pin.",
+      "verified": true
+    },
+    {
+      "id": "pin3",
+      "header": "P1-odd",
+      "pos": 2,
+      "label": "GPIO2",
+      "gpio": 2,
+      "code": "2",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO2"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA1 (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SA3 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "LCD_VSYNC (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI3_MOSI (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "CTS2 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA3 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 3"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 3, BCM GPIO2. I2C1 SDA, the main user I2C bus. Has a fixed pull-up resistor to 3.3 V on the board (the fetched documents do not state the value; it is commonly quoted as 1.8 kΩ).",
+      "verified": true
+    },
+    {
+      "id": "pin4",
+      "header": "P1-even",
+      "pos": 2,
+      "label": "5V",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "5V power"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 4"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "Physical pin 4. 5 V supply rail. Never connect it to a GPIO pin.",
+      "verified": true
+    },
+    {
+      "id": "pin5",
+      "header": "P1-odd",
+      "pos": 3,
+      "label": "GPIO3",
+      "gpio": 3,
+      "code": "3",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO3"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL1 (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SA2 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "LCD_HSYNC (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI3_SCLK (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "RTS2 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL3 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 5"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 5, BCM GPIO3. I2C1 SCL, the main user I2C bus. Has a fixed pull-up resistor to 3.3 V on the board (the fetched documents do not state the value; it is commonly quoted as 1.8 kΩ).",
+      "verified": true
+    },
+    {
+      "id": "pin6",
+      "header": "P1-even",
+      "pos": 3,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "Ground"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 6"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 6.",
+      "verified": true
+    },
+    {
+      "id": "pin7",
+      "header": "P1-odd",
+      "pos": 4,
+      "label": "GPIO4",
+      "gpio": 4,
+      "code": "4",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO4"
+        },
+        {
+          "type": "CLOCK",
+          "name": "GPCLK0 (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SA1 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D0 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI4_CE0_N (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "TXD3 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA3 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "JTAG",
+          "name": "ARM_TDI (ALT5) [Pi 2/3/Zero only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 7"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 7, BCM GPIO4. GPCLK0 general-purpose clock output.",
+      "verified": true
+    },
+    {
+      "id": "pin8",
+      "header": "P1-even",
+      "pos": 4,
+      "label": "GPIO14",
+      "gpio": 14,
+      "code": "14",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO14"
+        },
+        {
+          "type": "UART",
+          "name": "TXD0 (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD6 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D10 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI5_MOSI (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "CTS5 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "TXD1 (ALT5)"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 8"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 8, BCM GPIO14. Primary serial port TX (listed as \"Serial TX\" in the Raspberry Pi docs).",
+      "verified": true
+    },
+    {
+      "id": "pin9",
+      "header": "P1-odd",
+      "pos": 5,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "Ground"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 9"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 9.",
+      "verified": true
+    },
+    {
+      "id": "pin10",
+      "header": "P1-even",
+      "pos": 5,
+      "label": "GPIO15",
+      "gpio": 15,
+      "code": "15",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO15"
+        },
+        {
+          "type": "UART",
+          "name": "RXD0 (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD7 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D11 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI5_SCLK (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "RTS5 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "RXD1 (ALT5)"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 10"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 10, BCM GPIO15. Primary serial port RX (listed as \"Serial RX\" in the Raspberry Pi docs).",
+      "verified": true
+    },
+    {
+      "id": "pin11",
+      "header": "P1-odd",
+      "pos": 6,
+      "label": "GPIO17",
+      "gpio": 17,
+      "code": "17",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO17"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD9 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D13 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "RTS0 (ALT3)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1_CE1_N (ALT4)"
+        },
+        {
+          "type": "UART",
+          "name": "RTS1 (ALT5)"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 11"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 11, BCM GPIO17.",
+      "verified": true
+    },
+    {
+      "id": "pin12",
+      "header": "P1-even",
+      "pos": 6,
+      "label": "GPIO18",
+      "gpio": 18,
+      "code": "18",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO18"
+        },
+        {
+          "type": "I2S",
+          "name": "PCM_CLK (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD10 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D14 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI6_CE0_N (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "BSCSL SDA / MOSI (BSC/SPI slave) (ALT3) [Pi 2/3/Zero only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1_CE0_N (ALT4)"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM0 (PWM0_0 on BCM2711) (ALT5)"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 12"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 12, BCM GPIO18. Hardware PWM capable (ALT5). PCM/I2S clock.",
+      "verified": true
+    },
+    {
+      "id": "pin13",
+      "header": "P1-odd",
+      "pos": 7,
+      "label": "GPIO27",
+      "gpio": 27,
+      "code": "27",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO27"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD0_DAT3 (ALT0) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D23 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD1_DAT3 (ALT3)"
+        },
+        {
+          "type": "JTAG",
+          "name": "ARM_TMS (ALT4)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI6_CE1_N (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 13"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 13, BCM GPIO27.",
+      "verified": true
+    },
+    {
+      "id": "pin14",
+      "header": "P1-even",
+      "pos": 7,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "Ground"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 14"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 14.",
+      "verified": true
+    },
+    {
+      "id": "pin15",
+      "header": "P1-odd",
+      "pos": 8,
+      "label": "GPIO22",
+      "gpio": 22,
+      "code": "22",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO22"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD0_CLK (ALT0) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD14 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D18 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD1_CLK (ALT3)"
+        },
+        {
+          "type": "JTAG",
+          "name": "ARM_TRST (ALT4)"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA6 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 15"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 15, BCM GPIO22.",
+      "verified": true
+    },
+    {
+      "id": "pin16",
+      "header": "P1-even",
+      "pos": 8,
+      "label": "GPIO23",
+      "gpio": 23,
+      "code": "23",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO23"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD0_CMD (ALT0) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD15 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D19 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD1_CMD (ALT3)"
+        },
+        {
+          "type": "JTAG",
+          "name": "ARM_RTCK (ALT4)"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL6 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 16"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 16, BCM GPIO23.",
+      "verified": true
+    },
+    {
+      "id": "pin17",
+      "header": "P1-odd",
+      "pos": 9,
+      "label": "3V3",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "3V3 power"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 17"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "Physical pin 17. 3.3 V supply rail.",
+      "verified": true
+    },
+    {
+      "id": "pin18",
+      "header": "P1-even",
+      "pos": 9,
+      "label": "GPIO24",
+      "gpio": 24,
+      "code": "24",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO24"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD0_DAT0 (ALT0) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD16 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D20 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD1_DAT0 (ALT3)"
+        },
+        {
+          "type": "JTAG",
+          "name": "ARM_TDO (ALT4)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI3_CE1_N (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 18"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 18, BCM GPIO24.",
+      "verified": true
+    },
+    {
+      "id": "pin19",
+      "header": "P1-odd",
+      "pos": 10,
+      "label": "GPIO10",
+      "gpio": 10,
+      "code": "10",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO10"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0_MOSI (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD2 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D6 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "BSCSL SDA / MOSI (BSC/SPI slave) (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "CTS4 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA5 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 19"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 19, BCM GPIO10.",
+      "verified": true
+    },
+    {
+      "id": "pin20",
+      "header": "P1-even",
+      "pos": 10,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "Ground"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 20"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 20.",
+      "verified": true
+    },
+    {
+      "id": "pin21",
+      "header": "P1-odd",
+      "pos": 11,
+      "label": "GPIO9",
+      "gpio": 9,
+      "code": "9",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO9"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0_MISO (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD1 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D5 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "BSCSL / MISO (BSC/SPI slave) (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "RXD4 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL4 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 21"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 21, BCM GPIO9.",
+      "verified": true
+    },
+    {
+      "id": "pin22",
+      "header": "P1-even",
+      "pos": 11,
+      "label": "GPIO25",
+      "gpio": 25,
+      "code": "25",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO25"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD0_DAT1 (ALT0) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD17 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D21 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD1_DAT1 (ALT3)"
+        },
+        {
+          "type": "JTAG",
+          "name": "ARM_TCK (ALT4)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI4_CE1_N (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 22"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 22, BCM GPIO25.",
+      "verified": true
+    },
+    {
+      "id": "pin23",
+      "header": "P1-odd",
+      "pos": 12,
+      "label": "GPIO11",
+      "gpio": 11,
+      "code": "11",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO11"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0_SCLK (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD3 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D7 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "BSCSL SCL / SCLK (BSC/SPI slave) (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "RTS4 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL5 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 23"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 23, BCM GPIO11.",
+      "verified": true
+    },
+    {
+      "id": "pin24",
+      "header": "P1-even",
+      "pos": 12,
+      "label": "GPIO8",
+      "gpio": 8,
+      "code": "8",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO8"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0_CE0_N (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD0 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D4 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "BSCSL / CE_N (BSC/SPI slave) (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "TXD4 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA4 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 24"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 24, BCM GPIO8.",
+      "verified": true
+    },
+    {
+      "id": "pin25",
+      "header": "P1-odd",
+      "pos": 13,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "Ground"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 25"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 25.",
+      "verified": true
+    },
+    {
+      "id": "pin26",
+      "header": "P1-even",
+      "pos": 13,
+      "label": "GPIO7",
+      "gpio": 7,
+      "code": "7",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO7"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI0_CE1_N (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SWE_N / SRW_N (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D3 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI4_SCLK (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "RTS3 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL4 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 26"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 26, BCM GPIO7.",
+      "verified": true
+    },
+    {
+      "id": "pin27",
+      "header": "P1-odd",
+      "pos": 14,
+      "label": "GPIO0",
+      "gpio": 0,
+      "code": "0",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO0"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA0 (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SA5 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI PCLK (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI3_CE0_N (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "TXD2 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA6 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 27"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant",
+        "reserved"
+      ],
+      "notes": "Physical pin 27, BCM GPIO0. ID_SD: reserved for the HAT ID EEPROM (I2C0 data). At boot this bus is probed for an EEPROM. Leave unconnected unless you are adding an ID EEPROM.",
+      "verified": true
+    },
+    {
+      "id": "pin28",
+      "header": "P1-even",
+      "pos": 14,
+      "label": "GPIO1",
+      "gpio": 1,
+      "code": "1",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO1"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL0 (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SA4 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI DE (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI3_MISO (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "RXD2 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL6 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 28"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant",
+        "reserved"
+      ],
+      "notes": "Physical pin 28, BCM GPIO1. ID_SC: reserved for the HAT ID EEPROM (I2C0 clock). At boot this bus is probed for an EEPROM. Leave unconnected unless you are adding an ID EEPROM.",
+      "verified": true
+    },
+    {
+      "id": "pin29",
+      "header": "P1-odd",
+      "pos": 15,
+      "label": "GPIO5",
+      "gpio": 5,
+      "code": "5",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO5"
+        },
+        {
+          "type": "CLOCK",
+          "name": "GPCLK1 (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SA0 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D1 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI4_MISO (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "RXD3 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL3 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "JTAG",
+          "name": "ARM_TDO (ALT5) [Pi 2/3/Zero only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 29"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 29, BCM GPIO5.",
+      "verified": true
+    },
+    {
+      "id": "pin30",
+      "header": "P1-even",
+      "pos": 15,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "Ground"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 30"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 30.",
+      "verified": true
+    },
+    {
+      "id": "pin31",
+      "header": "P1-odd",
+      "pos": 16,
+      "label": "GPIO6",
+      "gpio": 6,
+      "code": "6",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO6"
+        },
+        {
+          "type": "CLOCK",
+          "name": "GPCLK2 (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SOE_N / SE (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D2 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI4_MOSI (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "CTS3 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA4 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "JTAG",
+          "name": "ARM_RTCK (ALT5) [Pi 2/3/Zero only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 31"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 31, BCM GPIO6.",
+      "verified": true
+    },
+    {
+      "id": "pin32",
+      "header": "P1-even",
+      "pos": 16,
+      "label": "GPIO12",
+      "gpio": 12,
+      "code": "12",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO12"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM0 (PWM0_0 on BCM2711) (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD4 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D8 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI5_CE0_N (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "TXD5 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SDA5 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "JTAG",
+          "name": "ARM_TMS (ALT5) [Pi 2/3/Zero only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 32"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 32, BCM GPIO12. Hardware PWM capable.",
+      "verified": true
+    },
+    {
+      "id": "pin33",
+      "header": "P1-odd",
+      "pos": 17,
+      "label": "GPIO13",
+      "gpio": 13,
+      "code": "13",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO13"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM1 (PWM0_1 on BCM2711) (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD5 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D9 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI5_MISO (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "RXD5 (ALT4) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "SCL5 (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "JTAG",
+          "name": "ARM_TCK (ALT5) [Pi 2/3/Zero only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 33"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 33, BCM GPIO13. Hardware PWM capable.",
+      "verified": true
+    },
+    {
+      "id": "pin34",
+      "header": "P1-even",
+      "pos": 17,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "Ground"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 34"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 34.",
+      "verified": true
+    },
+    {
+      "id": "pin35",
+      "header": "P1-odd",
+      "pos": 18,
+      "label": "GPIO19",
+      "gpio": 19,
+      "code": "19",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO19"
+        },
+        {
+          "type": "I2S",
+          "name": "PCM_FS (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD11 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D15 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI6_MISO (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "I2C",
+          "name": "BSCSL SCL / SCLK (BSC/SPI slave) (ALT3) [Pi 2/3/Zero only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1_MISO (ALT4)"
+        },
+        {
+          "type": "PWM",
+          "name": "PWM1 (PWM0_1 on BCM2711) (ALT5)"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 35"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 35, BCM GPIO19. Hardware PWM capable (ALT5). PCM/I2S frame sync.",
+      "verified": true
+    },
+    {
+      "id": "pin36",
+      "header": "P1-even",
+      "pos": 18,
+      "label": "GPIO16",
+      "gpio": 16,
+      "code": "16",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO16"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD8 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D12 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "UART",
+          "name": "CTS0 (ALT3)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1_CE2_N (ALT4)"
+        },
+        {
+          "type": "UART",
+          "name": "CTS1 (ALT5)"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 36"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 36, BCM GPIO16.",
+      "verified": true
+    },
+    {
+      "id": "pin37",
+      "header": "P1-odd",
+      "pos": 19,
+      "label": "GPIO26",
+      "gpio": 26,
+      "code": "26",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO26"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD0_DAT2 (ALT0) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D22 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD1_DAT2 (ALT3)"
+        },
+        {
+          "type": "JTAG",
+          "name": "ARM_TDI (ALT4)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI5_CE1_N (ALT5) [Pi 4B only]"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 37"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 37, BCM GPIO26.",
+      "verified": true
+    },
+    {
+      "id": "pin38",
+      "header": "P1-even",
+      "pos": 19,
+      "label": "GPIO20",
+      "gpio": 20,
+      "code": "20",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO20"
+        },
+        {
+          "type": "I2S",
+          "name": "PCM_DIN (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD12 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D16 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI6_MOSI (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "BSCSL / MISO (BSC/SPI slave) (ALT3) [Pi 2/3/Zero only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1_MOSI (ALT4)"
+        },
+        {
+          "type": "CLOCK",
+          "name": "GPCLK0 (ALT5)"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 38"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 38, BCM GPIO20. PCM/I2S data in.",
+      "verified": true
+    },
+    {
+      "id": "pin39",
+      "header": "P1-odd",
+      "pos": 20,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "Ground"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 39"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical pin 39.",
+      "verified": true
+    },
+    {
+      "id": "pin40",
+      "header": "P1-even",
+      "pos": 20,
+      "label": "GPIO21",
+      "gpio": 21,
+      "code": "21",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO21"
+        },
+        {
+          "type": "I2S",
+          "name": "PCM_DOUT (ALT0)"
+        },
+        {
+          "type": "OTHER",
+          "name": "SMI SD13 (ALT1)"
+        },
+        {
+          "type": "OTHER",
+          "name": "DPI_D17 (ALT2) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI6_SCLK (ALT3) [Pi 4B only]"
+        },
+        {
+          "type": "SPI",
+          "name": "BSCSL / CE_N (BSC/SPI slave) (ALT3) [Pi 2/3/Zero only]"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI1_SCLK (ALT4)"
+        },
+        {
+          "type": "CLOCK",
+          "name": "GPCLK1 (ALT5)"
+        },
+        {
+          "type": "OTHER",
+          "name": "Physical pin 40"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Physical pin 40, BCM GPIO21. PCM/I2S data out.",
+      "verified": true
+    }
+  ]
+}
