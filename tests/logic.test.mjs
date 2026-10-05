@@ -229,3 +229,23 @@ test('every board file is valid and listed in the manifest', () => {
 test('every manifest entry has a file', () => {
   for (const id of manifest) assert.ok(existsSync(join(boardsDir, `${id}.json`)), `missing data/boards/${id}.json`);
 });
+
+test('shortName keeps bus roles and drops notes', async () => {
+  const { shortName } = await import('../js/render.js');
+  assert.equal(shortName('HSPIQ (MISO)'), 'HSPIQ MISO');
+  assert.equal(shortName('SDA1 (ALT0)'), 'SDA1');
+  assert.equal(shortName('SPI3_MOSI (ALT3) [Pi 4B only]'), 'SPI3_MOSI');
+  assert.equal(shortName('TOUCH_CHANNEL7'), 'TOUCH_CH7');
+});
+
+test('pinTags: name first, warning flags, at most 3 function tags', async () => {
+  const { pinTags } = await import('../js/render.js');
+  const tags = pinTags(esp, pin(esp, 'g0'));
+  assert.equal(tags[0].text, '0');
+  assert.ok(tags.some((t) => t.text === 'STRAP'));
+  const big = { ...pin(esp, 'g4'), functions: [{ type: 'GPIO', name: 'GPIO4' }, ...'ABCDE'.split('').map((c) => ({ type: 'ADC', name: `ADC_${c}` }))] };
+  const t2 = pinTags(esp, big);
+  assert.equal(t2.filter((t) => t.cls.includes('t-ADC')).length, 3);
+  assert.equal(t2.at(-1).text, '+2');
+  assert.equal(pinTags(esp, pin(esp, 'g4'), 'names').length, 1);
+});

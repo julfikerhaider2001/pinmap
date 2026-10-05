@@ -25,7 +25,7 @@ A searchable, interactive pinout reference for microcontroller boards and module
 
 | Family | Boards |
 |---|---|
-| ESP32 | ESP32-S3-DevKitC-1, ESP32-DevKitC V4, ESP32 DevKit V1 (clone, unverified header order), ESP32-C3-DevKitM-1, ESP32-C6-DevKitC-1 |
+| ESP32 | ESP32-S3-DevKitC-1, ESP32-DevKitC V4, ESP32 DevKit V1 (clone, unverified header order), ESP32-C3-DevKitM-1, ESP32-C6-DevKitC-1, ESP32-P4X-Function-EV-Board, ESP32-P4X-C5-Function-EV-Board |
 | ESP8266 | NodeMCU v1.0 (ESP-12E) |
 | Arduino | Uno Rev3, Nano, Mega 2560 Rev3, CNC Shield V3 (GRBL mapping) |
 | Raspberry Pi | Pico (RP2040), 40-pin GPIO header (Pi 2/3/4/Zero) |

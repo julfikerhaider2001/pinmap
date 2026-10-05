@@ -94,25 +94,26 @@
     }
   ],
   "layout": {
-    "width": 22,
-    "height": 4,
+    "width": 4,
+    "height": 22,
+    "color": "#1f7a3d",
     "features": [],
     "headers": [
       {
         "id": "P1-odd",
         "x": 1.5,
-        "y": 2.5,
-        "dir": "right",
+        "y": 1.5,
+        "dir": "down",
         "count": 20,
-        "labelSide": "bottom"
+        "labelSide": "left"
       },
       {
         "id": "P1-even",
-        "x": 1.5,
+        "x": 2.5,
         "y": 1.5,
-        "dir": "right",
+        "dir": "down",
         "count": 20,
-        "labelSide": "top"
+        "labelSide": "right"
       }
     ]
   },

@@ -6,6 +6,8 @@
     "esp32-devkit-v1",
     "esp32-c3-devkitm-1",
     "esp32-c6-devkitc-1",
+    "esp32-p4x-function-ev-board",
+    "esp32-p4x-c5-function-ev-board",
     "esp8266-nodemcu",
     "arduino-uno-r3",
     "arduino-nano",

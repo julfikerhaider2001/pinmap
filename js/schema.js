@@ -77,6 +77,7 @@ export function validateBoard(b, fileId) {
       req(SIDES.includes(h.labelSide), `header ${h.id}: labelSide must be one of ${SIDES}`);
     });
     req(L.features === undefined || Array.isArray(L.features), 'layout.features must be an array');
+    req(L.color === undefined || /^#[0-9a-f]{6}$/i.test(L.color), 'layout.color must be a #rrggbb colour');
   } else e.push('layout missing');
 
   if (Array.isArray(b.warnings)) {

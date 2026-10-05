@@ -7,6 +7,9 @@
   <meta name="description" content="Searchable, interactive pinout reference for ESP32, Arduino, Raspberry Pi and stepper driver modules, built from official datasheets.">
   <meta name="color-scheme" content="light dark">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="css/main.css">
   <script>
     // Apply the saved theme before first paint to avoid a flash.
@@ -15,16 +18,22 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#/boards" aria-label="PinMap home">
-      <img src="assets/favicon.svg" alt="" width="24" height="24"> PinMap
+    <a class="brand" href="#/" aria-label="PinMap home">
+      <img src="assets/favicon.svg" alt="" width="28" height="28"><span>PinMap <small>pinout reference</small></span>
     </a>
+    <form class="top-search" id="top-search" role="search">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm9 16-4.2-4.2"/></svg>
+      <input type="search" id="top-q" placeholder="Search pins, e.g. i2c esp32-s3" aria-label="Search pins" autocomplete="off">
+      <kbd>/</kbd>
+    </form>
     <nav class="tabs" aria-label="Main">
       <a href="#/boards" data-tab="boards">Boards</a>
       <a href="#/search" data-tab="search">Search</a>
       <a href="#/planner" data-tab="planner">Pin Planner</a>
     </nav>
     <button class="icon-btn" id="theme-btn" type="button" aria-label="Toggle dark mode" title="Toggle theme">
-      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></svg>
     </button>
   </header>
 

@@ -1,0 +1,1269 @@
+{
+  "id": "esp32-p4x-c5-function-ev-board",
+  "name": "ESP32-P4X-C5-Function-EV-Board",
+  "category": "board",
+  "family": "ESP32",
+  "mcu": "ESP32-P4",
+  "aliases": [
+    "p4",
+    "esp32p4",
+    "esp32-p4",
+    "p4x",
+    "esp32p4x",
+    "p4x-c5",
+    "c5",
+    "function ev",
+    "function-ev-board",
+    "evboard",
+    "ev board",
+    "esp32-c5-mini-1"
+  ],
+  "logicVoltage": 3.3,
+  "wireless": [
+    "wifi",
+    "ble"
+  ],
+  "routing": {
+    "I2C": "any",
+    "SPI": "any",
+    "UART": "any",
+    "PWM": "any"
+  },
+  "codeStyle": "gpio",
+  "sources": [
+    {
+      "title": "ESP32-P4 Series Datasheet (chip revision v3.x, ESP32-P4NRW16X / P4NRW32X)",
+      "url": "https://documentation.espressif.com/esp32-p4_datasheet_en.pdf",
+      "rev": "v0.7 (Pre-release, 2026-07-14)",
+      "note": "Tables 2-1 (pin overview, power domains), 2-3 IO MUX, 2-5 LP IO MUX, 2-7 analog functions, 2-8 peripheral pin assignment, 2-15 flash pins (dedicated, PSRAM not pinned out), Section 3 strapping pins, 4.1.4.1 GPIO matrix, 4.2.2.x pin assignment (UART/SPI/I2C/LEDC via GPIO matrix), Table 5-2 VDD_IO_x 1.65-3.6 V."
+    },
+    {
+      "title": "ESP32-P4X-C5-Function-EV-Board User Guide",
+      "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32p4/esp32-p4x-c5-function-ev-board/user_guide.html",
+      "rev": "esp-dev-kits latest (master, commit 52772fb)",
+      "note": "J1 header table and footnotes (NC(6), NC(0), NC(1), NC(45), NC(53), NC(54)), components, LCD wiring, \"No previous revisions\"."
+    },
+    {
+      "title": "ESP32-P4X-C5-Function-EV-Board Schematics",
+      "url": "https://dl.espressif.com/schematics/ESP32_P4X_C5_Function_EV_board-2.0-schematics.pdf",
+      "rev": "Rev 2.0 (2026-02-26)",
+      "note": "J1 wiring, fitted/NC resistors (R29/R30, R76/R80, R79/R85, R231/R100), I2C on GPIO7/8, USB FS on GPIO26/27, VDD_IO_5 on LDO_VO4, programming connector on GPIO37/38."
+    },
+    {
+      "title": "ESP32-P4 Chip Revision v3.x User Guide",
+      "url": "https://documentation.espressif.com/esp32-p4-chip-revision-v3.x_user_guide_en.html",
+      "rev": "v1.1 (2026.08)",
+      "note": "Differences between chip revision v3.x and v1.x: fixed errata, 400 MHz CPU, firmware incompatibility, ESP-IDF v5.5.3+/v6.0+ and CONFIG_ESP32P4_SELECTS_REV_LESS_V3."
+    },
+    {
+      "title": "ESP32-P4 Series SoC Errata: Chip Revision Identification",
+      "url": "https://docs.espressif.com/projects/esp-chip-errata/en/latest/esp32p4/01-chip-identification/index.html",
+      "rev": "latest (fetched 2026-10)",
+      "note": "Revisions v0.0, v1.0, v1.3, v3.0, v3.1, v3.2 and their chip-marking codes."
+    }
+  ],
+  "datasheet": "https://documentation.espressif.com/esp32-p4_datasheet_en.pdf",
+  "verified": true,
+  "summary": "Espressif ESP32-P4 (chip rev v3.x) multimedia board with an ESP32-C5-MINI-1 co-processor for dual-band Wi-Fi 6 and BLE (the P4 itself has no radio), Ethernet, audio codec, microSD, MIPI DSI/CSI and a 40-pin J1 GPIO header.",
+  "warnings": [
+    {
+      "level": "danger",
+      "text": "3.3 V logic at most. ESP32-P4 IO supplies are limited to 3.6 V (datasheet Table 5-1); no pin is 5 V tolerant. The 5V header pins are power only; never connect a 5 V signal to a GPIO."
+    },
+    {
+      "level": "info",
+      "text": "The ESP32-P4 has no radio. Wi-Fi and Bluetooth on this board come from the separate ESP32-C5-MINI-1 co-processor module (2.4 GHz and 5 GHz dual-band Wi-Fi 6 and Bluetooth 5 (LE) (the C5 module also supports IEEE 802.15.4)), which the P4 talks to over an SDIO bus (SD2 nets in the board schematic). The co-processor runs its own firmware and has its own programming connector; your P4 code reaches the radio through Espressif's host/co-processor software, not directly."
+    },
+    {
+      "level": "warn",
+      "text": "Chip revision: this board carries an ESP32-P4 chip revision v3.1 or later (user guide). v3.x silicon (ESP32-P4NRW16X/32X) differs from the older v1.x chips used on the end-of-life ESP32-P4-Function-EV-Board (v1.4/v1.5.2): v1.x and v3.x firmware images are not interchangeable. Build with ESP-IDF v5.5.3+ or v6.0+ and keep CONFIG_ESP32P4_SELECTS_REV_LESS_V3=n for v3.x (Chip Revision v3.x User Guide). v3.x also fixes several errata, raises the CPU to 400 MHz and adds IO hold in Deep-sleep for all IOs. Chip revision v3.1 does not support Secure Download Mode (errata ROM-770), so do not enable it. The GPIO numbering and J1 header table are the same as on the v1.5.2 board."
+    },
+    {
+      "level": "warn",
+      "text": "Strapping pins on J1: GPIO36, GPIO37 and GPIO38 (with GPIO35, which is not on J1) select the boot mode at reset, and GPIO36 also controls UART0 ROM log printing. External pull-ups/pull-downs on them can stop the board from booting. GPIO34 (JTAG source strap) is not on J1.",
+      "pins": [
+        "pin24",
+        "pin8",
+        "pin10"
+      ]
+    },
+    {
+      "level": "warn",
+      "text": "IO voltage domains (datasheet Table 2-1, 5-2): GPIO0-GPIO15 are LP IOs on VDD_LP (3.0-3.6 V, so 3.3 V). The HP IO banks VDD_IO_0 (GPIO16-23), VDD_IO_4 (GPIO24-38), VDD_IO_5 (GPIO39-48) and VDD_IO_6 (GPIO49-54) can each run from 1.8 V to 3.3 V (1.65-3.6 V). On this board the board schematics show VDD_IO_0, VDD_IO_4 and VDD_IO_6 on the 3.3 V rail, but VDD_IO_5 (header GPIO46, GPIO47, GPIO48, and GPIO45 if enabled) on the chip LDO output LDO_VO4 (\"1V8/3V3 (SDIO)\"), shared with the microSD card. Its voltage and on/off state are set by software (user guide note on LDO_VO3/LDO_VO4), so those pins may be at 1.8 V or unpowered. Check before connecting 3.3 V parts.",
+      "pins": [
+        "pin36",
+        "pin37",
+        "pin33",
+        "pin40"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "No GPIO is used for flash or PSRAM: the 16 MB SPI flash uses dedicated FLASH_* pins and the PSRAM is in the chip package and not pinned out (datasheet 2.7). MIPI DSI/CSI and USB 2.0 High-Speed also use dedicated pins."
+    },
+    {
+      "level": "info",
+      "text": "On-board parts that use GPIOs not on J1: Ethernet PHY IP101GR (RMII), ES8311 audio codec (I2S), microSD card (4-bit, SD1 pins GPIO39-44), the co-processor SDIO bus, and the USB Serial/JTAG port (GPIO24/25). The codec, camera and LCD touch share the I2C bus on GPIO7/GPIO8.",
+      "pins": [
+        "pin3",
+        "pin5"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "GPIO26/GPIO27 on J1 are also the USB 2.0 Full-Speed OTG pins wired to the \"USB Full-speed Port\" Type-C; the user guide uses them as the default LCD PWM (GPIO26) and LCD reset (GPIO27) for the 7-inch display kit.",
+      "pins": [
+        "pin31",
+        "pin38"
+      ]
+    },
+    {
+      "level": "info",
+      "text": "Compared with the ESP32-P4X-Function-EV-Board, J1 pins 15 (GPIO6), 32 (GPIO54) and 35 (GPIO53) are not connected by default here: they go to the C5 wake-up line, the C5 enable and the speaker-amplifier enable. Each can be moved to the header by moving a 0 ohm resistor (user guide footnotes). J1 pins 22, 23 and 40 (GPIO1, GPIO0, GPIO45) are not connected either (32 kHz crystal and SD power).",
+      "pins": [
+        "pin15",
+        "pin32",
+        "pin35",
+        "pin22",
+        "pin23",
+        "pin40"
+      ]
+    }
+  ],
+  "layout": {
+    "color": "#1d1f24",
+    "width": 5,
+    "height": 44,
+    "features": [
+      {
+        "type": "label",
+        "x": 2.5,
+        "y": 1,
+        "label": "J1"
+      }
+    ],
+    "headers": [
+      {
+        "id": "J1-odd",
+        "x": 2,
+        "y": 3,
+        "dir": "down",
+        "count": 20,
+        "labelSide": "left"
+      },
+      {
+        "id": "J1-even",
+        "x": 3,
+        "y": 3,
+        "dir": "down",
+        "count": 20,
+        "labelSide": "right"
+      }
+    ]
+  },
+  "pins": [
+    {
+      "id": "pin1",
+      "header": "J1-odd",
+      "pos": 1,
+      "label": "3V3",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "3V3"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "3.3 V power supply. Physical J1 pin 1.",
+      "verified": true
+    },
+    {
+      "id": "pin2",
+      "header": "J1-even",
+      "pos": 1,
+      "label": "5V",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "5V"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "5 V power supply. Never connect 5 V to a GPIO. Physical J1 pin 2.",
+      "verified": true
+    },
+    {
+      "id": "pin3",
+      "header": "J1-odd",
+      "pos": 2,
+      "label": "7",
+      "gpio": 7,
+      "code": "7",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO7"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO7"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH_CHANNEL6"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI2_CS_PAD (CS)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Also the on-board I2C SDA line (net ESP_I2C_SDA in the P4X-C5 schematic v2.0), shared with the ES8311 audio codec and the camera/LCD connectors. Usable as I2C SDA for extra I2C devices on the same bus; do not use it as a plain GPIO if you use the codec, camera or touch screen. Voltage: LP IO domain (VDD_LP, 3.3 V). Physical J1 pin 3.",
+      "verified": true
+    },
+    {
+      "id": "pin4",
+      "header": "J1-even",
+      "pos": 2,
+      "label": "5V",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "5V"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "5 V power supply. Never connect 5 V to a GPIO. Physical J1 pin 4.",
+      "verified": true
+    },
+    {
+      "id": "pin5",
+      "header": "J1-odd",
+      "pos": 3,
+      "label": "8",
+      "gpio": 8,
+      "code": "8",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO8"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO8"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH_CHANNEL7"
+        },
+        {
+          "type": "UART",
+          "name": "UART0_RTS_PAD (RTS)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI2_D_PAD (MOSI)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Also the on-board I2C SCL line (net ESP_I2C_SCL in the P4X-C5 schematic v2.0), shared with the ES8311 audio codec and the camera/LCD connectors. Usable as I2C SCL for extra I2C devices on the same bus; do not use it as a plain GPIO if you use the codec, camera or touch screen. Voltage: LP IO domain (VDD_LP, 3.3 V). Physical J1 pin 5.",
+      "verified": true
+    },
+    {
+      "id": "pin6",
+      "header": "J1-even",
+      "pos": 3,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical J1 pin 6.",
+      "verified": true
+    },
+    {
+      "id": "pin7",
+      "header": "J1-odd",
+      "pos": 4,
+      "label": "23",
+      "gpio": 23,
+      "code": "23",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO23"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CHANNEL7"
+        },
+        {
+          "type": "CLOCK",
+          "name": "REF_50M_CLK_PAD"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Voltage: HP IO bank VDD_IO_0 (3.3 V on this board). Physical J1 pin 7.",
+      "verified": true
+    },
+    {
+      "id": "pin8",
+      "header": "J1-even",
+      "pos": 4,
+      "label": "37",
+      "gpio": 37,
+      "code": "37",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO37"
+        },
+        {
+          "type": "UART",
+          "name": "UART0_TXD_PAD (TX)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI2_IO7_PAD"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "console-uart",
+        "not-5v-tolerant"
+      ],
+      "notes": "UART0 TX (IO MUX default function): ROM boot log and default serial console. Also wired to the ESP32-P4 Programming Connector (board schematic). Strapping pin (boot mode, see TRM Chip Boot Control), floating by default. Voltage: HP IO bank VDD_IO_4 (3.3 V on this board). Physical J1 pin 8.",
+      "verified": true
+    },
+    {
+      "id": "pin9",
+      "header": "J1-odd",
+      "pos": 5,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical J1 pin 9.",
+      "verified": true
+    },
+    {
+      "id": "pin10",
+      "header": "J1-even",
+      "pos": 5,
+      "label": "38",
+      "gpio": 38,
+      "code": "38",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO38"
+        },
+        {
+          "type": "UART",
+          "name": "UART0_RXD_PAD (RX)"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI2_DQS_PAD"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "console-uart",
+        "not-5v-tolerant"
+      ],
+      "notes": "UART0 RX (IO MUX default function): default serial console and UART download. Also wired to the ESP32-P4 Programming Connector (board schematic). Strapping pin (boot mode, see TRM Chip Boot Control), floating by default. Voltage: HP IO bank VDD_IO_4 (3.3 V on this board). Physical J1 pin 10.",
+      "verified": true
+    },
+    {
+      "id": "pin11",
+      "header": "J1-odd",
+      "pos": 6,
+      "label": "21",
+      "gpio": 21,
+      "code": "21",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO21"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CHANNEL5"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Voltage: HP IO bank VDD_IO_0 (3.3 V on this board). Physical J1 pin 11.",
+      "verified": true
+    },
+    {
+      "id": "pin12",
+      "header": "J1-even",
+      "pos": 6,
+      "label": "22",
+      "gpio": 22,
+      "code": "22",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO22"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CHANNEL6"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Voltage: HP IO bank VDD_IO_0 (3.3 V on this board). Physical J1 pin 12.",
+      "verified": true
+    },
+    {
+      "id": "pin13",
+      "header": "J1-odd",
+      "pos": 7,
+      "label": "20",
+      "gpio": 20,
+      "code": "20",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO20"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC1_CHANNEL4"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Voltage: HP IO bank VDD_IO_0 (3.3 V on this board). Physical J1 pin 13.",
+      "verified": true
+    },
+    {
+      "id": "pin14",
+      "header": "J1-even",
+      "pos": 7,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical J1 pin 14.",
+      "verified": true
+    },
+    {
+      "id": "pin15",
+      "header": "J1-odd",
+      "pos": 8,
+      "label": "NC(6)",
+      "gpio": 6,
+      "code": "6",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO6"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO6"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH_CHANNEL5"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI2_HOLD_PAD (HOLD)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "nc",
+        "not-5v-tolerant"
+      ],
+      "notes": "Not connected to J1 by default: GPIO6 is the P4_WAKEUP_C5 line to the ESP32-C5. The user guide says to move R30 to R29 to put GPIO6 on the header (this disables that function). Voltage: LP IO domain (VDD_LP, 3.3 V). Physical J1 pin 15.",
+      "verified": true
+    },
+    {
+      "id": "pin16",
+      "header": "J1-even",
+      "pos": 8,
+      "label": "5",
+      "gpio": 5,
+      "code": "5",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO5"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTDO"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO5"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH_CHANNEL4"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "JTAG MTDO. Free to use when you debug over the USB Serial/JTAG port (the default JTAG source). Voltage: LP IO domain (VDD_LP, 3.3 V). Physical J1 pin 16.",
+      "verified": true
+    },
+    {
+      "id": "pin17",
+      "header": "J1-odd",
+      "pos": 9,
+      "label": "3V3",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "POWER",
+          "name": "3V3"
+        }
+      ],
+      "flags": [
+        "power"
+      ],
+      "notes": "3.3 V power supply. Physical J1 pin 17.",
+      "verified": true
+    },
+    {
+      "id": "pin18",
+      "header": "J1-even",
+      "pos": 9,
+      "label": "4",
+      "gpio": 4,
+      "code": "4",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO4"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTMS"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO4"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH_CHANNEL3"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "JTAG MTMS. Free to use when you debug over the USB Serial/JTAG port (the default JTAG source). Voltage: LP IO domain (VDD_LP, 3.3 V). Physical J1 pin 18.",
+      "verified": true
+    },
+    {
+      "id": "pin19",
+      "header": "J1-odd",
+      "pos": 10,
+      "label": "3",
+      "gpio": 3,
+      "code": "3",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO3"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTDI"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO3"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH_CHANNEL2"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "JTAG MTDI. Free to use when you debug over the USB Serial/JTAG port (the default JTAG source). Voltage: LP IO domain (VDD_LP, 3.3 V); can be switched to VDD_BAT by register. Physical J1 pin 19.",
+      "verified": true
+    },
+    {
+      "id": "pin20",
+      "header": "J1-even",
+      "pos": 10,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical J1 pin 20.",
+      "verified": true
+    },
+    {
+      "id": "pin21",
+      "header": "J1-odd",
+      "pos": 11,
+      "label": "2",
+      "gpio": 2,
+      "code": "2",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO2"
+        },
+        {
+          "type": "JTAG",
+          "name": "MTCK"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO2"
+        },
+        {
+          "type": "TOUCH",
+          "name": "TOUCH_CHANNEL1"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "JTAG MTCK. Free to use when you debug over the USB Serial/JTAG port (the default JTAG source). Voltage: LP IO domain (VDD_LP, 3.3 V); can be switched to VDD_BAT by register. Physical J1 pin 21.",
+      "verified": true
+    },
+    {
+      "id": "pin22",
+      "header": "J1-even",
+      "pos": 11,
+      "label": "NC(1)",
+      "gpio": 1,
+      "code": "1",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO1"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO1"
+        },
+        {
+          "type": "CLOCK",
+          "name": "XTAL_32K_P"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "nc",
+        "not-5v-tolerant"
+      ],
+      "notes": "Not connected to J1 by default: GPIO1 is used for the 32.768 kHz crystal (XTAL_32K_P). The user guide says to move R59 to R197 to put GPIO1 on the header (this disables the 32 kHz crystal). Voltage: LP IO domain (VDD_LP, 3.3 V); can be switched to VDD_BAT by register. Physical J1 pin 22.",
+      "verified": true
+    },
+    {
+      "id": "pin23",
+      "header": "J1-odd",
+      "pos": 12,
+      "label": "NC(0)",
+      "gpio": 0,
+      "code": "0",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO0"
+        },
+        {
+          "type": "RTC",
+          "name": "LP_GPIO0"
+        },
+        {
+          "type": "CLOCK",
+          "name": "XTAL_32K_N"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "nc",
+        "not-5v-tolerant"
+      ],
+      "notes": "Not connected to J1 by default: GPIO0 is used for the 32.768 kHz crystal (XTAL_32K_N). The user guide says to move R61 to R199 to put GPIO0 on the header (this disables the 32 kHz crystal). Voltage: LP IO domain (VDD_LP, 3.3 V); can be switched to VDD_BAT by register. Physical J1 pin 23.",
+      "verified": true
+    },
+    {
+      "id": "pin24",
+      "header": "J1-even",
+      "pos": 12,
+      "label": "36",
+      "gpio": 36,
+      "code": "36",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO36"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI2_IO6_PAD"
+        },
+        {
+          "type": "OTHER",
+          "name": "GMAC_PHY_TXER_PAD (Ethernet RMII)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "strapping",
+        "not-5v-tolerant"
+      ],
+      "notes": "Strapping pin: boot mode (with GPIO35, GPIO37, GPIO38) and UART0 ROM message printing. Floating by default. The board schematics also connect it to a boot-mode strap net (GPIO36_BOOTMODE, 10 kOhm resistor). Do not pull it at reset. Voltage: HP IO bank VDD_IO_4 (3.3 V on this board). Physical J1 pin 24.",
+      "verified": true
+    },
+    {
+      "id": "pin25",
+      "header": "J1-odd",
+      "pos": 13,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical J1 pin 25.",
+      "verified": true
+    },
+    {
+      "id": "pin26",
+      "header": "J1-even",
+      "pos": 13,
+      "label": "32",
+      "gpio": 32,
+      "code": "32",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO32"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI2_HOLD_PAD (HOLD)"
+        },
+        {
+          "type": "OTHER",
+          "name": "GMAC_RMII_CLK_PAD (Ethernet RMII)"
+        },
+        {
+          "type": "OTHER",
+          "name": "I3C_MST_SCL_PAD (I3C master SCL)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Dedicated I3C master SCL pin with configurable I3C pull-up (datasheet Table 2-8); a normal GPIO otherwise. Voltage: HP IO bank VDD_IO_4 (3.3 V on this board). Physical J1 pin 26.",
+      "verified": true
+    },
+    {
+      "id": "pin27",
+      "header": "J1-odd",
+      "pos": 14,
+      "label": "NC",
+      "gpio": null,
+      "code": null,
+      "functions": [],
+      "flags": [
+        "nc"
+      ],
+      "notes": "No connection (user guide). Physical J1 pin 27.",
+      "verified": true
+    },
+    {
+      "id": "pin28",
+      "header": "J1-even",
+      "pos": 14,
+      "label": "NC",
+      "gpio": null,
+      "code": null,
+      "functions": [],
+      "flags": [
+        "nc"
+      ],
+      "notes": "No connection (user guide). Physical J1 pin 28.",
+      "verified": true
+    },
+    {
+      "id": "pin29",
+      "header": "J1-odd",
+      "pos": 15,
+      "label": "33",
+      "gpio": 33,
+      "code": "33",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO33"
+        },
+        {
+          "type": "SPI",
+          "name": "SPI2_WP_PAD (WP)"
+        },
+        {
+          "type": "OTHER",
+          "name": "GMAC_PHY_TXEN_PAD (Ethernet RMII)"
+        },
+        {
+          "type": "OTHER",
+          "name": "I3C_MST_SDA_PAD (I3C master SDA)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Dedicated I3C master SDA pin with configurable I3C pull-up (datasheet Table 2-8); a normal GPIO otherwise. Voltage: HP IO bank VDD_IO_4 (3.3 V on this board). Physical J1 pin 29.",
+      "verified": true
+    },
+    {
+      "id": "pin30",
+      "header": "J1-even",
+      "pos": 15,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical J1 pin 30.",
+      "verified": true
+    },
+    {
+      "id": "pin31",
+      "header": "J1-odd",
+      "pos": 16,
+      "label": "26",
+      "gpio": 26,
+      "code": "26",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO26"
+        },
+        {
+          "type": "USB",
+          "name": "USB1P1_N1 (USB FS OTG D-)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "usb",
+        "not-5v-tolerant"
+      ],
+      "notes": "Default USB 2.0 Full-Speed OTG D- (datasheet). Also wired through 33 ohm to the board's \"USB Full-speed Port\" Type-C (board schematics), so do not use both. The user guide uses this pin as the default LCD backlight PWM (J6 PWM on the LCD adapter board). Voltage: HP IO bank VDD_IO_4 (3.3 V on this board). Physical J1 pin 31.",
+      "verified": true
+    },
+    {
+      "id": "pin32",
+      "header": "J1-even",
+      "pos": 16,
+      "label": "NC(54)",
+      "gpio": 54,
+      "code": "54",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO54"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CHANNEL5"
+        },
+        {
+          "type": "ANALOG_CMP",
+          "name": "ANA_COMP1"
+        },
+        {
+          "type": "OTHER",
+          "name": "GMAC_PHY_RXER_PAD (Ethernet RMII)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "nc",
+        "not-5v-tolerant"
+      ],
+      "notes": "Not connected to J1 by default: GPIO54 drives the ESP32-C5 enable (C5_EN). The user guide says to move R76 to R80 to put GPIO54 on the header (this removes the P4's control of the C5 enable). Voltage: HP IO bank VDD_IO_6 (3.3 V on this board). Physical J1 pin 32.",
+      "verified": true
+    },
+    {
+      "id": "pin33",
+      "header": "J1-odd",
+      "pos": 17,
+      "label": "48",
+      "gpio": 48,
+      "code": "48",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO48"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD1_CDATA7_PAD"
+        },
+        {
+          "type": "OTHER",
+          "name": "GMAC_PHY_RXER_PAD (Ethernet RMII)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Voltage: HP IO bank VDD_IO_5, fed from the chip's LDO_VO4 on this board (software sets 1.8 V or 3.3 V; see warning). Physical J1 pin 33.",
+      "verified": true
+    },
+    {
+      "id": "pin34",
+      "header": "J1-even",
+      "pos": 17,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical J1 pin 34.",
+      "verified": true
+    },
+    {
+      "id": "pin35",
+      "header": "J1-odd",
+      "pos": 18,
+      "label": "NC(53)",
+      "gpio": 53,
+      "code": "53",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO53"
+        },
+        {
+          "type": "ADC",
+          "name": "ADC2_CHANNEL4"
+        },
+        {
+          "type": "ANALOG_CMP",
+          "name": "ANA_COMP1"
+        },
+        {
+          "type": "OTHER",
+          "name": "GMAC_PHY_RXD1_PAD (Ethernet RMII)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "nc",
+        "not-5v-tolerant"
+      ],
+      "notes": "Not connected to J1 by default: GPIO53 is the audio amplifier enable (PA_CTRL). The user guide says to move R79 to R85 to put GPIO53 on the header (this removes the P4's control of the speaker amplifier). Voltage: HP IO bank VDD_IO_6 (3.3 V on this board). Physical J1 pin 35.",
+      "verified": true
+    },
+    {
+      "id": "pin36",
+      "header": "J1-even",
+      "pos": 18,
+      "label": "46",
+      "gpio": 46,
+      "code": "46",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO46"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD1_CDATA5_PAD"
+        },
+        {
+          "type": "OTHER",
+          "name": "GMAC_PHY_RXD0_PAD (Ethernet RMII)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Voltage: HP IO bank VDD_IO_5, fed from the chip's LDO_VO4 on this board (software sets 1.8 V or 3.3 V; see warning). Physical J1 pin 36.",
+      "verified": true
+    },
+    {
+      "id": "pin37",
+      "header": "J1-odd",
+      "pos": 19,
+      "label": "47",
+      "gpio": 47,
+      "code": "47",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO47"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD1_CDATA6_PAD"
+        },
+        {
+          "type": "OTHER",
+          "name": "GMAC_PHY_RXD1_PAD (Ethernet RMII)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "not-5v-tolerant"
+      ],
+      "notes": "Voltage: HP IO bank VDD_IO_5, fed from the chip's LDO_VO4 on this board (software sets 1.8 V or 3.3 V; see warning). Physical J1 pin 37.",
+      "verified": true
+    },
+    {
+      "id": "pin38",
+      "header": "J1-even",
+      "pos": 19,
+      "label": "27",
+      "gpio": 27,
+      "code": "27",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO27"
+        },
+        {
+          "type": "USB",
+          "name": "USB1P1_P1 (USB FS OTG D+)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "usb",
+        "not-5v-tolerant"
+      ],
+      "notes": "Default USB 2.0 Full-Speed OTG D+ (datasheet). Also wired through 33 ohm to the board's \"USB Full-speed Port\" Type-C (board schematics), so do not use both. The user guide uses this pin as the default LCD reset (J6 RST_LCD on the LCD adapter board). Voltage: HP IO bank VDD_IO_4 (3.3 V on this board). Physical J1 pin 38.",
+      "verified": true
+    },
+    {
+      "id": "pin39",
+      "header": "J1-odd",
+      "pos": 20,
+      "label": "GND",
+      "gpio": null,
+      "code": null,
+      "functions": [
+        {
+          "type": "GND",
+          "name": "GND"
+        }
+      ],
+      "flags": [
+        "ground"
+      ],
+      "notes": "Physical J1 pin 39.",
+      "verified": true
+    },
+    {
+      "id": "pin40",
+      "header": "J1-even",
+      "pos": 20,
+      "label": "NC(45)",
+      "gpio": 45,
+      "code": "45",
+      "functions": [
+        {
+          "type": "GPIO",
+          "name": "GPIO45"
+        },
+        {
+          "type": "SDIO",
+          "name": "SD1_CDATA4_PAD"
+        },
+        {
+          "type": "OTHER",
+          "name": "GMAC_PHY_RXDV_PAD (Ethernet RMII)"
+        },
+        {
+          "type": "PWM",
+          "name": "LEDC"
+        }
+      ],
+      "flags": [
+        "nc",
+        "not-5v-tolerant"
+      ],
+      "notes": "Not connected to J1 by default: GPIO45 drives the SD card power enable (SD_PWRn). The user guide says to move R231 to R100 to put GPIO45 on the header (this removes the P4's control of SD card power). Voltage: HP IO bank VDD_IO_5, fed from the chip's LDO_VO4 on this board (software sets 1.8 V or 3.3 V; see warning). Physical J1 pin 40.",
+      "verified": true
+    }
+  ]
+}

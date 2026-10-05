@@ -87,6 +87,7 @@
   "layout": {
     "width": 27,
     "height": 21,
+    "color": "#1d4f91",
     "features": [
       {
         "type": "terminal",

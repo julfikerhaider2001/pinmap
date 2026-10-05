@@ -106,6 +106,7 @@
   "layout": {
     "width": 10.2,
     "height": 21.7,
+    "color": "#1d1f24",
     "features": [
       {
         "type": "chip",

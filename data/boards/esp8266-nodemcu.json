@@ -110,6 +110,7 @@
   "layout": {
     "width": 25,
     "height": 21,
+    "color": "#1d1f24",
     "features": [
       {
         "type": "chip",

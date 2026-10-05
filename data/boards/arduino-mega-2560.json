@@ -124,6 +124,7 @@
   "layout": {
     "width": 40,
     "height": 21,
+    "color": "#00878f",
     "features": [
       {
         "type": "usb",

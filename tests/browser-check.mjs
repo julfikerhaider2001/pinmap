@@ -68,6 +68,7 @@ await send('Page.enable');
 
 const boards = JSON.parse(readFileSync(join(root, 'data/boards/index.json'), 'utf8')).boards;
 const pages = [
+  { name: 'home', hash: '#/' },
   ...boards.map((id) => ({ name: `board-${id}`, hash: `#/boards/${id}` })),
   { name: 'search', hash: '#/search?q=which%20pins%20can%20do%20I2C%20on%20ESP32-S3%3F' },
   {

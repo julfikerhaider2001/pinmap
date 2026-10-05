@@ -53,6 +53,7 @@ UI then shows an "unverified" badge. Never guess.
 ```
 - `x, y` is the centre of the header's **position 1**. Each next position is 1 unit further along `dir` (`"down"`, `"up"`, `"right"`, `"left"`). Optional `pitch` (default 1; use 2 for 5.08 mm screw terminals).
 - `labelSide`: the side where pin labels are drawn: `"left"`, `"right"`, `"top"` or `"bottom"`.
+- `color` (optional): solder-mask colour as `#rrggbb`, used to make the drawing look like the real board.
 - Feature types: `chip`, `usb`, `button`, `led`, `terminal`, `jack`, `label`. These are only drawn for orientation and don't need to be exact.
 - A 2-row header (like the Pi 40-pin) is written as **two** headers, one per row.
 - Approximate geometry is fine. The pin **order** on each header must match the official pinout.
